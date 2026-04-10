@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sidebar App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0d0f;
+      --surface:   #141417;
+      --border:    #222228;
+      --accent:    #c8f04e;
+      --accent-dim:#8faa30;
+      --text:      #e8e8ea;
+      --muted:     #6b6b78;
+      --nav-w:     260px;
+      --nav-w-col: 72px;
+      --topbar-h:  56px;
+      --radius:    12px;
+      --trans:     0.28s cubic-bezier(.4,0,.2,1);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* ── Overlay (mobile) ─────────────────────────────── */
+    #overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(3px);
+      z-index: 90;
+      opacity: 0;
+      transition: opacity var(--trans);
+    }
+    #overlay.active { opacity: 1; }
+
+    /* ── Sidebar ──────────────────────────────────────── */
+    .sidebar {
+      position: fixed; top: 0; left: 0; bottom: 0;
+      width: var(--nav-w);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      z-index: 100;
+      transition: transform var(--trans), width var(--trans);
+      overflow: hidden;
+    }
+
+    /* collapsed state (desktop) */
+    body.collapsed .sidebar { width: var(--nav-w-col); }
+    body.collapsed .nav-label,
+    body.collapsed .sidebar-title,
+    body.collapsed .user-info,
+    body.collapsed .section-title { opacity: 0; pointer-events: none; width: 0; overflow: hidden; }
+    body.collapsed .nav-item { justify-content: center; }
+    body.collapsed .nav-icon { margin-right: 0; }
+    body.collapsed .sidebar-header { justify-content: center; padding: 0 16px; }
+
+    /* ── Sidebar header ───────────────────────────────── */
+    .sidebar-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 20px;
+      height: var(--topbar-h);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .logo-mark {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: var(--accent);
+      border-radius: 8px;
+      display: grid; place-items: center;
+    }
+    .logo-mark svg { width: 18px; height: 18px; color: #0d0d0f; }
+    .sidebar-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.05rem;
+      letter-spacing: -.01em;
+      white-space: nowrap;
+      transition: opacity var(--trans), width var(--trans);
+    }
+
+    /* ── Nav ──────────────────────────────────────────── */
+    .nav-scroll {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      padding: 16px 12px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .nav-scroll::-webkit-scrollbar { width: 4px; }
+    .nav-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .section-title {
+      font-size: .65rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted);
+      padding: 12px 12px 4px;
+      white-space: nowrap;
+      transition: opacity var(--trans);
+    }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      position: relative;
+      white-space: nowrap;
+      transition: background var(--trans), color var(--trans), padding var(--trans);
+      color: var(--muted);
+      font-size: .9rem; font-weight: 500;
+      user-select: none;
+    }
+    .nav-item:hover { background: #1c1c22; color: var(--text); }
+    .nav-item.active {
+      background: rgba(200,240,78,.1);
+      color: var(--accent);
+    }
+    .nav-item.active::before {
+      content: '';
+      position: absolute; left: 0; top: 20%; bottom: 20%;
+      width: 3px; border-radius: 2px;
+      background: var(--accent);
+    }
+    .nav-icon {
+      width: 20px; height: 20px; flex-shrink: 0;
+      display: grid; place-items: center;
+      margin-right: 0;
+      transition: margin var(--trans);
+    }
+    .nav-icon svg { width: 18px; height: 18px; }
+    .nav-label {
+      transition: opacity var(--trans);
+      white-space: nowrap;
+    }
+    .nav-badge {
+      margin-left: auto;
+      background: var(--accent); color: #0d0d0f;
+      font-size: .65rem; font-weight: 700;
+      padding: 1px 7px; border-radius: 99px;
+    }
+
+    /* ── User footer ─────────────────────────────────── */
+    .sidebar-footer {
+      padding: 12px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .user-card {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--trans);
+    }
+    .user-card:hover { background: #1c1c22; }
+    .avatar {
+      width: 32px; height: 32px; flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg,#c8f04e,#4ef0c8);
+      display: grid; place-items: center;
+      font-family: 'Syne', sans-serif;
+      font-size: .75rem; font-weight: 800;
+      color: #0d0d0f;
+    }
+    .user-info { transition: opacity var(--trans); overflow: hidden; }
+    .user-name { font-size: .85rem; font-weight: 600; }
+    .user-role { font-size: .72rem; color: var(--muted); }
+
+    /* ── Topbar ──────────────────────────────────────── */
+    .main-wrap {
+      flex: 1;
+      margin-left: var(--nav-w);
+      display: flex; flex-direction: column;
+      min-height: 100dvh;
+      transition: margin-left var(--trans);
+    }
+    body.collapsed .main-wrap { margin-left: var(--nav-w-col); }
+
+    .topbar {
+      height: var(--topbar-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 24px;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .toggle-btn {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      background: transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      display: grid; place-items: center;
+      color: var(--muted);
+      transition: color var(--trans), background var(--trans);
+      flex-shrink: 0;
+    }
+    .toggle-btn:hover { background: #1c1c22; color: var(--text); }
+    .toggle-btn svg { width: 18px; height: 18px; }
+
+    .breadcrumb {
+      font-size: .82rem;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .breadcrumb span { color: var(--text); font-weight: 500; }
+
+    .topbar-right {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .icon-btn {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      background: transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      display: grid; place-items: center;
+      color: var(--muted);
+      transition: color var(--trans), background var(--trans);
+      position: relative;
+    }
+    .icon-btn:hover { background: #1c1c22; color: var(--text); }
+    .icon-btn svg { width: 18px; height: 18px; }
+    .notif-dot {
+      position: absolute; top: 7px; right: 7px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      border: 1.5px solid var(--surface);
+    }
+
+    /* ── Main content ────────────────────────────────── */
+    .main-content {
+      flex: 1; padding: 32px 28px;
+      max-width: 1100px;
+    }
+    .page-header { margin-bottom: 28px; }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.7rem; font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.2;
+    }
+    .page-sub { color: var(--muted); margin-top: 4px; font-size: .9rem; }
+
+    /* ── Stat cards ──────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--trans), transform var(--trans);
+      cursor: default;
+    }
+    .stat-card:hover { border-color: #38383f; transform: translateY(-2px); }
+    .stat-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity var(--trans);
+    }
+    .stat-card:hover::after { opacity: 1; }
+    .stat-label { font-size: .75rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+    .stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800;
+      margin: 6px 0 4px;
+      letter-spacing: -.03em;
+    }
+    .stat-delta { font-size: .78rem; }
+    .delta-up   { color: var(--accent); }
+    .delta-down { color: #f0654e; }
+
+    /* ── Table card ──────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .card-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700;
+    }
+    .pill-btn {
+      background: rgba(200,240,78,.12); color: var(--accent);
+      border: 1px solid rgba(200,240,78,.25);
+      border-radius: 99px; padding: 5px 14px;
+      font-size: .78rem; font-weight: 600;
+      cursor: pointer; transition: background var(--trans);
+    }
+    .pill-btn:hover { background: rgba(200,240,78,.22); }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      text-align: left; padding: 10px 20px;
+      font-size: .72rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .07em;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+    }
+    tbody tr { transition: background var(--trans); cursor: default; }
+    tbody tr:hover { background: #181820; }
+    tbody td { padding: 12px 20px; font-size: .87rem; border-bottom: 1px solid #18181f; }
+    tbody tr:last-child td { border-bottom: none; }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 99px;
+      font-size: .72rem; font-weight: 600;
+    }
+    .s-active  { background: rgba(200,240,78,.1);  color: var(--accent); }
+    .s-pending { background: rgba(240,180,78,.1);  color: #f0b44e; }
+    .s-idle    { background: rgba(107,107,120,.1); color: var(--muted); }
+
+    /* ── Mobile responsive ───────────────────────────── */
+    @media (max-width: 768px) {
+      :root { --nav-w: 260px; }
+      body.collapsed .sidebar { transform: none; width: var(--nav-w); }
+      body.collapsed .main-wrap { margin-left: 0; }
+      body.collapsed .nav-label,
+      body.collapsed .sidebar-title,
+      body.collapsed .user-info,
+      body.collapsed .section-title { opacity: 1; pointer-events: auto; width: auto; overflow: visible; }
+      body.collapsed .nav-item { justify-content: flex-start; }
+      body.collapsed .nav-icon { margin-right: 0; }
+      body.collapsed .sidebar-header { justify-content: flex-start; padding: 0 20px; }
+
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      #overlay { display: block; }
+      .main-wrap { margin-left: 0; }
+      .main-content { padding: 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile overlay -->
+  <div id="overlay" onclick="closeNav()"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <div class="sidebar-title">Nucleus</div>
+    </div>
+
+    <nav class="nav-scroll">
+      <div class="section-title">Main</div>
+
+      <div class="nav-item active" onclick="setActive(this)">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
+        <span class="nav-label">Dashboard</span>
+      </div>
+
+      <div class="nav-item" onclick="setActive(this)">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+        <span class="nav-label">Analytics</span>
+      </div>
+
+      <div class="nav-item" onclick="setActive(this)">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <span class="nav-label">Customers</span>
+        <span class="nav-badge">12</span>
+      </div>
+
+      <div class="nav-item" onclick="setActive(this)">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>
+        <span class="nav-label">Projects</span>
+      </div>
+
+      <div class="nav-item" onclick="setActive(this)">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+        <span class="nav-label">Reports</span>
+      </div>
+
+      <div class="section-title">System</div>
+
+      <div class="nav-item" onclick="setActive(this)">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></span>
+        <span class="nav-label">Integrations</span>
+      </div>
+
+      <div class="nav-item" onclick="setActive(this)">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <span class="nav-label">Security</span>
+      </div>
+
+      <div class="nav-item" onclick="setActive(this)">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        <span class="nav-label">Settings</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="avatar">JS</div>
+        <div class="user-info">
+          <div class="user-name">Jamie Sato</div>
+          <div class="user-role">Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main area -->
+  <div class="main-wrap" id="mainWrap">
+    <header class="topbar">
+      <button class="toggle-btn" id="toggleBtn" onclick="toggleNav()" aria-label="Toggle nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="breadcrumb">Nucleus / <span>Dashboard</span></div>
+      <div class="topbar-right">
+        <button class="icon-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="icon-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="avatar" style="cursor:pointer">JS</div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">Good morning, Jamie ✦</h1>
+        <p class="page-sub">Here's what's happening across your workspace today.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Revenue</div>
+          <div class="stat-value">$48.2k</div>
+          <div class="stat-delta delta-up">↑ 12.4% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active Users</div>
+          <div class="stat-value">2,841</div>
+          <div class="stat-delta delta-up">↑ 8.1% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Churn Rate</div>
+          <div class="stat-value">1.7%</div>
+          <div class="stat-delta delta-down">↑ 0.3% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Open Tickets</div>
+          <div class="stat-value">34</div>
+          <div class="stat-delta delta-up">↓ 5 since yesterday</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Recent Projects</div>
+          <button class="pill-btn">View All</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Owner</th>
+              <th>Progress</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Brand Redesign</td>
+              <td>Elena M.</td>
+              <td>82%</td>
+              <td><span class="status-pill s-active">● Active</span></td>
+            </tr>
+            <tr>
+              <td>API v3 Migration</td>
+              <td>Kai T.</td>
+              <td>47%</td>
+              <td><span class="status-pill s-active">● Active</span></td>
+            </tr>
+            <tr>
+              <td>Q3 Marketing Push</td>
+              <td>Priya K.</td>
+              <td>20%</td>
+              <td><span class="status-pill s-pending">● Pending</span></td>
+            </tr>
+            <tr>
+              <td>Infrastructure Audit</td>
+              <td>Omar L.</td>
+              <td>100%</td>
+              <td><span class="status-pill s-idle">● Idle</span></td>
+            </tr>
+            <tr>
+              <td>Data Pipeline Refactor</td>
+              <td>Jamie S.</td>
+              <td>65%</td>
+              <td><span class="status-pill s-active">● Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const sidebar  = document.getElementById('sidebar');
+    const overlay  = document.getElementById('overlay');
+    const isMobile = () => window.innerWidth <= 768;
+
+    function toggleNav() {
+      if (isMobile()) {
+        const open = sidebar.classList.toggle('open');
+        overlay.classList.toggle('active', open);
+      } else {
+        document.body.classList.toggle('collapsed');
+      }
+    }
+
+    function closeNav() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    }
+
+    function setActive(el) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      el.classList.add('active');
+      if (isMobile()) closeNav();
+    }
+
+    window.addEventListener('resize', () => {
+      if (!isMobile()) closeNav();
+    });
+  </script>
+</body>
+</html>
