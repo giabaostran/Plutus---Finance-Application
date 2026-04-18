@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Finance Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;800&family=Bitter:wght@400;600&family=Space+Mono:wght@400;700&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;800&family=Bitter:ital,wght@0,400;0,600;1,400&family=Space+Mono:wght@400;700&family=IBM+Plex+Sans:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -42,11 +42,12 @@
     --transition: 0.25s ease;
   }
 
+  /* ── DARK: deep navy + violet ── */
   [data-theme="dark"] {
-    --bg-page: #0c0c12;
-    --bg-card: #14141e;
-    --bg-sidebar: #09090f;
-    --bg-accent: #1a1a28;
+    --bg-page: #0c0c14;
+    --bg-card: #13131f;
+    --bg-sidebar: #08080f;
+    --bg-accent: #191926;
     --border: rgba(255,255,255,0.07);
     --border-strong: rgba(255,255,255,0.14);
     --text-primary: #edeaff;
@@ -66,40 +67,87 @@
     --chart-4: #5a5880;
     --spark-green: #34d48a;
     --spark-red: #e05a42;
-    --font-display: 'Syne', sans-serif;
-    --font-body: 'IBM Plex Sans', sans-serif;
-    --font-mono: 'DM Mono', monospace;
   }
 
+  /* ── RETRO: phosphor green on dark ── */
   [data-theme="retro"] {
-    --bg-page: #0d1117;
-    --bg-card: #111820;
-    --bg-sidebar: #050c10;
-    --bg-accent: #091218;
-    --border: rgba(0,255,140,0.12);
-    --border-strong: rgba(0,255,140,0.25);
-    --text-primary: #00ff8c;
-    --text-secondary: #00a85e;
-    --text-muted: #004d30;
-    --text-sidebar: #00ff8c;
-    --text-sidebar-muted: #005c38;
-    --accent: #00ff8c;
-    --accent-2: #ff6b35;
-    --accent-3: #00c9ff;
-    --accent-4: #ff3355;
-    --positive: #00ff8c;
-    --negative: #ff3355;
-    --chart-1: #00ff8c;
-    --chart-2: #ff6b35;
-    --chart-3: #00c9ff;
-    --chart-4: #cc44ff;
-    --spark-green: #00ff8c;
-    --spark-red: #ff3355;
-    --font-display: 'Space Mono', monospace;
-    --font-body: 'Space Mono', monospace;
-    --font-mono: 'Space Mono', monospace;
-    --radius: 2px;
-    --radius-sm: 2px;
+    --bg-page: #0a0f0a;
+    --bg-card: #0d140d;
+    --bg-sidebar: #060b06;
+    --bg-accent: #101810;
+    --border: rgba(80,200,100,0.12);
+    --border-strong: rgba(80,200,100,0.28);
+    --text-primary: #88e899;
+    --text-secondary: #3d8f50;
+    --text-muted: #1a3d22;
+    --text-sidebar: #88e899;
+    --text-sidebar-muted: #224a2a;
+    --accent: #50c864;
+    --accent-2: #e8a030;
+    --accent-3: #50c8c8;
+    --accent-4: #e85050;
+    --positive: #50c864;
+    --negative: #e85050;
+    --chart-1: #50c864;
+    --chart-2: #e8a030;
+    --chart-3: #50c8c8;
+    --chart-4: #8850c8;
+    --spark-green: #50c864;
+    --spark-red: #e85050;
+  }
+
+  /* ── SCI-FI: deep space blue + cyan ── */
+  [data-theme="scifi"] {
+    --bg-page: #020c18;
+    --bg-card: #05111f;
+    --bg-sidebar: #020a14;
+    --bg-accent: #071828;
+    --border: rgba(0,180,240,0.1);
+    --border-strong: rgba(0,180,240,0.26);
+    --text-primary: #c0e8ff;
+    --text-secondary: #4080a8;
+    --text-muted: #183048;
+    --text-sidebar: #90ccee;
+    --text-sidebar-muted: #183850;
+    --accent: #00b8f0;
+    --accent-2: #f03870;
+    --accent-3: #00e8a0;
+    --accent-4: #f03050;
+    --positive: #00e8a0;
+    --negative: #f03870;
+    --chart-1: #00b8f0;
+    --chart-2: #f03870;
+    --chart-3: #00e8a0;
+    --chart-4: #8830f0;
+    --spark-green: #00e8a0;
+    --spark-red: #f03870;
+  }
+
+  /* ── LUXURY: black + champagne gold ── */
+  [data-theme="luxury"] {
+    --bg-page: #0c0a06;
+    --bg-card: #131008;
+    --bg-sidebar: #080602;
+    --bg-accent: #1a1608;
+    --border: rgba(190,155,80,0.14);
+    --border-strong: rgba(190,155,80,0.32);
+    --text-primary: #ede0c0;
+    --text-secondary: #806840;
+    --text-muted: #382c14;
+    --text-sidebar: #d8c890;
+    --text-sidebar-muted: #403418;
+    --accent: #be9b50;
+    --accent-2: #805030;
+    --accent-3: #90b870;
+    --accent-4: #b85040;
+    --positive: #90b870;
+    --negative: #b85040;
+    --chart-1: #be9b50;
+    --chart-2: #805030;
+    --chart-3: #90b870;
+    --chart-4: #504030;
+    --spark-green: #90b870;
+    --spark-red: #b85040;
   }
 
   /* ─── BASE ─── */
@@ -147,7 +195,6 @@
     color: var(--bg-sidebar);
     flex-shrink: 0;
   }
-  [data-theme="retro"] .logo-mark { color: #000; }
   .nav-section {
     padding: 0 14px;
     flex: 1;
@@ -176,7 +223,6 @@
   }
   .nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text-sidebar); }
   .nav-item.active { background: rgba(255,255,255,0.08); color: var(--text-sidebar); }
-  [data-theme="retro"] .nav-item.active { background: rgba(0,255,140,0.08); color: var(--accent); }
   .nav-icon { font-size: 15px; width: 18px; text-align: center; }
   .nav-badge {
     margin-left: auto;
@@ -187,8 +233,6 @@
     padding: 2px 7px;
     border-radius: 20px;
   }
-  [data-theme="retro"] .nav-badge { color: #000; border-radius: 2px; }
-
   .sidebar-footer {
     padding: 0 14px;
     border-top: 1px solid var(--border);
@@ -210,7 +254,6 @@
     color: var(--bg-sidebar);
     flex-shrink: 0;
   }
-  [data-theme="retro"] .user-avatar { border-radius: 2px; color: #000; }
   .user-name { font-size: 13px; font-weight: 600; color: var(--text-sidebar); }
   .user-role { font-size: 11px; color: var(--text-sidebar-muted); }
 
@@ -271,9 +314,8 @@
   .theme-btn.active {
     background: var(--bg-card);
     color: var(--text-primary);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    border: 1px solid var(--border-strong);
   }
-  [data-theme="retro"] .theme-btn.active { background: rgba(0,255,140,0.12); color: var(--accent); }
   .topbar-search {
     display: flex; align-items: center; gap: 8px;
     background: var(--bg-accent);
@@ -340,11 +382,6 @@
   .kpi-icon.green { background: rgba(45,156,101,0.12); }
   .kpi-icon.orange { background: rgba(232,84,26,0.12); }
   .kpi-icon.purple { background: rgba(160,100,255,0.12); }
-  [data-theme="dark"] .kpi-icon.blue { background: rgba(124,110,245,0.15); }
-  [data-theme="retro"] .kpi-icon.blue,
-  [data-theme="retro"] .kpi-icon.green,
-  [data-theme="retro"] .kpi-icon.orange,
-  [data-theme="retro"] .kpi-icon.purple { background: rgba(0,255,140,0.08); border: 1px solid rgba(0,255,140,0.2); }
   .kpi-value {
     font-family: var(--font-display);
     font-size: 30px;
@@ -353,7 +390,6 @@
     letter-spacing: -1px;
     line-height: 1;
   }
-  [data-theme="retro"] .kpi-value { letter-spacing: 0; }
   .kpi-footer { display: flex; align-items: center; gap: 6px; }
   .kpi-delta {
     font-size: 12px;
@@ -364,18 +400,12 @@
   }
   .kpi-delta.up { color: var(--positive); background: rgba(45,156,101,0.1); }
   .kpi-delta.down { color: var(--negative); background: rgba(196,77,52,0.1); }
-  [data-theme="dark"] .kpi-delta.up { background: rgba(52,212,138,0.1); }
-  [data-theme="dark"] .kpi-delta.down { background: rgba(224,90,66,0.1); }
-  [data-theme="retro"] .kpi-delta.up { background: rgba(0,255,140,0.1); border-radius: 2px; }
-  [data-theme="retro"] .kpi-delta.down { background: rgba(255,51,85,0.1); border-radius: 2px; }
   .kpi-sub { font-size: 12px; color: var(--text-muted); font-family: var(--font-body); }
   .sparkline { width: 100%; height: 36px; }
   .spark-path-green { fill: none; stroke: var(--spark-green); stroke-width: 1.5; }
   .spark-path-red { fill: none; stroke: var(--spark-red); stroke-width: 1.5; }
   .spark-area-green { fill: var(--spark-green); opacity: 0.08; }
   .spark-area-red { fill: var(--spark-red); opacity: 0.08; }
-  [data-theme="retro"] .spark-area-green,
-  [data-theme="retro"] .spark-area-red { opacity: 0.15; }
 
   /* ─── ROW ─── */
   .row { display: grid; grid-template-columns: 1.7fr 1fr; gap: 16px; }
@@ -508,7 +538,6 @@
     font-size: 14px;
     flex-shrink: 0;
   }
-  [data-theme="retro"] .tx-icon { border-radius: 2px; border: 1px solid var(--border); }
   .tx-cell { display: flex; align-items: center; gap: 12px; }
   .tx-name { font-weight: 500; }
   .tx-sub { font-size: 11px; color: var(--text-secondary); }
@@ -522,11 +551,9 @@
     border-radius: 20px;
     font-family: var(--font-mono);
   }
-  [data-theme="retro"] .status-pill { border-radius: 2px; }
   .status-pill.completed { background: rgba(45,156,101,0.1); color: var(--positive); }
   .status-pill.pending { background: rgba(200,150,50,0.12); color: #c08830; }
   .status-pill.failed { background: rgba(196,77,52,0.1); color: var(--negative); }
-  [data-theme="retro"] .status-pill.pending { color: #ff6b35; background: rgba(255,107,53,0.12); }
   .amount-pos { color: var(--positive); font-weight: 600; font-family: var(--font-mono); }
   .amount-neg { color: var(--negative); font-weight: 600; font-family: var(--font-mono); }
   .amount-neu { font-weight: 600; font-family: var(--font-mono); color: var(--text-primary); }
@@ -548,32 +575,7 @@
     margin-top: 6px;
     overflow: hidden;
   }
-  [data-theme="retro"] .mini-stat-bar-track { border-radius: 0; }
   .mini-stat-bar-fill { height: 100%; border-radius: 2px; background: var(--accent); }
-  [data-theme="retro"] .mini-stat-bar-fill { border-radius: 0; }
-
-  /* ─── RETRO EXTRAS ─── */
-  [data-theme="retro"] .sidebar { border-right: 1px solid rgba(0,255,140,0.2); }
-  [data-theme="retro"] .topbar { border-bottom: 1px solid rgba(0,255,140,0.15); }
-  [data-theme="retro"] .logo-mark { background: var(--accent); border-radius: 2px; }
-  [data-theme="retro"] .kpi-card { border-color: rgba(0,255,140,0.15); }
-  [data-theme="retro"] .kpi-card:hover { border-color: rgba(0,255,140,0.35); box-shadow: 0 0 12px rgba(0,255,140,0.06); }
-  [data-theme="retro"] .card { border-color: rgba(0,255,140,0.12); }
-  [data-theme="retro"] .card-head { border-bottom-color: rgba(0,255,140,0.1); }
-  [data-theme="retro"] thead th { background: rgba(0,255,140,0.04); }
-  [data-theme="retro"] tbody tr:hover { background: rgba(0,255,140,0.04); }
-  [data-theme="retro"] .topbar-search { border-color: rgba(0,255,140,0.2); }
-  [data-theme="retro"] .icon-btn { border-color: rgba(0,255,140,0.2); }
-  [data-theme="retro"] .status-pill.completed { color: var(--positive); }
-  [data-theme="retro"] .kpi-value { font-size: 26px; }
-  [data-theme="retro"] * { font-size-adjust: none; }
-
-  /* ─── RETRO scanline overlay ─── */
-  [data-theme="retro"] body::after {
-    content: '';
-    position: fixed; inset: 0; pointer-events: none; z-index: 9999;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
-  }
 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 1200px) {
@@ -656,6 +658,8 @@
         <button class="theme-btn active" onclick="setTheme('light', this)">Light</button>
         <button class="theme-btn" onclick="setTheme('dark', this)">Dark</button>
         <button class="theme-btn" onclick="setTheme('retro', this)">Retro</button>
+        <button class="theme-btn" onclick="setTheme('scifi', this)">Sci-Fi</button>
+        <button class="theme-btn" onclick="setTheme('luxury', this)">Luxury</button>
       </div>
       <div class="topbar-search">⌕ Search…</div>
       <div class="icon-btn">🔔</div>
