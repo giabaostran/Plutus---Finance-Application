@@ -1,8 +1,12 @@
-
-import "./App.css";
+import Sidebar from "../components/Sidebar";
+import "../App.css";
 
 function App() {
-  return <>ss</>;
+  return (
+    <div data-theme="retro">
+      <Sidebar />
+    </div>
+  );
 }
 
 export default App;
