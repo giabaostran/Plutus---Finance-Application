@@ -1,0 +1,16 @@
+{
+  "Overview": [
+    { "icon": "▤", "title": "Dashboard" },
+    { "icon": "◈", "title": "Analytics" },
+    { "icon": "◎", "title": "Portfolio" }
+  ],
+  "Finance": [
+    { "icon": "⇄", "title": "Transactions" },
+    { "icon": "◐", "title": "Budgets" },
+    { "icon": "⬡", "title": "Investments" }
+  ],
+  "Account": [
+    { "icon": "◻", "title": "Reports" },
+    { "icon": "⊙", "title": "Settings" }
+  ]
+}

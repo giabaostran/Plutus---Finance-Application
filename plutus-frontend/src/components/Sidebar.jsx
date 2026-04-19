@@ -1,33 +1,17 @@
-export default function Sidebar() {
-  const user = { name: "Gia Tran", avatar: "ST" };
+import sections from "../data/sections.json";
+import users from "../data/users.json";
 
+export default function Sidebar() {
   return (
-    <aside class="sidebar">
+    <aside className="sidebar">
       <SidebarLogo />
-      <NavSection user={user} />
-      <SidebarFooter user={user} />
+      <NavSection user={users} />
+      <SidebarFooter user={users} />
     </aside>
   );
 }
 
 function NavSection({ user }) {
-  const sections = {
-    Overview: [
-      { icon: "▤", title: "Dashboard" },
-      { icon: "◈", title: "Analytics" },
-      { icon: "◎", title: "Portfolio" },
-    ],
-    Finance: [
-      { icon: "⇄", title: "Transactions" },
-      { icon: "◐", title: "Budgets" },
-      { icon: "⬡", title: "Investments" },
-    ],
-    Account: [
-      { icon: "◻", title: "Reports" },
-      { icon: "⊙", title: "Settings" },
-    ],
-  };
-
   return (
     <nav className="nav-section">
       {Object.entries(sections).map(([sectionTitle, items]) => (

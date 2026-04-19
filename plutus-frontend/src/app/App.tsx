@@ -1,10 +1,12 @@
 import Sidebar from "../components/Sidebar";
+import Main from "../components/Main";
 import "../App.css";
 
 function App() {
   return (
-    <div data-theme="retro">
+    <div id="body" data-theme="retro">
       <Sidebar />
+      <Main />
     </div>
   );
 }
