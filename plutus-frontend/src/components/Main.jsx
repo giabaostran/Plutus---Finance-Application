@@ -5,7 +5,7 @@ export default function Main() {
     <div className="main">
       <Topbar />
       <main className="content">
-        <div class="kpi-grid">
+        <div className="kpi-grid">
           <KpiCard />
         </div>
       </main>
