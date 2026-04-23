@@ -5,19 +5,18 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <SidebarLogo />
-      <NavSection user={users} />
+      <NavSection />
       <SidebarFooter user={users} />
     </aside>
   );
 }
 
-function NavSection({ user }) {
+function NavSection() {
   return (
     <nav className="nav-section">
       {NAVIGATION.map(({ section, items }) => (
         <div key={section}>
           <div className="nav-label">{section}</div>
-
           {items.map((item, index) => (
             <div className="nav-item" key={index}>
               <span className="nav-icon">{item.icon}</span>
@@ -37,6 +36,7 @@ function SidebarFooter({ user }) {
         <div className="user-avatar">{user.avatar}</div>
         <div>
           <div className="user-name">{user.name}</div>
+          <div className="user-role">{user.motto}</div>
         </div>
       </div>
     </div>
@@ -46,7 +46,8 @@ function SidebarFooter({ user }) {
 function SidebarLogo() {
   return (
     <div className="sidebar-logo">
-      <div className="logo-mark">P</div>
+      {/* <img src="" alt="" /> */}
+      {/* <div className="logo-mark">P</div> */}
       PLUTUS
     </div>
   );
