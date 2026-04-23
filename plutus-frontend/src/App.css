@@ -150,10 +150,10 @@
 
 /* ─── BASE ─── */
 html,
-#body {
+#app {
   height: 100%;
 }
-#body {
+#app {
   font-family: var(--font-body);
   background: var(--bg-page);
   color: var(--text-primary);

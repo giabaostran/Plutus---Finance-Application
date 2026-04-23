@@ -1,5 +1,5 @@
-import sections from "../data/sections.json";
 import users from "../data/users.json";
+import { NAVIGATION } from "../data/config";
 
 export default function Sidebar() {
   return (
@@ -14,9 +14,9 @@ export default function Sidebar() {
 function NavSection({ user }) {
   return (
     <nav className="nav-section">
-      {Object.entries(sections).map(([sectionTitle, items]) => (
-        <div key={sectionTitle}>
-          <div className="nav-label">{sectionTitle}</div>
+      {NAVIGATION.map(({ section, items }) => (
+        <div key={section}>
+          <div className="nav-label">{section}</div>
 
           {items.map((item, index) => (
             <div className="nav-item" key={index}>

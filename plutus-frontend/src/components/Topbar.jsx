@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getCurrentTimeString } from "../utils/time";
 import { ThemeContext } from "../hooks/ThemeContext";
 import { useContext } from "react";
-import themes from "../data/themes.json";
+import { THEMES } from "../data/config";
 
 export default function Topbar() {
   const [time, setTime] = useState(getCurrentTimeString());
@@ -12,7 +12,6 @@ export default function Topbar() {
     const id = setInterval(() => {
       setTime(getCurrentTimeString());
     }, 1000);
-
     return () => clearInterval(id);
   }, []);
 
@@ -25,14 +24,15 @@ export default function Topbar() {
 
       <div className="topbar-right">
         <div className="theme-switcher">
-          {Object.entries(themes).map(([themeName, themeValue]) => (
+          {THEMES.map(({ label, value }) => (
             <button
-              key={themeValue.class}
-              // IMPORTANT: Use an arrow function here to prevent immediate execution
-              onClick={() => setTheme(themeValue.class)}
-              className={`theme-btn ${theme === themeValue.class ? "active" : ""}`}
+              key={value}
+              onClick={() => {
+                setTheme(value);
+              }}
+              className={`theme-btn ${theme === value ? "active" : ""}`}
             >
-              {themeName}
+              {label}
             </button>
           ))}
         </div>

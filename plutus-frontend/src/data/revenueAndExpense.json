@@ -1,0 +1,8 @@
+[
+  { "month": "Jan", "revenue": 18000, "expenses": 12000 },
+  { "month": "Feb", "revenue": 19000, "expenses": 12500 },
+  { "month": "Mar", "revenue": 20000, "expenses": 13000 },
+  { "month": "Apr", "revenue": 21000, "expenses": 13500 },
+  { "month": "May", "revenue": 19500, "expenses": 12800 },
+  { "month": "Jun", "revenue": 20500, "expenses": 13200 }
+]

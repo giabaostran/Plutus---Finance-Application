@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Chen — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080f0b;
+    --bg2: #0c1510;
+    --text: #d4e8d0;
+    --muted: #4d6b55;
+    --accent: #39ff8a;
+    --accent-dim: rgba(57,255,138,0.06);
+    --accent-mid: rgba(57,255,138,0.15);
+    --border: rgba(57,255,138,0.1);
+    --border-dim: rgba(57,255,138,0.06);
+    --subtle: #111c14;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-weight: 400;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 2.2rem;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* subtle scanline texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.07) 2px,
+      rgba(0,0,0,0.07) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2.4rem 0 0;
+    margin-bottom: 6rem;
+    opacity: 0;
+    animation: up 0.5s 0.05s forwards;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* Avatar */
+  .nav-avatar-wrap {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .nav-avatar-wrap input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+  .nav-avatar-bg {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .nav-avatar-wrap:hover .nav-avatar-bg {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(57,255,138,0.2);
+  }
+  .nav-avatar-bg svg { width: 24px; opacity: 0.18; margin-top: 6px; }
+  #nav-avatar-img {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .avatar-hint {
+    font-size: 0.58rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .logo-group { display: flex; flex-direction: column; gap: 0.1rem; }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .logo-sub {
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  #hero {
+    margin-bottom: 8rem;
+    opacity: 0;
+    animation: up 0.55s 0.15s forwards;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.8rem;
+    background: var(--accent-dim);
+  }
+  .status-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: blink 2.5s ease-in-out infinite;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 6rem);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.8rem;
+    color: var(--text);
+  }
+  h1 .line2 {
+    color: var(--accent);
+    display: block;
+  }
+  h1 .dim {
+    color: var(--muted);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 0.65em;
+    display: block;
+    margin-top: 0.3rem;
+    letter-spacing: 0;
+  }
+
+  .hero-bio {
+    color: var(--muted);
+    max-width: 420px;
+    margin-bottom: 2.2rem;
+    line-height: 1.9;
+    font-size: 0.78rem;
+  }
+  .hero-bio strong { color: var(--text); font-weight: 700; }
+
+  .hero-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .hero-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--border);
+    transition: all 0.15s;
+  }
+  .hero-links a:hover {
+    color: var(--accent);
+    border-color: rgba(57,255,138,0.3);
+    background: var(--accent-dim);
+  }
+  .hero-links a.primary {
+    color: var(--bg);
+    background: var(--accent);
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .hero-links a.primary:hover {
+    background: #5dffaa;
+    border-color: #5dffaa;
+    color: var(--bg);
+  }
+
+  /* SECTION */
+  section {
+    margin-bottom: 6rem;
+    opacity: 0;
+    animation: up 0.55s forwards;
+  }
+  section:nth-of-type(1) { animation-delay: 0.25s; }
+  section:nth-of-type(2) { animation-delay: 0.32s; }
+  section:nth-of-type(3) { animation-delay: 0.39s; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-dim);
+  }
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .section-count { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  /* PROJECTS */
+  .project {
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--border-dim);
+  }
+  .project:last-child { border-bottom: none; }
+
+  .project-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 1.2rem;
+    align-items: start;
+  }
+
+  .thumb-wrap { position: relative; width: 130px; height: 82px; flex-shrink: 0; }
+
+  .thumb-placeholder {
+    width: 130px; height: 82px;
+    border: 1px dashed var(--border);
+    background: var(--subtle);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    transition: border-color 0.15s, background 0.15s;
+    cursor: pointer;
+    position: relative;
+  }
+  .thumb-placeholder:hover {
+    border-color: rgba(57,255,138,0.25);
+    background: var(--accent-dim);
+  }
+  .thumb-placeholder input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+  .thumb-placeholder svg { opacity: 0.2; }
+  .thumb-hint {
+    font-size: 0.5rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  .thumb-img {
+    width: 130px; height: 82px;
+    object-fit: cover;
+    display: none;
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+    transition: opacity 0.15s, border-color 0.15s;
+  }
+  .thumb-img:hover { opacity: 0.82; border-color: rgba(57,255,138,0.25); }
+
+  .project-body { min-width: 0; }
+  .project-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-bottom: 0.3rem;
+  }
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .project-links-inline { display: flex; gap: 0.7rem; flex-shrink: 0; }
+  .project-link {
+    font-size: 0.62rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 0.15s;
+  }
+  .project-link:hover { color: var(--accent); }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.73rem;
+    line-height: 1.7;
+    margin-bottom: 0.7rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .project-tags { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .tag {
+    font-size: 0.58rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    padding: 0.1rem 0.45rem;
+    background: var(--subtle);
+    border: 1px solid var(--border-dim);
+  }
+
+  .archive-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.8rem;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: none;
+    font-family: inherit;
+    cursor: pointer;
+    padding-bottom: 2px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .archive-btn:hover { color: var(--accent); border-bottom-color: rgba(57,255,138,0.3); }
+
+  /* EXPERIENCE */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--border-dim);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+  .exp-company {
+    color: var(--accent);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .exp-desc { color: var(--muted); font-size: 0.75rem; line-height: 1.75; }
+  .exp-date { font-size: 0.62rem; color: var(--muted); white-space: nowrap; text-align: right; padding-top: 0.25rem; letter-spacing: 0.04em; }
+
+  /* STACK */
+  .skills-list { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .skill {
+    font-size: 0.68rem;
+    color: var(--muted);
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border-dim);
+    letter-spacing: 0.04em;
+    transition: all 0.15s;
+    cursor: default;
+  }
+  .skill:hover {
+    color: var(--accent);
+    border-color: rgba(57,255,138,0.25);
+    background: var(--accent-dim);
+  }
+
+  /* ARCHIVE PAGE */
+  #archive-page { display: none; padding-top: 2.4rem; }
+  #archive-page.active { display: block; animation: up 0.4s forwards; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: none;
+    font-family: inherit;
+    cursor: pointer;
+    padding-bottom: 2px;
+    margin-bottom: 3.5rem;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .back-btn:hover { color: var(--accent); border-bottom-color: rgba(57,255,138,0.3); }
+
+  .archive-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .archive-sub { color: var(--muted); font-size: 0.75rem; margin-bottom: 3rem; }
+
+  .archive-table { width: 100%; border-collapse: collapse; }
+  .archive-table th {
+    font-size: 0.58rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 0 0 0.9rem;
+    border-bottom: 1px solid var(--border-dim);
+    font-weight: 400;
+  }
+  .archive-table th:last-child { text-align: right; }
+  .archive-table td {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-dim);
+    font-size: 0.73rem;
+    color: var(--muted);
+    vertical-align: middle;
+  }
+  .archive-table tr:last-child td { border-bottom: none; }
+  .archive-table td:first-child {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text);
+    padding-right: 1.2rem;
+    white-space: nowrap;
+  }
+  .archive-table td:last-child { text-align: right; white-space: nowrap; }
+  .archive-table a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.15s;
+    margin-left: 0.9rem;
+  }
+  .archive-table a:first-child { margin-left: 0; }
+  .archive-table a:hover { color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 0 5rem;
+    border-top: 1px solid var(--border-dim);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-email {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer-email:hover { color: var(--accent); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 88vh; object-fit: contain; border: 1px solid var(--border); }
+  .lightbox-close {
+    position: fixed;
+    top: 1.4rem; right: 1.6rem;
+    color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: inherit;
+    background: none;
+    border: none;
+    transition: color 0.15s;
+  }
+  .lightbox-close:hover { color: var(--accent); }
+
+  @keyframes up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">✕ close</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div id="main-page">
+
+  <nav>
+    <div class="nav-left">
+      <div class="nav-avatar-wrap" title="Click to upload your photo">
+        <input type="file" accept="image/*" onchange="loadAvatar(this)" />
+        <div class="nav-avatar-bg" id="avatar-bg">
+          <svg viewBox="0 0 24 30" fill="#39ff8a" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="12" cy="9" rx="6" ry="6"/>
+            <ellipse cx="12" cy="26" rx="11" ry="9"/>
+          </svg>
+        </div>
+        <img id="nav-avatar-img" alt="avatar" />
+      </div>
+      <div class="logo-group">
+        <a href="/" class="logo">Alex Chen</a>
+        <span class="logo-sub">Carleton University · CS</span>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Exp</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div id="hero">
+    <div class="status">
+      <div class="status-dot"></div>
+      Open to internships &amp; full-time — 2025
+    </div>
+    <h1>
+      Alex<br>
+      <span class="line2">Chen.</span>
+      <span class="dim">CS @ Carleton · builder of things.</span>
+    </h1>
+    <p class="hero-bio">
+      Computer Science student at <strong>Carleton University</strong>, focused on distributed systems, machine learning, and shipping products people actually use. I like hard problems and clean code.
+    </p>
+    <div class="hero-links">
+      <a href="#projects" class="primary">View work</a>
+      <a href="#">GitHub ↗</a>
+      <a href="#">LinkedIn ↗</a>
+      <a href="#">Resume ↗</a>
+    </div>
+  </div>
+
+  <section id="projects">
+    <div class="section-header">
+      <span class="section-label">// projects</span>
+      <span class="section-count">06 featured</span>
+    </div>
+    <div id="projects-list"></div>
+    <button class="archive-btn" onclick="showArchive()">Full archive ↗</button>
+  </section>
+
+  <section id="experience">
+    <div class="section-header">
+      <span class="section-label">// experience</span>
+    </div>
+    <div class="exp-item">
+      <div>
+        <p class="exp-role">Software Engineer Intern</p>
+        <p class="exp-company">Shopify</p>
+        <p class="exp-desc">Checkout Platform team. Reduced p99 latency by 18% through query batching and caching. Shipped A/B experiments to 10M+ users.</p>
+      </div>
+      <p class="exp-date">Summer 2024</p>
+    </div>
+    <div class="exp-item">
+      <div>
+        <p class="exp-role">Backend Engineer Intern</p>
+        <p class="exp-company">Cohere</p>
+        <p class="exp-desc">Built internal tooling for fine-tuning pipelines. Automated data preprocessing, saving ~20 hrs/week across the ML team.</p>
+      </div>
+      <p class="exp-date">Fall 2023</p>
+    </div>
+    <div class="exp-item">
+      <div>
+        <p class="exp-role">Undergraduate Researcher</p>
+        <p class="exp-company">Carleton Systems Lab</p>
+        <p class="exp-desc">Network congestion control in datacenter environments. Co-authored a workshop paper accepted at SOSR 2024.</p>
+      </div>
+      <p class="exp-date">2022 – present</p>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="section-header">
+      <span class="section-label">// stack</span>
+    </div>
+    <div class="skills-list">
+      <span class="skill">Python</span><span class="skill">Go</span><span class="skill">TypeScript</span>
+      <span class="skill">Rust</span><span class="skill">C++</span><span class="skill">React</span>
+      <span class="skill">Next.js</span><span class="skill">PostgreSQL</span><span class="skill">Redis</span>
+      <span class="skill">Docker</span><span class="skill">AWS</span><span class="skill">PyTorch</span>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <a href="mailto:alex@carleton.ca" class="footer-email">alex@carleton.ca</a>
+    <div class="footer-links">
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Resume</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ARCHIVE -->
+<div id="archive-page">
+  <button class="back-btn" onclick="showMain()">← Back</button>
+  <p class="archive-title">All Projects</p>
+  <p class="archive-sub">Every project, experiment, and thing I've shipped.</p>
+  <table class="archive-table">
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Stack</th>
+        <th>Links</th>
+      </tr>
+    </thead>
+    <tbody id="archive-tbody"></tbody>
+  </table>
+  <div style="height:5rem;"></div>
+</div>
+
+<script>
+  const projects = [
+    { name: 'NeuralSearch', desc: 'Semantic search engine using vector embeddings and HNSW indexing. Handles 1M+ docs with sub-50ms query times.', tags: ['Python','FastAPI','PyTorch','Redis'], year: '2024', demo: '#', github: '#' },
+    { name: 'Kestrel', desc: 'Distributed key-value store in Go implementing Raft consensus — leader election, log replication, and snapshotting.', tags: ['Go','Raft','gRPC'], year: '2024', github: '#' },
+    { name: 'Palette.ai', desc: 'Upload an image or describe a mood — get instant accessible color palettes powered by CLIP embeddings.', tags: ['Next.js','Python','CLIP'], year: '2024', demo: '#', github: '#' },
+    { name: 'TinyCompiler', desc: 'Compiler for a subset of C targeting x86-64. Implements lexing, parsing, semantic analysis, and register allocation.', tags: ['C++','LLVM IR','x86'], year: '2023', github: '#' },
+    { name: 'Flowtrack', desc: 'Real-time habit tracker with Pomodoro integration. Live multi-device sync via WebSockets.', tags: ['React','Node.js','WebSocket'], year: '2023', demo: '#', github: '#' },
+    { name: 'PixelVM', desc: 'Bytecode virtual machine for a toy language. Stack-based with a custom garbage collector, written in Rust.', tags: ['Rust','Bytecode','GC'], year: '2022', github: '#' },
+    { name: 'Scratchpad', desc: 'Collaborative whiteboard with CRDT-based real-time sync.', tags: ['TypeScript','CRDT','WebRTC'], year: '2022', github: '#' },
+    { name: 'LogLens', desc: 'Terminal log viewer with regex search and live tail.', tags: ['Go','TUI'], year: '2021', github: '#' },
+    { name: 'BudgetCLI', desc: 'Personal finance tracker that lives entirely in the terminal.', tags: ['Python','SQLite'], year: '2021', github: '#' },
+  ];
+
+  const FEATURED = 6;
+  const screenshots = {};
+
+  function thumbIcon() {
+    return `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="4" width="18" height="13" rx="1.5" stroke="#39ff8a" stroke-width="1.2"/>
+      <path d="M1 13l4-4 3 3 4-5 7 7" stroke="#39ff8a" stroke-width="1.2" stroke-linejoin="round"/>
+      <circle cx="5.5" cy="8.5" r="1.5" fill="#39ff8a"/>
+    </svg>`;
+  }
+
+  function renderProjects() {
+    const list = document.getElementById('projects-list');
+    list.innerHTML = '';
+    projects.slice(0, FEATURED).forEach((p, i) => {
+      const hasImg = !!screenshots[i];
+      const div = document.createElement('div');
+      div.className = 'project';
+      div.innerHTML = `
+        <div class="project-row">
+          <div class="thumb-wrap">
+            <div class="thumb-placeholder" id="placeholder-${i}" style="${hasImg ? 'display:none' : ''}">
+              <input type="file" accept="image/*" onchange="loadScreenshot(this,${i})" />
+              ${thumbIcon()}
+              <span class="thumb-hint">Screenshot</span>
+            </div>
+            <img class="thumb-img" id="thumb-${i}"
+              src="${hasImg ? screenshots[i] : ''}"
+              style="${hasImg ? 'display:block' : ''}"
+              onclick="openLightbox('${hasImg ? screenshots[i] : ''}')"
+              alt="${p.name}" />
+          </div>
+          <div class="project-body">
+            <div class="project-top">
+              <span class="project-name">${p.name}</span>
+              <span class="project-links-inline">
+                ${p.demo ? `<a href="${p.demo}" class="project-link">↗ demo</a>` : ''}
+                ${p.github ? `<a href="${p.github}" class="project-link">↗ github</a>` : ''}
+              </span>
+            </div>
+            <p class="project-desc">${p.desc}</p>
+            <div class="project-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+          </div>
+        </div>`;
+      list.appendChild(div);
+    });
+  }
+
+  function loadScreenshot(input, idx) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      screenshots[idx] = e.target.result;
+      const ph = document.getElementById('placeholder-' + idx);
+      const img = document.getElementById('thumb-' + idx);
+      if (ph) ph.style.display = 'none';
+      if (img) { img.src = e.target.result; img.style.display = 'block'; img.onclick = () => openLightbox(e.target.result); }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function renderArchive() {
+    const tbody = document.getElementById('archive-tbody');
+    tbody.innerHTML = '';
+    projects.forEach(p => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${p.name}</td>
+        <td><div style="display:flex;gap:0.3rem;flex-wrap:wrap;">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></td>
+        <td>
+          <span style="font-size:0.6rem;color:var(--muted);margin-right:0.6rem;">${p.year}</span>
+          ${p.demo ? `<a href="${p.demo}">demo ↗</a>` : ''}
+          ${p.github ? `<a href="${p.github}">github ↗</a>` : ''}
+        </td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function showArchive() {
+    document.getElementById('main-page').style.display = 'none';
+    const a = document.getElementById('archive-page');
+    a.classList.add('active');
+    renderArchive();
+    window.scrollTo(0, 0);
+  }
+
+  function showMain() {
+    document.getElementById('main-page').style.display = 'block';
+    document.getElementById('archive-page').classList.remove('active');
+    window.scrollTo(0, 0);
+  }
+
+  function loadAvatar(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.getElementById('nav-avatar-img');
+      const bg = document.getElementById('avatar-bg');
+      img.src = e.target.result;
+      img.style.display = 'block';
+      bg.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function openLightbox(src) {
+    if (!src) return;
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  renderProjects();
+</script>
+</body>
+</html>

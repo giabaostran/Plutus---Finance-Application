@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Chen</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --bg2: #111114;
+    --text: #e8e6e1;
+    --muted: #5a5a6a;
+    --subtle: #2a2a35;
+    --accent: #4fffb0;
+    --accent-dim: rgba(79,255,176,0.08);
+    --border: rgba(255,255,255,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geist Mono', monospace;
+    font-weight: 300;
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    font-size: 0.82rem;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2.2rem 0 0;
+    margin-bottom: 7rem;
+    opacity: 0;
+    animation: up 0.5s 0.05s forwards;
+  }
+
+  .logo {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  #hero {
+    margin-bottom: 8rem;
+    opacity: 0;
+    animation: up 0.55s 0.15s forwards;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 2.2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.75rem;
+  }
+
+  .status-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+    animation: blink 2.5s ease-in-out infinite;
+  }
+
+  h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2.6rem, 7.5vw, 4.2rem);
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.6rem;
+    color: var(--text);
+  }
+
+  h1 .dim {
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .hero-bio {
+    color: var(--muted);
+    max-width: 400px;
+    margin-bottom: 2.2rem;
+    line-height: 1.8;
+  }
+
+  .hero-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+  .hero-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--border);
+    transition: all 0.15s;
+  }
+
+  .hero-links a:hover {
+    color: var(--accent);
+    border-color: rgba(79,255,176,0.25);
+    background: var(--accent-dim);
+  }
+
+  .hero-links a.primary {
+    color: var(--bg);
+    background: var(--accent);
+    border-color: var(--accent);
+    font-weight: 500;
+  }
+  .hero-links a.primary:hover {
+    background: #6fffbe;
+    border-color: #6fffbe;
+    color: var(--bg);
+  }
+
+  /* SECTIONS */
+  section {
+    margin-bottom: 6rem;
+    opacity: 0;
+    animation: up 0.55s forwards;
+  }
+  section:nth-of-type(1) { animation-delay: 0.25s; }
+  section:nth-of-type(2) { animation-delay: 0.32s; }
+  section:nth-of-type(3) { animation-delay: 0.39s; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.8rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .section-count {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* PROJECTS */
+  .project {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .project:last-child { border-bottom: none; }
+  .project:hover { background: none; }
+
+  .project-name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+  .tag {
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.5rem;
+    background: var(--subtle);
+    border: 1px solid var(--border);
+  }
+
+  .project-link {
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-top: 0.15rem;
+    white-space: nowrap;
+    transition: color 0.15s;
+  }
+  .project-link:hover { color: var(--accent); }
+
+  /* EXPERIENCE */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-role {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+
+  .exp-company {
+    color: var(--accent);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.55rem;
+  }
+
+  .exp-desc { color: var(--muted); font-size: 0.78rem; line-height: 1.7; }
+
+  .exp-date {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    text-align: right;
+    padding-top: 0.25rem;
+  }
+
+  /* STACK */
+  .skills-list { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+
+  .skill {
+    font-size: 0.72rem;
+    color: var(--muted);
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    letter-spacing: 0.04em;
+    transition: all 0.15s;
+    cursor: default;
+  }
+  .skill:hover {
+    color: var(--accent);
+    border-color: rgba(79,255,176,0.2);
+    background: var(--accent-dim);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 0 4.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    animation: up 0.55s 0.45s forwards;
+  }
+
+  .footer-email {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer-email:hover { color: var(--accent); }
+
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--text); }
+
+  @keyframes up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">alex chen</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div id="hero">
+  <div class="status">
+    <div class="status-dot"></div>
+    Open to Summer 2025 internships
+  </div>
+  <h1>CS Student,<br><span class="dim">builder of things.</span></h1>
+  <p class="hero-bio">Third-year Computer Science at the University of Waterloo. I like distributed systems, clean interfaces, and hard problems.</p>
+  <div class="hero-links">
+    <a href="#projects" class="primary">View work</a>
+    <a href="#">GitHub ↗</a>
+    <a href="#">LinkedIn ↗</a>
+    <a href="#">Resume ↗</a>
+  </div>
+</div>
+
+<section id="projects">
+  <div class="section-header">
+    <span class="section-label">Projects</span>
+    <span class="section-count">04 selected</span>
+  </div>
+
+  <div class="project">
+    <div>
+      <p class="project-name">NeuralSearch</p>
+      <p class="project-desc">Semantic search engine using vector embeddings and HNSW indexing. Handles 1M+ documents with sub-50ms query times.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">PyTorch</span><span class="tag">Redis</span>
+      </div>
+    </div>
+    <a href="#" class="project-link">↗ demo</a>
+  </div>
+
+  <div class="project">
+    <div>
+      <p class="project-name">Kestrel</p>
+      <p class="project-desc">Distributed key-value store in Go implementing Raft consensus — leader election, log replication, and snapshotting.</p>
+      <div class="project-tags">
+        <span class="tag">Go</span><span class="tag">Raft</span><span class="tag">gRPC</span>
+      </div>
+    </div>
+    <a href="#" class="project-link">↗ github</a>
+  </div>
+
+  <div class="project">
+    <div>
+      <p class="project-name">Palette.ai</p>
+      <p class="project-desc">Upload an image or describe a mood — get instant, accessible color palettes powered by CLIP embeddings.</p>
+      <div class="project-tags">
+        <span class="tag">Next.js</span><span class="tag">Python</span><span class="tag">CLIP</span>
+      </div>
+    </div>
+    <a href="#" class="project-link">↗ demo</a>
+  </div>
+
+  <div class="project">
+    <div>
+      <p class="project-name">TinyCompiler</p>
+      <p class="project-desc">A compiler for a subset of C targeting x86-64 assembly, with lexing, parsing, and register allocation from scratch.</p>
+      <div class="project-tags">
+        <span class="tag">C++</span><span class="tag">LLVM IR</span><span class="tag">x86</span>
+      </div>
+    </div>
+    <a href="#" class="project-link">↗ github</a>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-header">
+    <span class="section-label">Experience</span>
+  </div>
+
+  <div class="exp-item">
+    <div>
+      <p class="exp-role">Software Engineer Intern</p>
+      <p class="exp-company">Shopify</p>
+      <p class="exp-desc">Checkout Platform team. Cut p99 latency by 18% via query batching. Shipped A/B experiments to 10M+ users.</p>
+    </div>
+    <p class="exp-date">Summer 2024</p>
+  </div>
+
+  <div class="exp-item">
+    <div>
+      <p class="exp-role">Backend Engineer Intern</p>
+      <p class="exp-company">Cohere</p>
+      <p class="exp-desc">Built fine-tuning pipeline tooling. Automated data preprocessing, saving ~20hrs/week across the ML team.</p>
+    </div>
+    <p class="exp-date">Fall 2023</p>
+  </div>
+
+  <div class="exp-item">
+    <div>
+      <p class="exp-role">Undergraduate Researcher</p>
+      <p class="exp-company">UW Systems Lab</p>
+      <p class="exp-desc">Network congestion control in datacenter environments. Co-authored a paper accepted at SOSR 2024.</p>
+    </div>
+    <p class="exp-date">2022 – present</p>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="section-header">
+    <span class="section-label">Stack</span>
+  </div>
+  <div class="skills-list">
+    <span class="skill">Python</span>
+    <span class="skill">Go</span>
+    <span class="skill">TypeScript</span>
+    <span class="skill">Rust</span>
+    <span class="skill">C++</span>
+    <span class="skill">React</span>
+    <span class="skill">Next.js</span>
+    <span class="skill">PostgreSQL</span>
+    <span class="skill">Redis</span>
+    <span class="skill">Docker</span>
+    <span class="skill">AWS</span>
+    <span class="skill">PyTorch</span>
+  </div>
+</section>
+
+<footer id="contact">
+  <a href="mailto:alex@waterloo.ca" class="footer-email">alex@waterloo.ca</a>
+  <div class="footer-links">
+    <a href="#">GitHub</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Resume</a>
+  </div>
+</footer>
+
+</body>
+</html>

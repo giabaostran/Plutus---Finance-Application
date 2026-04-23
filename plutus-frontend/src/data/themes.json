@@ -1,7 +1,0 @@
-{
-  "Light": { "class": "light" },
-  "Dark": { "class": "dark" },
-  "Retro": { "class": "retro" },
-  "Luxury": { "class": "luxury" },
-  "Sci-fi": { "class": "scifi" }
-}
