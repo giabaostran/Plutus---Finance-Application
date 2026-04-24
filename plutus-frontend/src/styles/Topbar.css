@@ -1,0 +1,73 @@
+  /* ─── TOPBAR ─── */
+  .topbar {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 50;
+    transition: background var(--transition);
+  }
+  .topbar-left h1 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+  }
+  .topbar-left span {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+  }
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .theme-switcher {
+    display: flex;
+    background: var(--bg-accent);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .theme-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .theme-btn:hover { color: var(--text-primary); }
+  .theme-btn.active {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-strong);
+  }
+  .topbar-search {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg-accent);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 6px 14px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    cursor: pointer;
+  }
+  .icon-btn {
+    width: 34px; height: 34px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--bg-accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.15s;
+  }
+  .icon-btn:hover { color: var(--text-primary); border-color: var(--border-strong); }

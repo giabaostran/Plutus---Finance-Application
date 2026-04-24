@@ -1,6 +1,7 @@
 import React from "react";
 import kpis from "@/data/kpiData.json";
-
+import {calculateMonthlyStats} from "@/utils/kpi";
+import transactions from "@/data/transactionData.json"
 /** -----------------------------
  * Sparkline Generator
  * ----------------------------- */
@@ -52,6 +53,7 @@ function KpiItem({ kpi }) {
  * Main Component
  * ----------------------------- */
 export default function KpiCard() {
+  console.log(calculateMonthlyStats(transactions))
   return (
     <>
       {kpis.map((kpi) => (

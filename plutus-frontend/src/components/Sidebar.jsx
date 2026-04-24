@@ -1,4 +1,5 @@
 import users from "@/data/users.json";
+import "@/styles/Sidebar.css";
 import { NAVIGATION } from "@/data/config";
 
 export default function Sidebar() {

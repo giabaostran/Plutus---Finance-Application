@@ -32,17 +32,26 @@ export const NAVIGATION = [
   },
 ];
 
+export const KPI_CATEGORY =[]
+
 export const CATEGORY_ICON_CONFIG = {
   housing: "🏠",
-  income: "💼",
-  groceries: "🛒",
-  investment: "◈",
-  software: "☁",
-  transfer: "✖",
+  groceries: "🥦",
+  investment: "📈",
+  software: "💻",
+  health: "🏋️‍♂️",
+  utilities: "🛠️",
+  dining: "🍕",
+  transportation: "🚗",
+  travel: "🏝️",
+  entertainment: "🍿",
+  shopping: "🛍️",
+  income: "💰",
+  transfer: "↔️",
 };
 
 export const TRANSACTION_STATUS_CONFIG = {
-  completed: { label: "✓ Completed", class: "completed" },
+  completed: { label: "✅ Completed", class: "completed" },
   pending: { label: "⏳ Pending", class: "pending" },
-  failed: { label: "✖ Failed", class: "failed" },
+  failed: { label: "❌ Failed", class: "failed" },
 };

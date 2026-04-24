@@ -84,7 +84,7 @@ function TransactionRow({ tx }) {
 
       <td style={{ textAlign: "right" }}>
         <span className={getAmountClass(tx.amount)}>
-          {tx.amount > 0 ? "+" : ""}${Math.abs(tx.amount).toLocaleString()}
+          {tx.amount > 0 ? "+" : "-"}${Math.abs(tx.amount).toLocaleString()}
         </span>
       </td>
     </tr>
