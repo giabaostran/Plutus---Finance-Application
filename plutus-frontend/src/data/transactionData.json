@@ -53,12 +53,13 @@
     "status": "failed",
     "amount": 5000
   },
+
   {
     "id": 7,
     "name": "Equinox Membership",
     "merchant": "Equinox",
     "category": "health",
-    "date": 1744113600,
+    "date": 1744113600000,
     "status": "completed",
     "amount": -250
   },
@@ -67,7 +68,7 @@
     "name": "Monthly Salary",
     "merchant": "Tech Corp LLC",
     "category": "income",
-    "date": 1744027200,
+    "date": 1744027200000,
     "status": "completed",
     "amount": 6200
   },
@@ -76,7 +77,7 @@
     "name": "Electric Bill",
     "merchant": "ConEd",
     "category": "utilities",
-    "date": 1743940800,
+    "date": 1743940800000,
     "status": "completed",
     "amount": -145.5
   },
@@ -85,7 +86,7 @@
     "name": "Starbucks Coffee",
     "merchant": "Visa ···4821",
     "category": "dining",
-    "date": 1743854400,
+    "date": 1743854400000,
     "status": "completed",
     "amount": -6.75
   },
@@ -94,7 +95,7 @@
     "name": "Quarterly Dividend",
     "merchant": "Vanguard",
     "category": "income",
-    "date": 1743768000,
+    "date": 1743768000000,
     "status": "completed",
     "amount": 425.2
   },
@@ -103,7 +104,7 @@
     "name": "Apple Services",
     "merchant": "Apple.com",
     "category": "software",
-    "date": 1743681600,
+    "date": 1743681600000,
     "status": "completed",
     "amount": -14.99
   },
@@ -112,7 +113,7 @@
     "name": "Shell Gas",
     "merchant": "Shell Oil",
     "category": "transportation",
-    "date": 1743595200,
+    "date": 1743595200000,
     "status": "completed",
     "amount": -55.0
   },
@@ -121,7 +122,7 @@
     "name": "Delta Airlines",
     "merchant": "Delta Air",
     "category": "travel",
-    "date": 1743508800,
+    "date": 1743508800000,
     "status": "pending",
     "amount": -432.1
   },
@@ -130,7 +131,7 @@
     "name": "Blue Apron",
     "merchant": "Visa ···4821",
     "category": "groceries",
-    "date": 1743422400,
+    "date": 1743422400000,
     "status": "completed",
     "amount": -80.0
   },
@@ -139,7 +140,7 @@
     "name": "Rent Reimbursement",
     "merchant": "Venmo",
     "category": "income",
-    "date": 1743336000,
+    "date": 1743336000000,
     "status": "completed",
     "amount": 1200
   },
@@ -148,7 +149,7 @@
     "name": "ChatGPT Plus",
     "merchant": "OpenAI",
     "category": "software",
-    "date": 1743249600,
+    "date": 1743249600000,
     "status": "completed",
     "amount": -20
   },
@@ -157,7 +158,7 @@
     "name": "Internet Service",
     "merchant": "Verizon",
     "category": "utilities",
-    "date": 1743163200,
+    "date": 1743163200000,
     "status": "completed",
     "amount": -89.99
   },
@@ -166,7 +167,7 @@
     "name": "Home Depot",
     "merchant": "Mastercard ···1102",
     "category": "housing",
-    "date": 1743076800,
+    "date": 1743076800000,
     "status": "completed",
     "amount": -312.45
   },
@@ -175,7 +176,7 @@
     "name": "Crypto Purchase",
     "merchant": "Coinbase",
     "category": "investment",
-    "date": 1742990400,
+    "date": 1742990400000,
     "status": "failed",
     "amount": -500
   },
@@ -184,7 +185,7 @@
     "name": "Netflix Subscription",
     "merchant": "Netflix",
     "category": "entertainment",
-    "date": 1742904000,
+    "date": 1742904000000,
     "status": "completed",
     "amount": -19.99
   },
@@ -193,7 +194,7 @@
     "name": "Trader Joe's",
     "merchant": "Visa ···4821",
     "category": "groceries",
-    "date": 1742817600,
+    "date": 1742817600000,
     "status": "completed",
     "amount": -112.3
   },
@@ -202,7 +203,7 @@
     "name": "Uber Ride",
     "merchant": "Uber Tech",
     "category": "transportation",
-    "date": 1742731200,
+    "date": 1742731200000,
     "status": "completed",
     "amount": -24.5
   },
@@ -211,7 +212,7 @@
     "name": "Gym Supplements",
     "merchant": "GNC",
     "category": "health",
-    "date": 1742644800,
+    "date": 1742644800000,
     "status": "completed",
     "amount": -65.0
   },
@@ -220,7 +221,7 @@
     "name": "Stock Sale",
     "merchant": "Fidelity",
     "category": "income",
-    "date": 1742558400,
+    "date": 1742558400000,
     "status": "completed",
     "amount": 2100
   },
@@ -229,7 +230,7 @@
     "name": "Amazon Order",
     "merchant": "Amazon",
     "category": "shopping",
-    "date": 1742472000,
+    "date": 1742472000000,
     "status": "pending",
     "amount": -124.99
   }

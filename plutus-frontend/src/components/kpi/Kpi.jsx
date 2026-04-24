@@ -1,5 +1,15 @@
-import React from "react";
-import calculateMonthlyStats from "@/utils/kpi";
+import React, { useContext } from "react";
+import { AppContext } from "@/stores/AppContext";
+import { formatKpi } from "@/utils/kpi";
+import KpiItem from "./KPIItem";
 export default function Kpi() {
-  return <div className="kpi-grid"></div>;
+  const { kpis, monthlyStats } = useContext(AppContext);
+  const formattedKpis = formatKpi(kpis, monthlyStats);
+  return (
+    <div className="kpi-grid">
+      {formattedKpis.map((kpi) => (
+        <KpiItem key={kpi.id} kpi={kpi} />
+      ))}
+    </div>
+  );
 }

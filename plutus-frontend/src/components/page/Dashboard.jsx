@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import KpiCard from "@/components/ui/KpiCard";
+import Kpi from "@/components/kpi/Kpi";
 import RevenueChart from "@/components/ui/RevenueChartCard";
 import data from "@/data/revenueAndExpense.json";
 import AllocationChart from "@/components/ui/AllocationChartCard";
@@ -8,9 +8,8 @@ import BudgetCard from "@/components/ui/BudgetCard";
 export default function Dashboard() {
   return (
     <Fragment>
-      <div className="kpi-grid">
-        <KpiCard />
-      </div>
+      <Kpi />
+
       <div className="row">
         <RevenueChart />
         <AllocationChart />
@@ -20,8 +19,6 @@ export default function Dashboard() {
         <TransactionTable />
         <BudgetCard />
       </div>
-
-      
     </Fragment>
   );
 }

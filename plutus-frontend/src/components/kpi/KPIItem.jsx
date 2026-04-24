@@ -1,7 +1,10 @@
 import React from "react";
 import { getPoints } from "@/utils/kpi";
 
-export default function KpiCard() {
+/** -----------------------------
+ * KPI Card Component
+ * ----------------------------- */
+export default function KpiItem({ kpi }) {
   const { line, area } = getPoints(kpi.data);
 
   return (

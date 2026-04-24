@@ -1,37 +1,74 @@
+/** -----------------------------
+ * Sparkline Generator
+ * ----------------------------- */
 export function getPoints(data) {
-  const step = 120 / (data.length - 1);
+  if (!data.length) return { line: "", area: "" };
 
-  const line = data.map((val, i) => `${i * step},${val}`).join(" ");
+  const max = Math.max(...data);
+  const min = Math.min(...data);
 
+  const normalize = (val) => {
+    if (max === min) return 18;
+    return 36 - ((val - min) / (max - min)) * 36;
+  };
+
+  const step = 120 / (data.length - 1 || 1);
+
+  const line = data.map((val, i) => `${i * step},${normalize(val)}`).join(" ");
   const area = `${line} 120,36 0,36`;
 
   return { line, area };
 }
 
-export function calculateMonthlyStats(transactions) {
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  
-  const monthlyData = {};
-
-  for (const transaction of transactions) {
-    const date = new Date(transaction.date * 1000);
-    const monthIndex = date.getMonth(); // 0-11
-    const year = date.getFullYear();
-    const monthLabel = `${monthNames[monthIndex]} ${year}`;
-
-    // Initialize the month object if it doesn't exist
-    if (!monthlyData[monthLabel]) {
-      monthlyData[monthLabel] = { income: 0, expense: 0 };
-    }
-
-    if (transaction.amount > 0) {
-      monthlyData[monthLabel].income += transaction.amount;
-    } else {
-      // Use Math.abs to keep expenses as positive numbers for easier UI display
-      monthlyData[monthLabel].expense += Math.abs(transaction.amount);
-    }
-  }
-
-  return monthlyData;
+export function formatKpi(kpis, monthlyStats) {
+  return [
+    {
+      id: 1,
+      label: "Net Worth",
+      value: `$${kpis.netWorth.value.toLocaleString()}`,
+      delta: `${(kpis.netWorth.change * 100).toFixed(1)}%`,
+      trend: kpis.netWorth.change >= 0 ? "up" : "down",
+      type: kpis.netWorth.change >= 0 ? "green" : "red",
+      sub: "vs last month",
+      data: monthlyStats.netWorth,
+      icon: "💼",
+      color: "blue",
+    },
+    {
+      id: 2,
+      label: "Monthly Income",
+      value: `$${kpis.income.value.toLocaleString()}`,
+      delta: `${(kpis.income.change * 100).toFixed(1)}%`,
+      trend: kpis.income.change >= 0 ? "up" : "down",
+      type: kpis.income.change >= 0 ? "green" : "red",
+      sub: "vs last month",
+      data: monthlyStats.income,
+      icon: "↑",
+      color: "green",
+    },
+    {
+      id: 3,
+      label: "Total Expenses",
+      value: `$${kpis.expense.value.toLocaleString()}`,
+      delta: `${(kpis.expense.change * 100).toFixed(1)}%`,
+      trend: kpis.expense.change >= 0 ? "up" : "down", // real direction
+      type: kpis.expense.change <= 0 ? "green" : "red", // GOOD when decreasing
+      sub: "vs last month",
+      data: monthlyStats.expense.map(Math.abs),
+      icon: "↓",
+      color: "red",
+    },
+    {
+      id: 4,
+      label: "Savings Rate",
+      value: `${(kpis.savingRate.value * 100).toFixed(1)}%`,
+      delta: `${(kpis.savingRate.change * 100).toFixed(1)}pp`,
+      trend: kpis.savingRate.change >= 0 ? "up" : "down",
+      type: kpis.savingRate.change >= 0 ? "green" : "red",
+      sub: "vs last month",
+      data: monthlyStats.savingRate,
+      icon: "◈",
+      color: "purple",
+    },
+  ];
 }
