@@ -31,3 +31,18 @@ export const NAVIGATION = [
     ],
   },
 ];
+
+export const CATEGORY_ICON_CONFIG = {
+  housing: "🏠",
+  income: "💼",
+  groceries: "🛒",
+  investment: "◈",
+  software: "☁",
+  transfer: "✖",
+};
+
+export const TRANSACTION_STATUS_CONFIG = {
+  completed: { label: "✓ Completed", class: "completed" },
+  pending: { label: "⏳ Pending", class: "pending" },
+  failed: { label: "✖ Failed", class: "failed" },
+};

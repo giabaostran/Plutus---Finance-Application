@@ -1,6 +1,7 @@
 import Topbar from "./Topbar";
-import KpiCard from "./ui/KpiCard";
-import Dashboard from "./page/Dashboard";
+import KpiCard from "@/components/ui/KpiCard";
+import Dashboard from "@/components/page/Dashboard";
+
 export default function Main() {
   return (
     <div className="main">

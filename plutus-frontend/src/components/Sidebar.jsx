@@ -1,5 +1,5 @@
-import users from "../data/users.json";
-import { NAVIGATION } from "../data/config";
+import users from "@/data/users.json";
+import { NAVIGATION } from "@/data/config";
 
 export default function Sidebar() {
   return (

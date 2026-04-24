@@ -1,16 +1,6 @@
 import React from "react";
 
-/** -----------------------------
- * Data (same structure idea)
- * ----------------------------- */
-const data = [
-  { month: "Jan", revenue: 18000, expenses: 9000 },
-  { month: "Feb", revenue: 19000, expenses: 8500 },
-  { month: "Mar", revenue: 19500, expenses: 9200 },
-  { month: "Apr", revenue: 20000, expenses: 9500 },
-  { month: "May", revenue: 19200, expenses: 8800 },
-  { month: "Jun", revenue: 19800, expenses: 9600 },
-];
+import data from "@/data/revenueAndExpense.json";
 
 /** -----------------------------
  * Helpers (match your old layout)
@@ -26,9 +16,7 @@ export default function RevenueChart() {
       <div className="card-head">
         <div>
           <div className="card-title">Revenue vs Expenses</div>
-          <div className="card-sub">
-            Monthly overview · Jan – Jun 2026
-          </div>
+          <div className="card-sub">Monthly overview · Jan – Jun 2026</div>
         </div>
         <div className="card-action">Export ↗</div>
       </div>

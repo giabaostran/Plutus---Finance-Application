@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Mortgage Payment",
+    "merchant": "Chase Bank",
+    "category": "housing",
+    "date": "2026-04-15",
+    "status": "completed",
+    "amount": -2400
+  },
+  {
+    "id": 2,
+    "name": "Freelance Project",
+    "merchant": "Stripe Inc.",
+    "category": "income",
+    "date": "2026-04-14",
+    "status": "completed",
+    "amount": 3500
+  },
+  {
+    "id": 3,
+    "name": "Whole Foods",
+    "merchant": "Visa ···4821",
+    "category": "groceries",
+    "date": "2026-04-13",
+    "status": "completed",
+    "amount": -184
+  },
+  {
+    "id": 4,
+    "name": "ETF Purchase",
+    "merchant": "Fidelity",
+    "category": "investment",
+    "date": "2026-04-12",
+    "status": "pending",
+    "amount": -1000
+  },
+  {
+    "id": 5,
+    "name": "AWS Services",
+    "merchant": "Amazon",
+    "category": "software",
+    "date": "2026-04-11",
+    "status": "completed",
+    "amount": -340
+  },
+  {
+    "id": 6,
+    "name": "Wire Transfer",
+    "merchant": "Bank of America",
+    "category": "transfer",
+    "date": "2026-04-10",
+    "status": "failed",
+    "amount": 5000
+  }
+]

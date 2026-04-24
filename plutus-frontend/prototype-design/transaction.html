@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transactions — Finsight</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;800&family=IBM+Plex+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../src/App.css" />
+    <style>
+      /* ── PAGE-SPECIFIC: Transactions ── */
+
+      /* Toolbar above table */
+      .tx-toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .tx-search {
+        flex: 1;
+        min-width: 180px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--bg-accent);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 8px 14px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+      }
+      .tx-search input {
+        background: none;
+        border: none;
+        outline: none;
+        font-size: 13px;
+        font-family: var(--font-body);
+        color: var(--text-primary);
+        width: 100%;
+      }
+      .tx-search input::placeholder {
+        color: var(--text-secondary);
+      }
+
+      .filter-group {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .filter-btn {
+        padding: 7px 14px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--bg-accent);
+        font-size: 12px;
+        font-family: var(--font-body);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .filter-btn:hover {
+        border-color: var(--border-strong);
+        color: var(--text-primary);
+      }
+      .filter-btn.active {
+        background: var(--accent);
+        color: var(--bg-card);
+        border-color: var(--accent);
+      }
+
+      .tx-select {
+        padding: 7px 12px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--bg-accent);
+        font-size: 12px;
+        font-family: var(--font-body);
+        color: var(--text-secondary);
+        cursor: pointer;
+        outline: none;
+      }
+
+      /* Summary strip */
+      .tx-summary {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .tx-summary-item {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .tx-summary-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+      }
+      .tx-summary-val {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--text-primary);
+        letter-spacing: -0.5px;
+      }
+      .tx-summary-val.pos {
+        color: var(--positive);
+      }
+      .tx-summary-val.neg {
+        color: var(--negative);
+      }
+      .tx-summary-sub {
+        font-size: 11px;
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+      }
+
+      /* Full transactions table enhancements */
+      .tx-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      table.tx-table {
+        min-width: 680px;
+      }
+      table.tx-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+      table.tx-table thead th.sortable {
+        cursor: pointer;
+        user-select: none;
+      }
+      table.tx-table thead th.sortable:hover {
+        color: var(--text-primary);
+      }
+      .sort-arrow {
+        opacity: 0.4;
+        margin-left: 4px;
+        font-size: 10px;
+      }
+      .sort-arrow.active {
+        opacity: 1;
+        color: var(--accent);
+      }
+
+      /* Category tag */
+      .cat-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        font-family: var(--font-body);
+        padding: 3px 9px;
+        border-radius: 20px;
+        background: var(--bg-accent);
+        color: var(--text-secondary);
+        border: 1px solid var(--border);
+        white-space: nowrap;
+      }
+
+      /* Pagination */
+      .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 22px;
+        border-top: 1px solid var(--border);
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .pagination-info {
+        font-size: 12px;
+        color: var(--text-secondary);
+        font-family: var(--font-mono);
+      }
+      .pagination-btns {
+        display: flex;
+        gap: 4px;
+      }
+      .pg-btn {
+        min-width: 32px;
+        height: 32px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--bg-accent);
+        font-size: 12px;
+        font-family: var(--font-mono);
+        color: var(--text-secondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 8px;
+        transition: all 0.15s;
+      }
+      .pg-btn:hover {
+        border-color: var(--border-strong);
+        color: var(--text-primary);
+      }
+      .pg-btn.active {
+        background: var(--accent);
+        color: var(--bg-card);
+        border-color: var(--accent);
+      }
+      .pg-btn:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+
+      /* Add transaction modal */
+      .modal-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal-backdrop.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--bg-card);
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius);
+        width: 100%;
+        max-width: 480px;
+        overflow: hidden;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+      }
+      .modal-head {
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .modal-title {
+        font-family: var(--font-display);
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .modal-close {
+        width: 28px;
+        height: 28px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: var(--text-secondary);
+        transition: all 0.15s;
+      }
+      .modal-close:hover {
+        border-color: var(--border-strong);
+        color: var(--text-primary);
+      }
+      .modal-body {
+        padding: 20px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .modal-footer {
+        padding: 16px 24px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      /* Form */
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .form-label {
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+      }
+      .form-input,
+      .form-select {
+        padding: 9px 12px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--bg-accent);
+        font-size: 13px;
+        font-family: var(--font-body);
+        color: var(--text-primary);
+        outline: none;
+        transition: border-color 0.15s;
+        width: 100%;
+      }
+      .form-input:focus,
+      .form-select:focus {
+        border-color: var(--accent);
+      }
+      .form-input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .btn {
+        padding: 9px 18px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        font-size: 13px;
+        font-weight: 500;
+        font-family: var(--font-body);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .btn-ghost {
+        background: var(--bg-accent);
+        color: var(--text-secondary);
+      }
+      .btn-ghost:hover {
+        color: var(--text-primary);
+        border-color: var(--border-strong);
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: var(--bg-card);
+        border-color: var(--accent);
+      }
+      .btn-primary:hover {
+        opacity: 0.88;
+      }
+
+      @media (max-width: 639px) {
+        .tx-summary {
+          grid-template-columns: 1fr 1fr;
+        }
+        .tx-toolbar {
+          gap: 8px;
+        }
+        .filter-group {
+          gap: 4px;
+        }
+        .filter-btn {
+          padding: 6px 10px;
+          font-size: 11px;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body data-theme="light">
+    <!-- Sidebar backdrop -->
+    <div class="sidebar-backdrop" id="backdrop" onclick="closeSidebar()"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">F</div>
+        Finsight
+      </div>
+      <nav class="nav-section">
+        <div class="nav-label">Overview</div>
+        <div class="nav-item" onclick="location.href = '#'">
+          <span class="nav-icon">▤</span> Dashboard
+        </div>
+        <div class="nav-item"><span class="nav-icon">◈</span> Analytics</div>
+        <div class="nav-item"><span class="nav-icon">◎</span> Portfolio</div>
+        <div class="nav-label">Finance</div>
+        <div class="nav-item active">
+          <span class="nav-icon">⇄</span> Transactions
+          <span class="nav-badge">24</span>
+        </div>
+        <div class="nav-item"><span class="nav-icon">◐</span> Budgets</div>
+        <div class="nav-item" onclick="location.href = 'assets.html'">
+          <span class="nav-icon">⬡</span> Assets
+        </div>
+        <div class="nav-label">Account</div>
+        <div class="nav-item"><span class="nav-icon">◻</span> Reports</div>
+        <div class="nav-item"><span class="nav-icon">⊙</span> Settings</div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">AK</div>
+          <div>
+            <div class="user-name">Alex Kim</div>
+            <div class="user-role">Pro Plan</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <div class="menu-btn" onclick="openSidebar()">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="topbar-left">
+            <h1>Transactions</h1>
+            <span>April 2026 · 24 entries</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="theme-switcher">
+            <button class="theme-btn active" onclick="setTheme('light', this)">
+              Light
+            </button>
+            <button class="theme-btn" onclick="setTheme('dark', this)">
+              Dark
+            </button>
+            <button class="theme-btn" onclick="setTheme('retro', this)">
+              Retro
+            </button>
+            <button class="theme-btn" onclick="setTheme('scifi', this)">
+              Sci-Fi
+            </button>
+            <button class="theme-btn" onclick="setTheme('luxury', this)">
+              Luxury
+            </button>
+          </div>
+          <div class="icon-btn">🔔</div>
+          <button
+            class="btn btn-primary"
+            onclick="openModal()"
+            style="white-space: nowrap"
+          >
+            + Add
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="content">
+        <!-- Summary strip -->
+        <div class="tx-summary">
+          <div class="tx-summary-item">
+            <div class="tx-summary-label">Total In</div>
+            <div class="tx-summary-val pos">+$18,420</div>
+            <div class="tx-summary-sub">12 transactions</div>
+          </div>
+          <div class="tx-summary-item">
+            <div class="tx-summary-label">Total Out</div>
+            <div class="tx-summary-val neg">−$6,842</div>
+            <div class="tx-summary-sub">12 transactions</div>
+          </div>
+          <div class="tx-summary-item">
+            <div class="tx-summary-label">Net Cash Flow</div>
+            <div class="tx-summary-val pos">+$11,578</div>
+            <div class="tx-summary-sub">This month</div>
+          </div>
+          <div class="tx-summary-item">
+            <div class="tx-summary-label">Pending</div>
+            <div class="tx-summary-val">$6,340</div>
+            <div class="tx-summary-sub">2 transactions</div>
+          </div>
+        </div>
+
+        <!-- Table card -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">All Transactions</div>
+              <div class="card-sub">April 2026 · Sorted by date</div>
+            </div>
+            <div class="card-action">Export CSV ↗</div>
+          </div>
+
+          <!-- Toolbar -->
+          <div
+            style="
+              padding: 16px 22px;
+              border-bottom: 1px solid var(--border);
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+            "
+          >
+            <div class="tx-toolbar">
+              <div class="tx-search">
+                <span>⌕</span>
+                <input type="text" placeholder="Search merchant, category…" />
+              </div>
+              <select class="tx-select">
+                <option>All Categories</option>
+                <option>Income</option>
+                <option>Housing</option>
+                <option>Groceries</option>
+                <option>Transport</option>
+                <option>Software</option>
+                <option>Investment</option>
+                <option>Entertainment</option>
+              </select>
+              <select class="tx-select">
+                <option>All Accounts</option>
+                <option>Visa ···4821</option>
+                <option>Chase Bank</option>
+                <option>Stripe Inc.</option>
+                <option>Fidelity</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <button class="filter-btn active">All</button>
+              <button class="filter-btn">Income</button>
+              <button class="filter-btn">Expenses</button>
+              <button class="filter-btn">Investments</button>
+              <button class="filter-btn">Pending</button>
+              <button class="filter-btn">Failed</button>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="tx-table-wrap">
+            <table class="tx-table">
+              <thead>
+                <tr>
+                  <th style="width: 40px; padding-right: 8px"></th>
+                  <th class="sortable">
+                    Merchant <span class="sort-arrow active">↓</span>
+                  </th>
+                  <th class="sortable">Category</th>
+                  <th class="sortable">Account</th>
+                  <th class="sortable">
+                    Date <span class="sort-arrow">↑</span>
+                  </th>
+                  <th class="sortable">Status</th>
+                  <th class="sortable" style="text-align: right">
+                    Amount <span class="sort-arrow">↑</span>
+                  </th>
+                  <th style="width: 40px"></th>
+                </tr>
+              </thead>
+              <tbody id="tx-tbody">
+                <!-- rows injected by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <div class="pagination-info">Showing 1–10 of 24 transactions</div>
+            <div class="pagination-btns">
+              <button class="pg-btn" disabled>←</button>
+              <button class="pg-btn active">1</button>
+              <button class="pg-btn">2</button>
+              <button class="pg-btn">3</button>
+              <button class="pg-btn">→</button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom nav (mobile) -->
+      <nav class="bottom-nav">
+        <div class="bottom-nav-item" onclick="location.href = '#'">
+          <span class="bn-icon">▤</span>Home
+        </div>
+        <div class="bottom-nav-item active">
+          <span class="bn-icon">⇄</span>Txns
+        </div>
+        <div class="bottom-nav-item" onclick="location.href = 'assets.html'">
+          <span class="bn-icon">⬡</span>Assets
+        </div>
+        <div class="bottom-nav-item"><span class="bn-icon">◐</span>Budget</div>
+        <div class="bottom-nav-item">
+          <span class="bn-icon">⊙</span>Settings
+        </div>
+      </nav>
+    </div>
+
+    <!-- ADD TRANSACTION MODAL -->
+    <div class="modal-backdrop" id="modal">
+      <div class="modal">
+        <div class="modal-head">
+          <div class="modal-title">Add Transaction</div>
+          <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Merchant / Description</label>
+              <input
+                class="form-input"
+                type="text"
+                placeholder="e.g. Whole Foods"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Amount</label>
+              <input class="form-input" type="number" placeholder="0.00" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Type</label>
+              <select class="form-select">
+                <option>Expense</option>
+                <option>Income</option>
+                <option>Transfer</option>
+                <option>Investment</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select class="form-select">
+                <option>Groceries</option>
+                <option>Housing</option>
+                <option>Transport</option>
+                <option>Entertainment</option>
+                <option>Software</option>
+                <option>Health</option>
+                <option>Income</option>
+                <option>Investment</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input class="form-input" type="date" value="2026-04-24" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Account</label>
+              <select class="form-select">
+                <option>Visa ···4821</option>
+                <option>Chase Bank</option>
+                <option>Fidelity</option>
+                <option>Stripe Inc.</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Notes (optional)</label>
+            <input class="form-input" type="text" placeholder="Add a note…" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+          <button class="btn btn-primary">Save Transaction</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const TRANSACTIONS = [
+        {
+          icon: "🏠",
+          bg: "rgba(100,130,255,0.12)",
+          name: "Mortgage Payment",
+          sub: "Chase Bank",
+          cat: "Housing",
+          date: "Apr 24",
+          account: "Chase Bank",
+          status: "completed",
+          amount: -2400,
+        },
+        {
+          icon: "💼",
+          bg: "rgba(45,156,101,0.12)",
+          name: "Freelance Project",
+          sub: "Stripe Inc.",
+          cat: "Income",
+          date: "Apr 23",
+          account: "Stripe Inc.",
+          status: "completed",
+          amount: +3500,
+        },
+        {
+          icon: "🛒",
+          bg: "rgba(232,84,26,0.12)",
+          name: "Whole Foods",
+          sub: "Visa ···4821",
+          cat: "Groceries",
+          date: "Apr 22",
+          account: "Visa ···4821",
+          status: "completed",
+          amount: -184,
+        },
+        {
+          icon: "◈",
+          bg: "rgba(200,150,50,0.12)",
+          name: "ETF Purchase",
+          sub: "Fidelity",
+          cat: "Investment",
+          date: "Apr 21",
+          account: "Fidelity",
+          status: "pending",
+          amount: -1000,
+        },
+        {
+          icon: "☁",
+          bg: "rgba(160,100,255,0.12)",
+          name: "AWS Services",
+          sub: "Amazon",
+          cat: "Software",
+          date: "Apr 20",
+          account: "Visa ···4821",
+          status: "completed",
+          amount: -340,
+        },
+        {
+          icon: "✖",
+          bg: "rgba(196,77,52,0.12)",
+          name: "Wire Transfer",
+          sub: "Bank of America",
+          cat: "Transfer",
+          date: "Apr 19",
+          account: "Chase Bank",
+          status: "failed",
+          amount: -5000,
+        },
+        {
+          icon: "🚗",
+          bg: "rgba(100,130,255,0.12)",
+          name: "Shell Gas Station",
+          sub: "Visa ···4821",
+          cat: "Transport",
+          date: "Apr 18",
+          account: "Visa ···4821",
+          status: "completed",
+          amount: -68,
+        },
+        {
+          icon: "💼",
+          bg: "rgba(45,156,101,0.12)",
+          name: "Salary — April",
+          sub: "Employer ACH",
+          cat: "Income",
+          date: "Apr 15",
+          account: "Chase Bank",
+          status: "completed",
+          amount: +9800,
+        },
+        {
+          icon: "🎬",
+          bg: "rgba(232,84,26,0.12)",
+          name: "Netflix",
+          sub: "Visa ···4821",
+          cat: "Entertainment",
+          date: "Apr 14",
+          account: "Visa ···4821",
+          status: "completed",
+          amount: -18,
+        },
+        {
+          icon: "🏋",
+          bg: "rgba(160,100,255,0.12)",
+          name: "Equinox",
+          sub: "Visa ···4821",
+          cat: "Health",
+          date: "Apr 13",
+          account: "Visa ···4821",
+          status: "completed",
+          amount: -120,
+        },
+      ];
+
+      function renderRows() {
+        const tbody = document.getElementById("tx-tbody");
+        tbody.innerHTML = TRANSACTIONS.map((t) => {
+          const amtClass =
+            t.amount > 0
+              ? "amount-pos"
+              : t.amount === 0
+                ? "amount-neu"
+                : "amount-neg";
+          const amtStr =
+            t.amount > 0
+              ? `+$${t.amount.toLocaleString()}`
+              : `-$${Math.abs(t.amount).toLocaleString()}`;
+          const pillCls =
+            t.status === "completed"
+              ? "completed"
+              : t.status === "pending"
+                ? "pending"
+                : "failed";
+          const pillTxt =
+            t.status === "completed"
+              ? "✓ Completed"
+              : t.status === "pending"
+                ? "⏳ Pending"
+                : "✖ Failed";
+          return `
+      <tr>
+        <td style="padding-right:0;padding-left:22px;">
+          <div class="tx-icon" style="background:${t.bg}">${t.icon}</div>
+        </td>
+        <td>
+          <div class="tx-cell" style="gap:0">
+            <div>
+              <div class="tx-name">${t.name}</div>
+              <div class="tx-sub">${t.sub}</div>
+            </div>
+          </div>
+        </td>
+        <td><span class="cat-tag">${t.cat}</span></td>
+        <td style="color:var(--text-secondary);font-size:12px">${t.account}</td>
+        <td style="color:var(--text-secondary);font-family:var(--font-mono);font-size:12px">${t.date}</td>
+        <td><span class="status-pill ${pillCls}">${pillTxt}</span></td>
+        <td style="text-align:right"><span class="${amtClass}">${amtStr}</span></td>
+        <td style="padding-left:0">
+          <div class="icon-btn" style="width:28px;height:28px;font-size:12px;border:none;background:none">⋯</div>
+        </td>
+      </tr>`;
+        }).join("");
+      }
+
+      // Filter buttons
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        });
+      });
+
+      // Sidebar
+      function openSidebar() {
+        document.getElementById("sidebar").classList.add("open");
+        document.getElementById("backdrop").classList.add("open");
+      }
+      function closeSidebar() {
+        document.getElementById("sidebar").classList.remove("open");
+        document.getElementById("backdrop").classList.remove("open");
+      }
+
+      // Modal
+      function openModal() {
+        document.getElementById("modal").classList.add("open");
+      }
+      function closeModal() {
+        document.getElementById("modal").classList.remove("open");
+      }
+      document.getElementById("modal").addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) closeModal();
+      });
+
+      // Theme
+      function setTheme(t, btn) {
+        document.body.setAttribute("data-theme", t);
+        document
+          .querySelectorAll(".theme-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+
+      renderRows();
+    </script>
+  </body>
+</html>

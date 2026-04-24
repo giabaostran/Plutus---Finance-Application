@@ -2,7 +2,7 @@ import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
 import { useState, useEffect } from "react";
 import "./App.css";
-import { ThemeContext } from "./hooks/ThemeContext";
+import { ThemeContext } from "@/stores/ThemeContext";
 
 function App() {
   /* ========== STATE MANAGER FOR THE THEME SELECTOR ========== */

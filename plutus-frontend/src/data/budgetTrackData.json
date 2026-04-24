@@ -1,0 +1,9 @@
+[
+  { "label": "🏠 Housing", "spent": 2400, "total": 2500 },
+  { "label": "🛒 Food & Groceries", "spent": 620, "total": 900 },
+  { "label": "🚗 Transport", "spent": 190, "total": 400 },
+  { "label": "🎬 Entertainment", "spent": 340, "total": 300 },
+  { "label": "☁ Software & Tech", "spent": 580, "total": 800 },
+  { "label": "🏋 Health & Fitness", "spent": 120, "total": 250 },
+  { "label": "📚 Education", "spent": 0, "total": 200 }
+]
