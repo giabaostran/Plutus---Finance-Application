@@ -23,49 +23,41 @@ export function getPoints(data) {
 export function formatKpi(kpis, monthlyStats) {
   return [
     {
-      id: 1,
       label: "Net Worth",
       value: `$${kpis.netWorth.value.toLocaleString()}`,
       delta: `${(kpis.netWorth.change * 100).toFixed(1)}%`,
       trend: kpis.netWorth.change >= 0 ? "up" : "down",
       type: kpis.netWorth.change >= 0 ? "green" : "red",
-      sub: "vs last month",
       data: monthlyStats.netWorth,
       icon: "💼",
       color: "blue",
     },
     {
-      id: 2,
       label: "Monthly Income",
       value: `$${kpis.income.value.toLocaleString()}`,
       delta: `${(kpis.income.change * 100).toFixed(1)}%`,
       trend: kpis.income.change >= 0 ? "up" : "down",
       type: kpis.income.change >= 0 ? "green" : "red",
-      sub: "vs last month",
       data: monthlyStats.income,
       icon: "↑",
       color: "green",
     },
     {
-      id: 3,
       label: "Total Expenses",
       value: `$${kpis.expense.value.toLocaleString()}`,
       delta: `${(kpis.expense.change * 100).toFixed(1)}%`,
-      trend: kpis.expense.change >= 0 ? "up" : "down", // real direction
-      type: kpis.expense.change <= 0 ? "green" : "red", // GOOD when decreasing
-      sub: "vs last month",
+      trend: kpis.expense.change >= 0 ? "down" : "up", // real direction
+      type: kpis.expense.change < 0 ? "green" : "red", // GOOD when decreasing
       data: monthlyStats.expense.map(Math.abs),
       icon: "↓",
-      color: "red",
+      color: "orange",
     },
     {
-      id: 4,
       label: "Savings Rate",
       value: `${(kpis.savingRate.value * 100).toFixed(1)}%`,
       delta: `${(kpis.savingRate.change * 100).toFixed(1)}pp`,
       trend: kpis.savingRate.change >= 0 ? "up" : "down",
       type: kpis.savingRate.change >= 0 ? "green" : "red",
-      sub: "vs last month",
       data: monthlyStats.savingRate,
       icon: "◈",
       color: "purple",

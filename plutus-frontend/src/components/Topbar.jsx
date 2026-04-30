@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { getCurrentTimeString } from "@/utils/time";
 import { ThemeContext } from "@/stores/ThemeContext";
 import { useContext } from "react";
-import { THEMES } from "@/data/config";
-import "@/styles/Topbar.css";
+import { THEMES } from "@/config/config";
+import "./Topbar.css";
 
 export default function Topbar() {
   const [time, setTime] = useState(getCurrentTimeString());

@@ -29,7 +29,7 @@ export default function KpiItem({ kpi }) {
         <span className={`kpi-delta ${kpi.trend}`}>
           {kpi.trend === "up" ? "▲" : "▼"} {kpi.delta}
         </span>
-        <span className="kpi-sub">{kpi.sub}</span>
+        <span className="kpi-sub">vs last month</span>
       </div>
     </div>
   );

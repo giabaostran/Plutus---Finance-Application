@@ -1,5 +1,5 @@
 import React from "react";
-import transactions from "@/data/transactionData.json";
+import transactions from "@/config/transactionData.json";
 import TransactionRow from "@/components/transactions/TransactionRow";
 
 export default function RecentTransactionTable() {

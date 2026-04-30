@@ -1,9 +1,9 @@
 import React from "react";
-import transactions from "@/data/transactionData.json";
+import transactions from "@/config/transactionData.json";
 import {
   CATEGORY_ICON_CONFIG,
   TRANSACTION_STATUS_CONFIG,
-} from "@/data/config.js";
+} from "@/config/config.js";
 
 /** -----------------------------
  * Main Table Component

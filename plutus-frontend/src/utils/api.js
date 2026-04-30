@@ -1,4 +1,4 @@
-import transactions from "@/data/transactionData.json";
+import transactions from "@/config/transactionData.json";
 export function getTransactions() {
   return transactions;
 }

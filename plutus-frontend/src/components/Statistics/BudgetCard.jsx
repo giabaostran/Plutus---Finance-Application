@@ -1,5 +1,5 @@
 import React from "react";
-import goals from "@/data/budgetTrackData.json"
+import goals from "@/config/budgetTrackData.json"
 
 
 // ---- COMPONENTS ----

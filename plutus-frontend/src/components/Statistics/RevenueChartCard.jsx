@@ -1,9 +1,9 @@
 import React from "react";
 
-import data from "@/data/revenueAndExpense.json";
+import data from "@/config/revenueAndExpense.json";
 
 /** -----------------------------
- * Helpers (match your old layout)
+ * Helpers (match old layout)
  * ----------------------------- */
 const MAX = 20000;
 const CHART_HEIGHT = 160;

@@ -1,6 +1,6 @@
-import users from "@/data/users.json";
-import "@/styles/Sidebar.css";
-import { NAVIGATION } from "@/data/config";
+import users from "@/config/users.json";
+import "./Sidebar.css";
+import { NAVIGATION } from "@/config/config";
 
 export default function Sidebar() {
   return (

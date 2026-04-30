@@ -1,5 +1,5 @@
 import React from "react";
-import { CATEGORY_ICON_CONFIG, TRANSACTION_STATUS_CONFIG } from "@/data/config";
+import { CATEGORY_ICON_CONFIG, TRANSACTION_STATUS_CONFIG } from "@/config/config";
 import { formatAmount, formatDate, getAmountClass } from "@/utils/transactions";
 
 export default function TransactionRow({ tx }) {
