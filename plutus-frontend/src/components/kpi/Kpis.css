@@ -1,0 +1,112 @@
+/* ════════════════════════════════════════════════════════════
+   KPI CARDS
+════════════════════════════════════════════════════════════ */
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition:
+    border-color 0.15s,
+    background var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+.kpi:hover {
+  border-color: var(--border-2);
+}
+.kpi-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.kpi-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-2);
+}
+.kpi-ico {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  background: var(--surface-2);
+  flex-shrink: 0;
+}
+.kpi-val {
+  font-family: var(--fn-d);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-1);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.kpi-foot {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.delta {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--fn-m);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.delta.up {
+  color: var(--green);
+  background: rgba(34, 160, 107, 0.1);
+}
+.delta.dn {
+  color: var(--red);
+  background: rgba(209, 64, 64, 0.1);
+}
+[data-theme="dark"] .delta.up {
+  background: rgba(52, 212, 138, 0.1);
+}
+[data-theme="dark"] .delta.dn {
+  background: rgba(224, 90, 66, 0.1);
+}
+[data-theme="retro"] .delta.up {
+  background: rgba(74, 192, 94, 0.1);
+}
+[data-theme="retro"] .delta.dn {
+  background: rgba(224, 72, 72, 0.1);
+}
+.kpi-sub {
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--fn-b);
+}
+
+/* sparkline */
+.spark {
+  width: 100%;
+  height: 32px;
+}
+.sp-line-g {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 1.5;
+}
+.sp-line-r {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 1.5;
+}
+.sp-area-g {
+  fill: var(--green);
+  opacity: 0.08;
+}
+.sp-area-r {
+  fill: var(--red);
+  opacity: 0.08;
+}

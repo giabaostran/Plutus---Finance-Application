@@ -1,0 +1,51 @@
+{
+  "navigation": [
+    {
+      "section": "Overview",
+      "items": [
+        {
+          "id": "dashboard",
+          "label": "Dashboard",
+          "icon": "⬛",
+          "isActive": true
+        }
+      ]
+    },
+    {
+      "section": "Finance",
+      "items": [
+        {
+          "id": "transactions",
+          "label": "Transactions",
+          "icon": "⇄",
+          "badge": 24
+        },
+        {
+          "id": "assets",
+          "label": "Assets",
+          "icon": "◈"
+        },
+        {
+          "id": "goals",
+          "label": "Goals",
+          "icon": "◎"
+        }
+      ]
+    },
+    {
+      "section": "Insights",
+      "items": [
+        {
+          "id": "intelligence",
+          "label": "Intelligence",
+          "icon": "✦"
+        }
+      ]
+    }
+  ],
+  "user": {
+    "name": "Alex Kim",
+    "initials": "AK",
+    "plan": "Pro Plan"
+  }
+}

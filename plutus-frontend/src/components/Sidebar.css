@@ -1,105 +1,149 @@
-/* ─── SIDEBAR ─── */
+/* ════════════════════════════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════════════════════════════ */
 .sidebar {
-  width: var(--sidebar-w);
-  min-height: 100vh;
-  background: var(--bg-sidebar);
+  width: var(--sw);
+  height: 100vh;
+  background: var(--sidebar-bg);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  padding: 28px 0;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  transition: background var(--transition);
+  transition:
+    transform var(--ease),
+    background var(--ease);
+  overflow: hidden;
 }
-.sidebar-logo {
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-sidebar);
-  letter-spacing: -0.5px;
-  padding: 0 24px 32px;
+.sb-logo {
+  padding: 28px 22px 24px;
   display: flex;
   align-items: center;
   gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
 }
-.logo-mark {
-  width: 28px;
-  height: 28px;
+.sb-mark {
+  width: 30px;
+  height: 30px;
   background: var(--accent);
-  border-radius: var(--radius-sm);
+  border-radius: var(--r-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-family: var(--fn-d);
+  font-size: 15px;
   font-weight: 800;
-  color: var(--bg-sidebar);
+  color: #fff;
   flex-shrink: 0;
 }
-.nav-section {
-  padding: 0 14px;
+[data-theme="retro"] .sb-mark {
+  color: #000;
+}
+.sb-name {
+  font-family: var(--fn-d);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--sidebar-t);
+  letter-spacing: -0.3px;
+}
+.sb-nav {
   flex: 1;
+  overflow-y: auto;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
-.nav-label {
-  font-size: 10px;
+.sb-nav::-webkit-scrollbar {
+  width: 0;
+}
+.sb-section {
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
-  color: var(--text-sidebar-muted);
-  padding: 0 10px 8px;
-  margin-top: 20px;
+  color: var(--sidebar-m);
+  padding: 14px 10px 6px;
 }
-.nav-item {
+.sb-item {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 9px 12px;
-  border-radius: var(--radius-sm);
-  color: var(--text-sidebar-muted);
-  font-size: 14px;
-  font-family: var(--font-body);
+  border-radius: var(--r-sm);
+  color: var(--sidebar-m);
+  font-size: 13px;
+  font-weight: 400;
   cursor: pointer;
   transition: all 0.15s;
-  margin-bottom: 2px;
+  position: relative;
 }
-.nav-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-sidebar);
+.sb-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--sidebar-t);
 }
-.nav-item.active {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-sidebar);
+.sb-item.active {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--sidebar-t);
 }
-.nav-icon {
-  font-size: 15px;
-  width: 18px;
+[data-theme="retro"] .sb-item.active {
+  background: rgba(74, 192, 94, 0.08);
+  color: var(--accent);
+}
+[data-theme="retro"] .sb-item:hover {
+  background: rgba(74, 192, 94, 0.05);
+}
+.sb-item-icon {
+  width: 16px;
   text-align: center;
+  font-size: 14px;
+  flex-shrink: 0;
 }
-.nav-badge {
+.sb-badge {
   margin-left: auto;
-  background: var(--accent-2);
-  color: white;
-  font-size: 10px;
-  font-weight: 600;
-  padding: 2px 7px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
   border-radius: 20px;
+  font-family: var(--fn-m);
 }
-.sidebar-footer {
-  padding: 0 14px;
-  border-top: 1px solid var(--border);
-  padding-top: 20px;
-  margin-top: 20px;
+[data-theme="retro"] .sb-badge {
+  color: #000;
+  border-radius: 2px;
 }
-.user-chip {
+.sb-active-bar {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+}
+.sb-item.active .sb-active-bar {
+  opacity: 1;
+}
+.sb-foot {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+.sb-user {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
   cursor: pointer;
 }
-.user-avatar {
+.sb-avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -107,17 +151,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  color: var(--bg-sidebar);
+  color: #fff;
   flex-shrink: 0;
 }
-.user-name {
+[data-theme="retro"] .sb-avatar {
+  border-radius: 2px;
+  color: #000;
+}
+.sb-uname {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-sidebar);
+  color: var(--sidebar-t);
 }
-.user-role {
+.sb-urole {
   font-size: 11px;
-  color: var(--text-sidebar-muted);
+  color: var(--sidebar-m);
+}
+
+/* backdrop */
+.sb-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 90;
+  opacity: 0;
+  transition: opacity var(--ease);
+}
+.sb-backdrop.on {
+  opacity: 1;
 }

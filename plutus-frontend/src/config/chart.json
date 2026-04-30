@@ -1,0 +1,11 @@
+{
+  "title": "Revenue vs Expenses",
+  "subtitle": "Jan – Jun 2026 · Monthly",
+  "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  "yAxis": ["$20k", "$16k", "$12k", "$8k", "$4k"],
+  "datasets": [
+    { "label": "Revenue", "key": "revenue", "color": "var(--c1)", "data": [130, 140, 145, 150, 142, 148] },
+    { "label": "Expenses", "key": "expenses", "color": "var(--c2)", "data": [85, 80, 88, 90, 84, 92] },
+    { "label": "Net Profit", "key": "profit", "color": "var(--c3)", "data": [74, 66, 54, 46, 60, 44] }
+  ]
+}

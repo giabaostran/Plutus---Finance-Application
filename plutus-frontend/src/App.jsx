@@ -19,41 +19,44 @@ export default function App() {
   }, [theme]);
 
   /* ========== DATA ========== */
-  const [appData, setAppData] = useState({
-    transactions: [],
-    monthlyStats: {
-      netWorth: [],
-      income: [],
-      expense: [],
-      savingRate: [],
-    },
-    kpis: {
-      netWorth: { value: 0, change: 0 },
-      income: { value: 0, change: 0 },
-      expense: { value: 0, change: 0 },
-      savingRate: { value: 0, change: 0 },
-    },
-  });
+  // const [appData, setAppData] = useState({
+  //   transactions: [],
+  //   monthlyStats: {
+  //     netWorth: [],
+  //     income: [],
+  //     expense: [],
+  //     savingRate: [],
+  //   },
+  //   kpis: {
+  //     netWorth: { value: 0, change: 0 },
+  //     income: { value: 0, change: 0 },
+  //     expense: { value: 0, change: 0 },
+  //     savingRate: { value: 0, change: 0 },
+  //   },
+  // });
 
-  useEffect(() => {
-    const tx = getTransactions(); // sync for now
-    const payload = buildDashboardPayload(tx);
-    setAppData(payload);
-  }, []);
+  // useEffect(() => {
+  //   const tx = getTransactions(); // sync for now
+  //   const payload = buildDashboardPayload(tx);
+  //   setAppData(payload);
+  // }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <AppContext.Provider value={appData}>
-        <div id="app" data-theme={theme}>
-          <Sidebar />
-          <div className="main">
-            <Topbar />
-            <main className="content">
-              <DashboardPage />
-            </main>
+      {/* <AppContext.Provider value={appData}> */}
+      {/* id app will act like the body tag itself  */}
+      <div id="app" data-theme={theme}>
+        {/* ======= <-- SIDEBAR --> =======*/}
+        <Sidebar />
+
+        <div className="shell">
+          <Topbar />
+          <div className="pages">
+            <DashboardPage isActive="true" />
           </div>
         </div>
-      </AppContext.Provider>
+      </div>
+      {/* </AppContext.Provider> */}
     </ThemeContext.Provider>
   );
 }

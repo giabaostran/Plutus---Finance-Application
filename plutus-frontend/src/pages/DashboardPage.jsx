@@ -1,27 +1,29 @@
 import React, { Fragment } from "react";
-import KPI from "@/components/kpi/KPI";
-import RevenueChart from "@/components/Statistics/RevenueChartCard";
-import data from "@/config/revenueAndExpense.json";
-import AllocationChart from "@/components/Statistics/AllocationChartCard";
-import TransactionTableUpdate from "@/components/Statistics/TransactionTableUpdate";
-import BudgetCard from "@/components/Statistics/BudgetCard";
+import Kpis from "@/components/kpi/Kpis";
+import "./Page.css";
+import ChartCard from "@/components/Statistics/ChartCard";
+import AllocationCard from "@/components/Statistics/AllocationCard";
+import RecentTransactions from "@/components/RecentTransactions";
+import BudgetTracker from "@/components/BudgetTracker";
 
-export default function DashboardPage() {
+export default function DashboardPage({ isActive }) {
   return (
-    <Fragment>
-
-      <KPI />
-
-      <div className="row">
-        <RevenueChart />
-        <AllocationChart />
+    <div className={`page ${isActive ? "on" : ""}`} id="p-dashboard">
+      {/* <!-- KPI row --> */}
+      <div className="g4">
+        <Kpis />
       </div>
 
-      <div className="row">
-        <TransactionTableUpdate />
-        <BudgetCard />
+      {/* <!-- Chart + Donut --> */}
+      <div className="g-main">
+        <ChartCard />
+        <AllocationCard />
       </div>
-    </Fragment>
 
+      <div className="g-main">
+        <RecentTransactions />
+        <BudgetTracker />
+      </div>
+    </div>
   );
 }

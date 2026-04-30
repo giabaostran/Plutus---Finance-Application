@@ -1,0 +1,56 @@
+/* ════════════════════════════════════════════════════════════
+   BAR CHART
+════════════════════════════════════════════════════════════ */
+svg.chart {
+  margin-inline: auto;
+  width: 80%;
+  display: block;
+}
+.cg {
+  stroke: var(--border);
+  stroke-width: 0.5;
+}
+.ct text {
+  fill: var(--text-3);
+  font-size: 10px;
+  font-family: var(--fn-m);
+}
+.br {
+  fill: var(--c1);
+}
+.be {
+  fill: var(--c2);
+  opacity: 0.72;
+}
+.lp {
+  fill: none;
+  stroke: var(--c3);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.dp {
+  fill: var(--c3);
+}
+.chart-legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+.leg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+[data-theme="retro"] .leg-dot {
+  border-radius: 0;
+}

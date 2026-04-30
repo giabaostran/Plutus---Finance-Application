@@ -1,0 +1,30 @@
+/* ════════════════════════════════════════════════════════════
+   PAGE CONTAINER
+════════════════════════════════════════════════════════════ */
+.pages {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+.page {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: 28px;
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+}
+.page.on {
+  display: flex;
+}
+.page::-webkit-scrollbar {
+  width: 4px;
+}
+.page::-webkit-scrollbar-track {
+  background: transparent;
+}
+.page::-webkit-scrollbar-thumb {
+  background: var(--border-2);
+  border-radius: 2px;
+}

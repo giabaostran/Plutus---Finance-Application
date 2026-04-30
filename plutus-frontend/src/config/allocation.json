@@ -1,0 +1,11 @@
+{
+  "title": "Allocation",
+  "subtitle": "Portfolio breakdown",
+  "totalValue": "$248k",
+  "items": [
+    { "label": "Equities", "value": 45, "color": "var(--c1)" },
+    { "label": "Bonds", "value": 25, "color": "var(--c2)" },
+    { "label": "Real Estate", "value": 18, "color": "var(--c3)" },
+    { "label": "Cash", "value": 12, "color": "var(--c4)" }
+  ]
+}

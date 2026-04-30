@@ -1,0 +1,13 @@
+{
+  "title": "Budget Tracker",
+  "period": "April 2026",
+  "daysLeft": 7,
+  "budgets": [
+    { "category": "housing", "label": "Housing", "spent": 2400, "limit": 2500 },
+    { "category": "groceries", "label": "Groceries", "spent": 620, "limit": 900 },
+    { "category": "transportation", "label": "Transport", "spent": 190, "limit": 400 },
+    { "category": "entertainment", "label": "Entertainment", "spent": 340, "limit": 300 },
+    { "category": "software", "label": "Software", "spent": 580, "limit": 800 },
+    { "category": "health", "label": "Health", "spent": 120, "limit": 250 }
+  ]
+}

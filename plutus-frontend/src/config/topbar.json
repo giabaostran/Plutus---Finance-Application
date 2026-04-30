@@ -1,0 +1,11 @@
+{
+  "themes": [
+    { "id": "light", "label": "Light" },
+    { "id": "dark", "label": "Dark" },
+    { "id": "retro", "label": "Retro" }
+  ],
+  "icons": {
+    "notification": "🔔",
+    "themeCycle": "◑"
+  }
+}
