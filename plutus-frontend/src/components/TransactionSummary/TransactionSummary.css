@@ -1,0 +1,44 @@
+/* summary row */
+.sum-row {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  /* overflow: hidden; */
+}
+.sum-cell {
+  flex: 1;
+  padding: 14px 16px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.sum-cell:last-child {
+  border-right: none;
+}
+.sum-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.sum-val {
+  font-family: var(--fn-d);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-1);
+  letter-spacing: -0.5px;
+}
+.sum-val.pos {
+  color: var(--green);
+}
+.sum-val.neg {
+  color: var(--red);
+}
+.sum-sub {
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--fn-m);
+}

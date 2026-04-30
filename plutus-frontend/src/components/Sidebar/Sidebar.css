@@ -81,7 +81,7 @@
   transition: all 0.15s;
   position: relative;
 }
-.sb-item:hover {
+.sb-item:hover, .sb-item.on {
   background: rgba(255, 255, 255, 0.04);
   color: var(--sidebar-t);
 }

@@ -429,7 +429,7 @@ input[type="range"] {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r);
-  overflow: hidden;
+  /* overflow: hidden; */
   transition:
     background var(--ease),
     border-color var(--ease);

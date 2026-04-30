@@ -1,0 +1,143 @@
+/* ════════════════════════════════════════════════════════════
+   TABLE
+════════════════════════════════════════════════════════════ */
+.tbl-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+thead th {
+  padding: 10px 20px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  font-family: var(--fn-b);
+}
+thead th.sort {
+  cursor: pointer;
+  user-select: none;
+}
+thead th.sort:hover {
+  color: var(--text-1);
+}
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+tbody tr:hover {
+  background: var(--surface-2);
+}
+tbody tr:last-child {
+  border-bottom: none;
+}
+tbody td {
+  padding: 13px 20px;
+  color: var(--text-1);
+  vertical-align: middle;
+  font-family: var(--fn-b);
+}
+.tx-ico {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+[data-theme="retro"] .tx-ico {
+  border-radius: 2px;
+}
+.tx-cell {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.tx-name {
+  font-weight: 500;
+  font-size: 13px;
+}
+.tx-sub {
+  font-size: 11px;
+  color: var(--text-2);
+  margin-top: 1px;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-family: var(--fn-m);
+  white-space: nowrap;
+}
+[data-theme="retro"] .pill {
+  border-radius: 2px;
+}
+.pill.ok {
+  color: var(--green);
+  background: rgba(34, 160, 107, 0.1);
+}
+.pill.pend {
+  color: var(--amber);
+  background: rgba(196, 125, 26, 0.1);
+}
+.pill.fail {
+  color: var(--red);
+  background: rgba(209, 64, 64, 0.1);
+}
+[data-theme="dark"] .pill.ok {
+  background: rgba(52, 212, 138, 0.1);
+}
+[data-theme="dark"] .pill.fail {
+  background: rgba(224, 90, 66, 0.1);
+}
+[data-theme="retro"] .pill.ok {
+  background: rgba(74, 192, 94, 0.1);
+}
+[data-theme="retro"] .pill.fail {
+  background: rgba(224, 72, 72, 0.1);
+}
+.amt-pos {
+  color: var(--green);
+  font-weight: 600;
+  font-family: var(--fn-m);
+}
+.amt-neg {
+  color: var(--red);
+  font-weight: 600;
+  font-family: var(--fn-m);
+}
+.amt-neu {
+  color: var(--text-1);
+  font-weight: 600;
+  font-family: var(--fn-m);
+}
+.cat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+[data-theme="retro"] .cat-chip {
+  border-radius: 2px;
+}

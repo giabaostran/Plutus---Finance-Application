@@ -1,6 +1,6 @@
 import React from "react";
 import db from "@/config/transactions.json";
-
+import "./RecentTransactions.css"
 export default function RecentTransactions() {
   // Use the categories map and data array from JSON
   const { categories, data } = db;

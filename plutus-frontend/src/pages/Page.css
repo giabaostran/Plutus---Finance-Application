@@ -3,9 +3,10 @@
 ════════════════════════════════════════════════════════════ */
 .pages {
   flex: 1;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
 }
+
 .page {
   position: absolute;
   inset: 0;

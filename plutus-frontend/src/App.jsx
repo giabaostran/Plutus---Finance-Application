@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
-import "./App.css";
-import Sidebar from "./components/Sidebar";
+import { Routes, Route, Outlet } from "react-router-dom";
 
 import { ThemeContext } from "@/stores/ThemeContext";
-import { AppContext } from "@/stores/AppContext";
-import { getTransactions } from "@/utils/api";
-import { buildDashboardPayload } from "@/utils/stats";
-import Topbar from "@/components/Topbar";
+// import { AppContext } from "@/stores/AppContext";
+// import { getTransactions } from "@/utils/api";
+// import { buildDashboardPayload } from "@/utils/stats";
+
+import Topbar from "@/components/Topbar/Topbar";
+import Sidebar from "./components/Sidebar/Sidebar";
 import DashboardPage from "@/pages/DashboardPage";
+import TransactionPage from "@/pages/TransactionPage";
+import "./App.css";
+
 export default function App() {
   /* ========== THEME ========== */
   const [theme, setTheme] = useState(() => {
@@ -52,7 +56,13 @@ export default function App() {
         <div className="shell">
           <Topbar />
           <div className="pages">
-            <DashboardPage isActive="true" />
+            <Routes>
+              <Route path="/" element={<DashboardPage isActive={true} />} />
+              <Route
+                path="/transactions"
+                element={<TransactionPage isActive={true} />}
+              />
+            </Routes>
           </div>
         </div>
       </div>

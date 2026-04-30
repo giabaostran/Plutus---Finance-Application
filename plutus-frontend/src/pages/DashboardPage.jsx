@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
-import Kpis from "@/components/kpi/Kpis";
+import Kpis from "@/components/Kpis/Kpis";
 import "./Page.css";
-import ChartCard from "@/components/Statistics/ChartCard";
-import AllocationCard from "@/components/Statistics/AllocationCard";
-import RecentTransactions from "@/components/RecentTransactions";
-import BudgetTracker from "@/components/BudgetTracker";
+import ChartCard from "@/components/ChartCard/ChartCard";
+import AllocationCard from "@/components/AllocationCard/AllocationCard";
+import RecentTransactions from "@/components/RecentTransactions/RecentTransactions";
+import BudgetTracker from "@/components/BudgetTracker/BudgetTracker";
 
 export default function DashboardPage({ isActive }) {
   return (
