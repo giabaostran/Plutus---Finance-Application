@@ -1,5 +1,5 @@
 import React from "react";
-import "./AssetHeader.css"
+
 export default function AssetHeader({ title, subtitle, onAddClick }) {
   return (
     <div className="section-header">

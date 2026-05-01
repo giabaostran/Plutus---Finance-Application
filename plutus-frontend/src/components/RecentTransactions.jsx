@@ -1,11 +1,11 @@
 import React from "react";
-import "./RecentTransactions.css";
-import { formatTimeString } from "../../utils/time";
+
+import { formatTimeString } from "../utils/time";
 
 export default function RecentTransactions({ data }) {
   // Use the categories map and data array from JSON
   const { categories, transactions } = data;
-  const displayData = transactions.slice(0, 5);
+  const displayData = transactions.slice(0, 7);
 
   return (
     <div className="card">

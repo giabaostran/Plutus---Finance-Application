@@ -6,11 +6,15 @@ import { ThemeContext } from "@/stores/ThemeContext";
 // import { getTransactions } from "@/utils/api";
 // import { buildDashboardPayload } from "@/utils/stats";
 
-import Topbar from "@/components/Topbar/Topbar";
-import Sidebar from "./components/Sidebar/Sidebar";
+import Topbar from "@/components/Topbar";
+import Sidebar from "@/components/Sidebar";
+
 import DashboardPage from "@/pages/DashboardPage";
 import TransactionPage from "@/pages/TransactionPage";
+import GoalPage from "@/pages/GoalPage";
 import AssetPage from "@/pages/AssetPage";
+import IntelligencePage from "@/pages/IntelligencePage";
+
 import "./App.css";
 
 export default function App() {
@@ -61,6 +65,9 @@ export default function App() {
               <Route path="/" element={<DashboardPage isActive={true} />} />
               <Route path="/transactions" element={<TransactionPage isActive={true} />} />
               <Route path="/assets" element={<AssetPage isActive={true} />} />
+
+              <Route path="/goals" element={<GoalPage isActive={true} />} />
+              <Route path="/intelligence" element={<IntelligencePage isActive={true} />} />
             </Routes>
           </div>
         </div>

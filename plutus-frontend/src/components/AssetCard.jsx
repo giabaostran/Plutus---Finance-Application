@@ -1,35 +1,49 @@
 import React from "react";
 
-export default function AssetCard({ assetName, assetType, assetValue }) {
+export default function AssetCard({ asset, onRemove }) {
+  // Destructure for cleaner code
+  const { name, type, value, since, icon, color, change, isPositive } = asset;
+
+  // Determine the CSS class for performance
+  const gainCls = isPositive ? "amt-pos" : "amt-neg";
+
+  // Format the year from Unix timestamp
+  const yearSince = new Date(since).getFullYear();
+
   return (
-    <div class="asset-card">
-      <div class="asset-top">
-        <div class="asset-icon" style="background:${a.bg}">
-          ${a.ico}
+    <div className="asset-card">
+      <div className="asset-top">
+        {/* React uses {{ }} for inline style objects */}
+        <div className="asset-icon" style={{ background: color }}>
+          {icon}
         </div>
-        <div style="flex:1">
-          <div class="asset-name">${assetName}</div>
-          <div class="asset-type">${assetType}</div>
+
+        <div style={{ flex: 1 }}>
+          <div className="asset-name">{name}</div>
+          <div className="asset-type">{type}</div>
         </div>
+
         <button
-          class="btn btn-ghost btn-sm btn-icon"
-          style="border:none;background:none;color:var(--text-3);font-size:16px"
-          onclick="removeAsset(${i})"
+          className="btn btn-ghost btn-sm btn-icon"
+          style={{ border: "none", background: "none", color: "var(--text-3)", fontSize: "16px" }}
+          onClick={() => onRemove(asset.id)}
         >
           ×
         </button>
       </div>
+
       <div>
-        <div class="asset-val">$${assetValue}</div>
-        <div class="asset-change">
-          <span class="${gainCls}" style="font-size:12px;font-family:var(--fn-m)">
-            ${gainStr}
+        <div className="asset-val">{value}</div>
+        <div className="asset-change">
+          <span className={gainCls} style={{ fontSize: "12px", fontFamily: "var(--fn-m)" }}>
+            {change}
           </span>
         </div>
       </div>
-      <div class="asset-foot">
-        <span class="asset-meta">Since ${a.date.slice(0, 4)}</span>
-        <span class="cat-chip">${a.type}</span>
+
+      <div className="asset-foot">
+        <span className="asset-meta">Since {yearSince}</span>
+        <span className="cat-chip">{type}</span>
       </div>
     </div>
   );

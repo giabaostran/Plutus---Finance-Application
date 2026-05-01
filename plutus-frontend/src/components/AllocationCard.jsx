@@ -1,5 +1,4 @@
 import React from "react";
-import "./AllocationCard.css";
 
 export default function AllocationCard({ data }) {
   const { title, subtitle, totalValue, items } = data;

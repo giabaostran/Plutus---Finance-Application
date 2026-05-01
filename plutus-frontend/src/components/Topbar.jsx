@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { getCurrentTimeString } from "@/utils/time";
 import { ThemeContext } from "@/stores/ThemeContext";
 import data from "@/config/topbar.json";
-import "./Topbar.css";
 
 const PAGE_TITLES = {
   "/": "Dashboard",
@@ -37,13 +36,9 @@ export default function Topbar() {
       <div className="tb-title">{pageTitle}</div>
 
       <DigitalClock />
-      
+
       <div className="tb-right">
-        <ThemeSwitcher
-          currentTheme={theme}
-          onThemeChange={setTheme}
-          options={data.themes}
-        />
+        <ThemeSwitcher currentTheme={theme} onThemeChange={setTheme} options={data.themes} />
 
         <div className="tb-icon" title="Switch theme">
           {data.icons.themeCycle}

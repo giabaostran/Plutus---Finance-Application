@@ -1,5 +1,5 @@
 import React from "react";
-import { formatTimeString } from "../../utils/time";
+import { formatTimeString } from "../utils/time";
 
 export default function TransactionsTable({ data }) {
   const { categories, transactions } = data;

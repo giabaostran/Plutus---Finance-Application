@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 
-import TransactionSummary from "@/components/TransactionSummary/TransactionSummary";
+import TransactionSummary from "@/components/TransactionSummary";
 import transactionSummaryData from "@/config/transactionSummary.json";
 
-import TransactionTable from "@/components/TransactionTable/TransactionTable";
+import TransactionTable from "@/components/TransactionTable";
 import transactionData from "@/config/transactions.json";
 
 import "./Page.css";

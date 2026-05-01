@@ -1,5 +1,5 @@
 import React from "react";
-import "./Kpis.css";
+
 
 export default function Kpis({ data }) {
   // Defensive check to ensure data exists before mapping

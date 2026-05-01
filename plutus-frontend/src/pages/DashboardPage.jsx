@@ -1,18 +1,18 @@
 import React, { Fragment } from "react";
 
 import kpiData from "@/config/kpis.json";
-import Kpis from "@/components/Kpis/Kpis";
+import Kpis from "@/components/Kpis";
 
-import ChartCard from "@/components/ChartCard/ChartCard";
+import ChartCard from "@/components/ChartCard";
 import revenueSpendingData from "@/config/chart.json";
 
-import AllocationCard from "@/components/AllocationCard/AllocationCard";
+import AllocationCard from "@/components/AllocationCard";
 import allocationData from "@/config/allocation.json";
 
-import RecentTransactions from "@/components/RecentTransactions/RecentTransactions";
+import RecentTransactions from "@/components/RecentTransactions";
 import transactionData from "@/config/transactions.json";
 
-import BudgetTracker from "@/components/BudgetTracker/BudgetTracker";
+import BudgetTracker from "@/components/BudgetTracker";
 import budgetData from "@/config/budget.json";
 
 import "./Page.css";

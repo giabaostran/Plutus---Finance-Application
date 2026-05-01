@@ -1,25 +1,19 @@
 import React, { useState } from "react";
 import data from "@/config/sidebar.json";
-import { useLocation } from "react-router-dom";
-import "./Sidebar.css";
+import { Link, useLocation } from "react-router-dom";
+
 
 export default function Sidebar() {
   // Empty stands for the default dashboard
-  let initialPath =
-    useLocation().pathname === "/" ? "" : useLocation().pathname.substring(1);
-  const [activeTab, setActiveTab] = useState(initialPath);
+  const location = useLocation();
+  const activeTab = location.pathname === "/" ? "" : location.pathname.substring(1);
 
   return (
     <aside className="sidebar" id="sb">
       <NavLogo />
       <nav className="sb-nav">
         {data.navigation.map((section) => (
-          <NavSection
-            key={section.section}
-            section={section}
-            activeTab={activeTab}
-            onItemClick={setActiveTab}
-          />
+          <NavSection key={section.section} section={section} activeTab={activeTab} />
         ))}
       </nav>
       <SidebarFooter user={data.user} />
@@ -42,28 +36,23 @@ function NavSection({ section, activeTab, onItemClick }) {
     <>
       <div className="sb-section">{section.section}</div>
       {section.items.map((item) => (
-        <NavItem
-          key={item.id}
-          item={item}
-          isActive={activeTab === item.id}
-          onClick={() => onItemClick(item.id)}
-        />
+        <NavItem key={item.id} item={item} isActive={activeTab === item.id} onClick={() => onItemClick(item.id)} />
       ))}
     </>
   );
 }
 
 // 2. Pure UI for a single Nav Link
-function NavItem({ item, isActive, onClick }) {
+function NavItem({ item, isActive }) {
   return (
-    <a href={`/${item.id}`}>
-      <div className={`sb-item ${isActive ? "on" : ""}`} onClick={onClick}>
+    <Link to={`/${item.id}`}>
+      <div className={`sb-item ${isActive ? "active" : ""}`}>
         <div className="sb-active-bar"></div>
         <span className="sb-item-icon">{item.icon}</span>
         {item.label}
         {item.badge && <span className="sb-badge">{item.badge}</span>}
       </div>
-    </a>
+    </Link>
   );
 }
 

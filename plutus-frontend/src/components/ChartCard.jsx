@@ -1,5 +1,5 @@
 import React from "react";
-import "./ChartCard.css";
+
 
 export default function ChartCard({ data }) {
   const { title, subtitle, labels, yAxis, datasets } = data;
