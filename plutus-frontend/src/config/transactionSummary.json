@@ -1,21 +1,21 @@
 [
   {
     "label": "Total In",
-    "val": "+$18,420",
+    "val": 18420,
     "sub": "12 transactions",
     "type": "pos"
   },
   {
     "label": "Total Out",
-    "val": "−$6,842",
+    "val": 6842,
     "sub": "12 transactions",
     "type": "neg"
   },
   {
     "label": "Net Cash Flow",
-    "val": "+$11,578",
+    "val": 11578,
     "sub": "This month",
     "type": "pos"
   },
-  { "label": "Pending", "val": "$6,340", "sub": "2 transactions", "type": "" }
+  { "label": "Pending", "val": 6340, "sub": "2 transactions", "type": "" }
 ]

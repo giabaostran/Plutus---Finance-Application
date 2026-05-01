@@ -1,0 +1,33 @@
+{
+  "kpis": [
+    {
+      "id": "total-assets",
+      "label": "Total Assets",
+      "icon": "💰",
+      "value": 524800,
+      "delta": 4.2
+    },
+    {
+      "id": "total-liabilities",
+      "label": "Total Liabilities",
+      "icon": "📋",
+      "delta": -2.4,
+      "value": 276260
+    },
+    {
+      "id": "net-value",
+      "label": "Net Value",
+      "icon": "⬆",
+      "value": 248540,
+      "delta": 8.4,
+      "status": "up"
+    },
+    {
+      "id": "asset-count",
+      "label": "Asset Count",
+      "icon": "◈",
+      "value": 7,
+      "status": "stable"
+    }
+  ]
+}

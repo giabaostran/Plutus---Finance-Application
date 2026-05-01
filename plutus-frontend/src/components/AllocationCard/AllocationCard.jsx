@@ -1,9 +1,8 @@
 import React from "react";
-import allocationData from "@/config/allocation.json";
 import "./AllocationCard.css";
 
-export default function AllocationCard() {
-  const { title, subtitle, totalValue, items } = allocationData;
+export default function AllocationCard({ data }) {
+  const { title, subtitle, totalValue, items } = data;
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
 
@@ -18,26 +17,11 @@ export default function AllocationCard() {
         </div>
       </div>
 
-      <div
-        className="card-bd"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "18px",
-        }}
-      >
+      <div className="card-bd allocation-card-bd">
         <div className="donut-wrap">
           <svg viewBox="0 0 130 130" width="130" height="130">
             {/* Background Track */}
-            <circle
-              cx="65"
-              cy="65"
-              r={radius}
-              fill="none"
-              stroke="var(--border)"
-              strokeWidth="16"
-            />
+            <circle cx="65" cy="65" r={radius} fill="none" stroke="var(--border)" strokeWidth="16" />
 
             {/* Dynamic Segments */}
             {items.map((item, i) => {
@@ -57,7 +41,6 @@ export default function AllocationCard() {
                   strokeDasharray={`${strokeDash} ${circumference}`}
                   strokeDashoffset={-offset}
                   transform="rotate(-90 65 65)"
-                  style={{ transition: "stroke-dashoffset 0.5s ease" }}
                 />
               );
             })}
@@ -68,40 +51,14 @@ export default function AllocationCard() {
           </div>
         </div>
 
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-          }}
-        >
+        <div className="allocation-chart-legends">
           {items.map((item, i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
+            <div className="allocation-chart-legend" key={i}>
               <div className="legend-row">
-                <div
-                  className="leg-dot"
-                  style={{ background: item.color }}
-                ></div>
+                <div className="leg-dot" style={{ background: item.color }}></div>
                 {item.label}
               </div>
-              <span
-                style={{
-                  fontSize: "12px",
-                  fontWeight: "600",
-                  fontFamily: "var(--fn-m)",
-                  color: "var(--text-1)",
-                }}
-              >
-                {item.value}%
-              </span>
+              <span className="allocation-chart-percent">{item.value}%</span>
             </div>
           ))}
         </div>

@@ -6,9 +6,7 @@
       "icon": "💼",
       "value": "$248,540",
       "trend": [28, 22, 20, 16, 18, 10, 6],
-      "delta": "▲ 8.4%",
-      "status": "up",
-      "color": "green"
+      "delta": 8.4
     },
     {
       "id": "income",
@@ -16,9 +14,7 @@
       "icon": "↑",
       "value": "$14,280",
       "trend": [26, 22, 24, 18, 16, 12, 10],
-      "delta": "▲ 3.2%",
-      "status": "up",
-      "color": "green"
+      "delta": 3.2
     },
     {
       "id": "expenses",
@@ -26,9 +22,7 @@
       "icon": "↓",
       "value": "$6,842",
       "trend": [12, 16, 14, 20, 17, 22, 26],
-      "delta": "▲ 5.1%",
-      "status": "dn",
-      "color": "red"
+      "delta": -5.1
     },
     {
       "id": "savings",
@@ -36,9 +30,7 @@
       "icon": "◈",
       "value": "52.1%",
       "trend": [20, 18, 22, 14, 16, 10, 8],
-      "delta": "▲ 2.8pp",
-      "status": "up",
-      "color": "green"
+      "delta": 2.8
     }
   ]
 }

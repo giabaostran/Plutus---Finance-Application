@@ -1,9 +1,8 @@
 import React from "react";
-import chartData from "@/config/chart.json";
 import "./ChartCard.css";
 
-export default function ChartCard() {
-  const { title, subtitle, labels, yAxis, datasets } = chartData;
+export default function ChartCard({ data }) {
+  const { title, subtitle, labels, yAxis, datasets } = data;
 
   // Configuration for spacing
   const xOffset = 50;
@@ -17,10 +16,7 @@ export default function ChartCard() {
           <div className="card-title">{title}</div>
           <div className="card-sub">{subtitle}</div>
         </div>
-        <button
-          className="card-act"
-          onClick={() => console.log("Exporting...")}
-        >
+        <button className="card-act" onClick={() => console.log("Exporting...")}>
           Export ↗
         </button>
       </div>
@@ -28,11 +24,7 @@ export default function ChartCard() {
       <div className="card-bd">
         <ChartLegend datasets={datasets} />
 
-        <svg
-          className="chart"
-          viewBox="0 0 540 210"
-          preserveAspectRatio="xMidYMid meet"
-        >
+        <svg className="chart" viewBox="0 0 540 210" preserveAspectRatio="xMidYMid meet">
           {/* Background Grid Lines */}
           {[20, 60, 100, 140, 170].map((y, i) => (
             <line key={i} className="cg" x1="50" y1={y} x2="530" y2={y} />
@@ -58,45 +50,21 @@ export default function ChartCard() {
 
           {/* Bars: Revenue */}
           {datasets[0].data.map((val, i) => (
-            <rect
-              key={i}
-              className="br"
-              x={68 + i * xSpacing}
-              y={chartHeight - val}
-              width="28"
-              height={val}
-              rx="3"
-            />
+            <rect key={i} className="br" x={68 + i * xSpacing} y={chartHeight - val} width="28" height={val} rx="3" />
           ))}
 
           {/* Bars: Expenses */}
           {datasets[1].data.map((val, i) => (
-            <rect
-              key={i}
-              className="be"
-              x={100 + i * xSpacing}
-              y={chartHeight - val}
-              width="28"
-              height={val}
-              rx="3"
-            />
+            <rect key={i} className="be" x={100 + i * xSpacing} y={chartHeight - val} width="28" height={val} rx="3" />
           ))}
 
           {/* Line & Dots: Net Profit */}
           <polyline
             className="lp"
-            points={datasets[2].data
-              .map((val, i) => `${100 + i * xSpacing},${val}`)
-              .join(" ")}
+            points={datasets[2].data.map((val, i) => `${100 + i * xSpacing},${val}`).join(" ")}
           />
           {datasets[2].data.map((val, i) => (
-            <circle
-              key={i}
-              className="dp"
-              cx={100 + i * xSpacing}
-              cy={val}
-              r="4"
-            />
+            <circle key={i} className="dp" cx={100 + i * xSpacing} cy={val} r="4" />
           ))}
         </svg>
       </div>

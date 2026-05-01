@@ -1,9 +1,8 @@
 import React from "react";
-import budgetData from "@/config/budget.json";
 import { categories } from "@/config/transactions.json"; // Reuse your category icons
 
-export default function BudgetTracker() {
-  const { title, period, daysLeft, budgets } = budgetData;
+export default function BudgetTracker({ data }) {
+  const { title, period, daysLeft, budgets } = data;
 
   const getBarColor = (percent) => {
     if (percent >= 90) return "var(--red)";
@@ -16,48 +15,42 @@ export default function BudgetTracker() {
       <div className="card-hd">
         <div>
           <div className="card-title">{title}</div>
-          <div className="card-sub">{period} · {daysLeft} days left</div>
+          <div className="card-sub">
+            {period} · {daysLeft} days left
+          </div>
         </div>
       </div>
       <div className="card-bd">
-        <div className="spend-bar" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+        <div className="spend-bar">
           {budgets.map((item, i) => {
             const percent = Math.min((item.spent / item.limit) * 100, 100);
             const icon = categories[item.category]?.icon || "•";
 
             return (
               <div key={i} className="spend-item">
-                <div className="spend-row" style={{ 
-                  display: "flex", 
-                  justifyContent: "space-between", 
-                  marginBottom: "8px",
-                  fontSize: "13px"
-                }}>
+                <div className="spend-row">
                   <span className="spend-label">
                     {icon} {item.label}
                   </span>
-                  <span className="spend-val" style={{ 
-                    fontFamily: "var(--fn-m)", 
-                    fontWeight: "600",
-                    color: "var(--text-1)"
-                  }}>
+                  <span className="spend-val">
                     ${item.spent.toLocaleString()} / ${item.limit.toLocaleString()}
                   </span>
                 </div>
-                
-                <div className="prog-track" style={{ 
-                  height: "8px", 
-                  background: "var(--border)", 
-                  borderRadius: "4px",
-                  overflow: "hidden" 
-                }}>
+
+                <div
+                  className="prog-track"
+                  style={{
+                    height: "8px",
+                    background: "var(--border)",
+                    borderRadius: "4px",
+                    overflow: "hidden",
+                  }}
+                >
                   <div
                     className="prog-fill"
                     style={{
                       width: `${percent}%`,
-                      height: "100%",
                       background: getBarColor(percent),
-                      transition: "width 0.6s ease, background 0.3s ease"
                     }}
                   />
                 </div>

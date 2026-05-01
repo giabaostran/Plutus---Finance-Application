@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import data from "@/config/sidebar.json";
+import { useLocation } from "react-router-dom";
 import "./Sidebar.css";
 
 export default function Sidebar() {
-  const [activeTab, setActiveTab] = useState("dashboard");
+  // Empty stands for the default dashboard
+  let initialPath =
+    useLocation().pathname === "/" ? "" : useLocation().pathname.substring(1);
+  const [activeTab, setActiveTab] = useState(initialPath);
 
   return (
     <aside className="sidebar" id="sb">
@@ -52,12 +56,14 @@ function NavSection({ section, activeTab, onItemClick }) {
 // 2. Pure UI for a single Nav Link
 function NavItem({ item, isActive, onClick }) {
   return (
-    <div className={`sb-item ${isActive ? "on" : ""}`} onClick={onClick}>
-      <div className="sb-active-bar"></div>
-      <span className="sb-item-icon">{item.icon}</span>
-      {item.label}
-      {item.badge && <span className="sb-badge">{item.badge}</span>}
-    </div>
+    <a href={`/${item.id}`}>
+      <div className={`sb-item ${isActive ? "on" : ""}`} onClick={onClick}>
+        <div className="sb-active-bar"></div>
+        <span className="sb-item-icon">{item.icon}</span>
+        {item.label}
+        {item.badge && <span className="sb-badge">{item.badge}</span>}
+      </div>
+    </a>
   );
 }
 

@@ -1,6 +1,31 @@
 /* ════════════════════════════════════════════════════════════
    DONUT
 ════════════════════════════════════════════════════════════ */
+.allocation-card-bd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.allocation-chart-legends {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.allocation-chart-percent {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--fn-m);
+  color: var(--text-1);
+}
+.allocation-chart-legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .donut-wrap {
   position: relative;
   width: 130px;

@@ -1,10 +1,10 @@
 import React from "react";
-import db from "@/config/transactions.json";
+import { formatTimeString } from "../../utils/time";
 
-export default function TransactionsTable() {
-  const { categories, data } = db;
+export default function TransactionsTable({ data }) {
+  const { categories, transactions } = data;
   // Visual limit for the "look" (top 10 entries)
-  const displayData = data.slice(0, 10);
+  const displayData = transactions.slice(0, 10);
 
   return (
     <div className="card">
@@ -12,7 +12,7 @@ export default function TransactionsTable() {
       <div className="card-hd">
         <div>
           <div className="card-title">All Transactions</div>
-          <div className="card-sub">April 2026 · {data.length} entries</div>
+          <div className="card-sub">April 2026 · {transactions.length} entries</div>
         </div>
         <div style={{ display: "flex", gap: "8px" }}>
           <button className="card-act">Export CSV ↗</button>
@@ -60,55 +60,27 @@ export default function TransactionsTable() {
           </thead>
           <tbody>
             {displayData.map((tx) => {
-              const cat = categories[tx.category] || {
-                icon: "•",
-                rgb: "150, 150, 150",
-              };
               const isIncome = tx.amount > 0;
 
               return (
                 <tr key={tx.id}>
                   <td>
-                    <div
-                      className="tx-ico"
-                      style={{ background: `rgba(${cat.rgb}, 0.12)` }}
-                    >
-                      {cat.icon}
-                    </div>
+                    <div className={`tx-ico tx-ico-${tx.category}`}>{categories[tx.category].icon}</div>
                   </td>
                   <td>
                     <div className="tx-name">{tx.name}</div>
                     <div className="tx-sub">{tx.merchant}</div>
                   </td>
                   <td>
-                    <div
-                      className="tx-sub"
-                      style={{ textTransform: "capitalize" }}
-                    >
-                      {tx.category}
-                    </div>
+                    <div className="tx-sub">{tx.category}</div>
                   </td>
-                  <td
-                    style={{
-                      color: "var(--text-2)",
-                      fontSize: "12px",
-                      fontFamily: "var(--fn-m)",
-                    }}
-                  >
-                    {new Date(tx.date).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </td>
+                  <td className="tx-date">{formatTimeString(tx.date)}</td>
+
                   <td>
                     <span
                       className={`pill ${tx.status === "completed" ? "ok" : tx.status === "pending" ? "pend" : "failed"}`}
                     >
-                      {tx.status === "completed"
-                        ? "✓ Done"
-                        : tx.status === "pending"
-                          ? "⏳ Pending"
-                          : "✕ Failed"}
+                      {tx.status === "completed" ? "✓ Done" : tx.status === "pending" ? "⏳ Pending" : "✕ Failed"}
                     </span>
                   </td>
                   <td style={{ textAlign: "right" }}>
@@ -116,8 +88,7 @@ export default function TransactionsTable() {
                       className={isIncome ? "amt-pos" : "amt-neg"}
                       style={{ fontWeight: "600", fontFamily: "var(--fn-m)" }}
                     >
-                      {isIncome ? "+" : "-"}$
-                      {Math.abs(tx.amount).toLocaleString()}
+                      {isIncome ? "+" : "-"}${Math.abs(tx.amount).toLocaleString()}
                     </span>
                   </td>
                 </tr>
@@ -129,7 +100,7 @@ export default function TransactionsTable() {
 
       {/* Pager Footer */}
       <div className="pager">
-        <div className="pager-info">Showing 1–10 of {data.length}</div>
+        <div className="pager-info">Showing 1–10 of {transactions.length}</div>
         <div className="pager-btns">
           <button className="pg" disabled>
             ←

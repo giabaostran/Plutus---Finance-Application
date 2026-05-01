@@ -94,6 +94,13 @@ html,
     background var(--ease),
     color var(--ease);
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 button,
 select,
 input {
@@ -899,7 +906,7 @@ input[type="range"] {
 .spend-bar {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
   padding: 4px 0;
 }
 .spend-item {
@@ -908,6 +915,8 @@ input[type="range"] {
   gap: 5px;
 }
 .spend-row {
+  margin-bottom: 8px;
+  font-size: 13px;
   display: flex;
   justify-content: space-between;
   align-items: center;

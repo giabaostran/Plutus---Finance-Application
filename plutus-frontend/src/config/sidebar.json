@@ -4,7 +4,7 @@
       "section": "Overview",
       "items": [
         {
-          "id": "dashboard",
+          "id": "",
           "label": "Dashboard",
           "icon": "⬛",
           "isActive": true

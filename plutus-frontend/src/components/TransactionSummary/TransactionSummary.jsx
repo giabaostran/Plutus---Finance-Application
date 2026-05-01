@@ -1,10 +1,9 @@
 import React from "react";
-import stats from "@/config/transactionSummary.json";
-import "./TransactionSummary.css"
-export default function TransactionSummary() {
+import "./TransactionSummary.css";
+export default function TransactionSummary({ data }) {
   return (
     <>
-      {stats.map((item, index) => (
+      {data.map((item, index) => (
         <div key={index} className="sum-cell">
           <div className="sum-label">{item.label}</div>
           <div className={`sum-val ${item.type}`}>{item.val}</div>

@@ -10,6 +10,7 @@ import Topbar from "@/components/Topbar/Topbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import DashboardPage from "@/pages/DashboardPage";
 import TransactionPage from "@/pages/TransactionPage";
+import AssetPage from "@/pages/AssetPage";
 import "./App.css";
 
 export default function App() {
@@ -58,10 +59,8 @@ export default function App() {
           <div className="pages">
             <Routes>
               <Route path="/" element={<DashboardPage isActive={true} />} />
-              <Route
-                path="/transactions"
-                element={<TransactionPage isActive={true} />}
-              />
+              <Route path="/transactions" element={<TransactionPage isActive={true} />} />
+              <Route path="/assets" element={<AssetPage isActive={true} />} />
             </Routes>
           </div>
         </div>

@@ -14,7 +14,7 @@
     "income": { "icon": "💰", "rgb": "34, 160, 107" },
     "transfer": { "icon": "↔️", "rgb": "150, 150, 150" }
   },
-  "data": [
+  "transactions": [
     {
       "id": 1,
       "name": "Mortgage Payment",
@@ -243,6 +243,15 @@
     },
     {
       "id": 26,
+      "name": "Amazon Order",
+      "merchant": "Amazon",
+      "category": "shopping",
+      "date": 1742472000000,
+      "status": "pending",
+      "amount": -124.99
+    },
+    {
+      "id": 27,
       "name": "Amazon Order",
       "merchant": "Amazon",
       "category": "shopping",

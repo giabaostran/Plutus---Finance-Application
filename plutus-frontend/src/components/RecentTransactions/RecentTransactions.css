@@ -56,6 +56,59 @@ tbody td {
   font-size: 14px;
   flex-shrink: 0;
 }
+
+.tx-ico-housing {
+  background-color: rgba(100, 130, 255, 0.12);
+}
+
+.tx-ico-groceries {
+  background-color: rgba(34, 160, 107, 0.12);
+}
+
+.tx-ico-investment {
+  background-color: rgba(196, 125, 26, 0.12);
+}
+
+.tx-ico-software {
+  background-color: rgba(160, 100, 255, 0.12);
+}
+
+.tx-ico-health {
+  background-color: rgba(255, 82, 160, 0.12);
+}
+
+.tx-ico-utilities {
+  background-color: rgba(120, 120, 120, 0.12);
+}
+
+.tx-ico-dining {
+  background-color: rgba(232, 84, 26, 0.12);
+}
+
+.tx-ico-transportation {
+  background-color: rgba(80, 180, 255, 0.12);
+}
+
+.tx-ico-travel {
+  background-color: rgba(0, 200, 200, 0.12);
+}
+
+.tx-ico-entertainment {
+  background-color: rgba(255, 193, 7, 0.12);
+}
+
+.tx-ico-shopping {
+  background-color: rgba(255, 64, 129, 0.12);
+}
+
+.tx-ico-income {
+  background-color: rgba(34, 160, 107, 0.12);
+}
+
+.tx-ico-transfer {
+  background-color: rgba(89, 255, 0, 0.12);
+}
+
 [data-theme="retro"] .tx-ico {
   border-radius: 2px;
 }
@@ -72,6 +125,12 @@ tbody td {
   font-size: 11px;
   color: var(--text-2);
   margin-top: 1px;
+  text-transform: capitalize;
+}
+.tx-date {
+  color: var(--text-2);
+  font-size: 12px;
+  font-family: var(--fn-m);
 }
 .pill {
   display: inline-flex;
@@ -95,7 +154,7 @@ tbody td {
   color: var(--amber);
   background: rgba(196, 125, 26, 0.1);
 }
-.pill.fail {
+.pill.failed {
   color: var(--red);
   background: rgba(209, 64, 64, 0.1);
 }
