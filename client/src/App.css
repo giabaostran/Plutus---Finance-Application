@@ -314,6 +314,7 @@
   border: 1px solid var(--border);
   border-radius: var(--r);
   /* overflow: hidden; */
+  
   transition:
     background var(--ease),
     border-color var(--ease);
