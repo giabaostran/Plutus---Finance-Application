@@ -6,8 +6,8 @@ export function Sidebar({ navItems, activePage, onNavigate, user, isOpen, onClos
       <div className={`sb-backdrop${isOpen ? " on" : ""}`} onClick={onClose} />
       <aside className={`sidebar${isOpen ? " on" : ""}`}>
         <div className="sb-logo">
-          <div className="sb-mark">F</div>
-          <div className="sb-name">Finsight</div>
+          <div className="sb-mark">P</div>
+          <div className="sb-name">lutus</div>
         </div>
         <nav className="sb-nav">
           {sections.map((section) => (

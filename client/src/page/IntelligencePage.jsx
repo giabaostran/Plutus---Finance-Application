@@ -59,7 +59,7 @@ export default function IntelligencePage({ insights, aiResponses }) {
               ✦
             </div>
             <div>
-              <div className="card-title">Finsight AI</div>
+              <div className="card-title">Plutus AI</div>
               <div className="card-sub">Your personal financial intelligence</div>
             </div>
           </div>
