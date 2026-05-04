@@ -1,10 +1,7 @@
 import React from "react";
 
-
 export default function Kpis({ data }) {
   // Defensive check to ensure data exists before mapping
-  if (!data || !data.kpis) return null;
-
   return (
     <>
       {data.kpis.map((kpi) => (
@@ -15,20 +12,21 @@ export default function Kpis({ data }) {
 }
 
 function KpiCard({ label, icon, value, trend, delta }) {
-  // 1. Improved Logic: Handle 'blue' or other colors gracefully
+  // 1. Improved Logic: Handle 'blue' or other colors gracefully????
 
   const colorClass = delta > 0 ? "g" : "r";
   const trendIcon = delta > 0 ? "+" : "-";
   const trendStatus = delta > 0 ? "up" : "dn";
 
   // 2. Dynamic Point Generation: Ensures points fit the 120px width regardless of array length
-  const generatePoints = (data) => {
+  function generatePoints(data) {
     if (!data || data.length < 2) return "";
     const xStep = 120 / (data.length - 1);
     return data.map((y, i) => `${i * xStep},${y}`).join(" ");
-  };
+  }
 
   const linePoints = generatePoints(trend);
+
   // 3. Area points: Close the polygon at the bottom-right (120,32) and bottom-left (0,32)
   const areaPoints = linePoints ? `${linePoints} 120,32 0,32` : "";
 

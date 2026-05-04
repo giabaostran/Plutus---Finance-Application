@@ -1,9 +1,8 @@
 import React from "react";
-
 import { formatTimeString } from "../utils/time";
+import { Link } from "react-router-dom";
 
 export default function RecentTransactions({ data }) {
-  // Use the categories map and data array from JSON
   const { categories, transactions } = data;
   const displayData = transactions.slice(0, 7);
 
@@ -14,9 +13,10 @@ export default function RecentTransactions({ data }) {
           <div className="card-title">Recent Transactions</div>
           <div className="card-sub">Last 7 days</div>
         </div>
-        <button className="card-act" onClick={() => window.nav?.("transactions")}>
+        {/* Use 'as={Link}' or style the Link directly to avoid nested button issues */}
+        <Link to="/transactions" className="card-act">
           View all →
-        </button>
+        </Link>
       </div>
 
       <div className="tbl-wrap">
@@ -31,33 +31,10 @@ export default function RecentTransactions({ data }) {
             </tr>
           </thead>
           <tbody>
-            {displayData.map((tx) => {
-              const isIncome = tx.amount > 0;
-
-              return (
-                <tr key={tx.id}>
-                  <td>
-                    <div className={`tx-ico tx-ico-${tx.category}`}>{categories[tx.category].icon}</div>
-                  </td>
-                  <td>
-                    <div className="tx-name">{tx.name}</div>
-                    <div className="tx-sub">{tx.merchant}</div>
-                  </td>
-                  <td className="tx-date">{formatTimeString(tx.date)}</td>
-                  <td>
-                    <StatusPill status={tx.status} />
-                  </td>
-                  <td style={{ textAlign: "right" }}>
-                    <span
-                      className={isIncome ? "amt-pos" : "amt-neg"}
-                      style={{ fontWeight: "600", fontFamily: "var(--fn-m)" }}
-                    >
-                      {isIncome ? "+" : "-"}${Math.abs(tx.amount).toLocaleString()}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
+            {displayData.map((tx) => (
+              /* Pass categories explicitly as a prop */
+              <TransactionRow key={tx.id} {...tx} categories={categories} />
+            ))}
           </tbody>
         </table>
       </div>
@@ -73,4 +50,32 @@ function StatusPill({ status }) {
   }[status] || { cls: "pend", txt: status };
 
   return <span className={`pill ${config.cls}`}>{config.txt}</span>;
+}
+
+function TransactionRow({ category, name, merchant, date, status, amount, categories }) {
+  const isIncome = amount > 0;
+
+  // Safely access the icon in case category doesn't exist in the map
+  const icon = categories[category]?.icon || "💰";
+
+  return (
+    <tr>
+      <td>
+        <div className={`tx-ico tx-ico-${category}`}>{icon}</div>
+      </td>
+      <td>
+        <div className="tx-name">{name}</div>
+        <div className="tx-sub">{merchant}</div>
+      </td>
+      <td className="tx-date">{formatTimeString(date)}</td>
+      <td>
+        <StatusPill status={status} />
+      </td>
+      <td style={{ textAlign: "right" }}>
+        <span className={isIncome ? "amt-pos" : "amt-neg"} style={{ fontWeight: "600", fontFamily: "var(--fn-m)" }}>
+          {isIncome ? "+" : "-"}${Math.abs(amount).toLocaleString()}
+        </span>
+      </td>
+    </tr>
+  );
 }

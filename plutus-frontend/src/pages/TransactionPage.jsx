@@ -6,15 +6,13 @@ import transactionSummaryData from "@/config/transactionSummary.json";
 import TransactionTable from "@/components/TransactionTable";
 import transactionData from "@/config/transactions.json";
 
-import "./Page.css";
-
 export default function TransactionPage({ isActive }) {
   return (
     <div className={`page ${isActive ? "on" : ""}`} id="p-transactions">
       <div className="sum-row">
         <TransactionSummary data={transactionSummaryData} />
       </div>
-      <TransactionTable data={transactionData}/>
+      <TransactionTable data={transactionData} />
     </div>
   );
 }

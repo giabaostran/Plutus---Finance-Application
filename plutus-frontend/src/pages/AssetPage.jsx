@@ -4,7 +4,6 @@ import assetDataRaw from "@/config/assets.json"; // Assuming your JSON is here
 import Kpis from "@/components/Kpis";
 import AssetHeader from "@/components/AssetHeader";
 import AssetCard from "@/components/AssetCard";
-import "./Page.css";
 
 function AssetPage({ isActive }) {
   // Use state so the UI updates when you remove an asset
@@ -30,9 +29,6 @@ function AssetPage({ isActive }) {
 
       <div className="asset-grid" id="asset-grid">
         {assets.map((asset) => (
-          <AssetCard key={asset.id} asset={asset} onRemove={handleRemoveAsset} />
-        ))}
-        {assets.slice(0,3).map((asset) => (
           <AssetCard key={asset.id} asset={asset} onRemove={handleRemoveAsset} />
         ))}
 

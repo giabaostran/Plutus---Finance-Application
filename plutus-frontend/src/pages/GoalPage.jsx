@@ -1,8 +1,8 @@
 import React from "react";
 import goalData from "@/config/goals.json";
 import AssetHeader from "../components/AssetHeader";
-import "./Goals.css";
-import "./Page.css";
+
+
 
 
 function GoalPage({ isActive }) {

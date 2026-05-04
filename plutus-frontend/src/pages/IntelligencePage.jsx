@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import "./intelligence.css";
 
-import "./Page.css";
 
 // --- Mock Data ---
 const INSIGHTS_DATA = [

@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap");
+
+:root {
+  --bg: #f5f2ed;
+  --surface: #ffffff;
+  --surface-2: #edeae4;
+  --border: rgba(0, 0, 0, 0.07);
+  --border-2: rgba(0, 0, 0, 0.13);
+  --text-1: #100f0d;
+  --text-2: #6c6862;
+  --text-3: #b4b0ab;
+  --sidebar-bg: #18181e;
+  --sidebar-t: #e8e5f0;
+  --sidebar-m: #6e6c80;
+  --accent: #5b4ee8;
+  --accent-h: #4a3dd4;
+  --green: #22a06b;
+  --red: #d14040;
+  --amber: #c47d1a;
+  --c1: #5b4ee8;
+  --c2: #e8541a;
+  --c3: #22a06b;
+  --c4: #c4a240;
+  --r: 10px;
+  --r-sm: 6px;
+  --sw: 240px;
+  --fn-d: "Syne", sans-serif;
+  --fn-b: "IBM Plex Sans", sans-serif;
+  --fn-m: "DM Mono", monospace;
+  --ease: 0.2s ease;
+}
+[data-theme="dark"] {
+  --bg: #0d0d14;
+  --surface: #14141f;
+  --surface-2: #1c1c2a;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-2: rgba(255, 255, 255, 0.14);
+  --text-1: #eeeaff;
+  --text-2: #8886a6;
+  --text-3: #44435a;
+  --sidebar-bg: #09090f;
+  --sidebar-t: #cccaee;
+  --sidebar-m: #55546e;
+  --accent: #7c6ef5;
+  --accent-h: #9080ff;
+  --green: #34d48a;
+  --red: #e05a42;
+  --amber: #e8a030;
+  --c1: #7c6ef5;
+  --c2: #f07040;
+  --c3: #34d48a;
+  --c4: #5a5880;
+}
+[data-theme="retro"] {
+  --bg: #080d08;
+  --surface: #0c120c;
+  --surface-2: #101810;
+  --border: rgba(74, 192, 94, 0.12);
+  --border-2: rgba(74, 192, 94, 0.26);
+  --text-1: #7ee08e;
+  --text-2: #3a8a4a;
+  --text-3: #18401e;
+  --sidebar-bg: #050905;
+  --sidebar-t: #7ee08e;
+  --sidebar-m: #204828;
+  --accent: #4ac05e;
+  --accent-h: #64d478;
+  --green: #4ac05e;
+  --red: #e04848;
+  --amber: #c8902a;
+  --c1: #4ac05e;
+  --c2: #c8902a;
+  --c3: #46c0c0;
+  --c4: #8050c0;
+  --r: 2px;
+  --r-sm: 2px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  font-family: var(--fn-b);
+  background: var(--bg);
+  color: var(--text-1);
+  /* display: flex; */
+  transition:
+    background var(--ease),
+    color var(--ease);
+}
+button,
+select,
+input {
+  font-family: inherit;
+  outline: none;
+}

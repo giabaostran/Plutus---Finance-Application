@@ -1,7 +1,6 @@
 import React from "react";
 
-
-export default function ChartCard({ data }) {
+export default function ChartCard({ data, handleExport }) {
   const { title, subtitle, labels, yAxis, datasets } = data;
 
   // Configuration for spacing
@@ -16,7 +15,7 @@ export default function ChartCard({ data }) {
           <div className="card-title">{title}</div>
           <div className="card-sub">{subtitle}</div>
         </div>
-        <button className="card-act" onClick={() => console.log("Exporting...")}>
+        <button className="card-act" onClick={handleExport}>
           Export ↗
         </button>
       </div>

@@ -15,7 +15,7 @@ import transactionData from "@/config/transactions.json";
 import BudgetTracker from "@/components/BudgetTracker";
 import budgetData from "@/config/budget.json";
 
-import "./Page.css";
+import { exportTransactions } from "@/api/api";
 
 export default function DashboardPage({ isActive }) {
   return (
@@ -27,7 +27,7 @@ export default function DashboardPage({ isActive }) {
 
       {/* <!-- Chart + Donut --> */}
       <div className="g-main">
-        <ChartCard data={revenueSpendingData} />
+        <ChartCard data={revenueSpendingData} handleExport={exportTransactions} />
         <AllocationCard data={allocationData} />
       </div>
 
