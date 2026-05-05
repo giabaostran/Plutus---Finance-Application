@@ -3,7 +3,8 @@ import Pill from "@/ui/Pill";
 import ProgressBar from "@/ui/ProgressBar";
 import BarChart from "@/chart/BarChart";
 import DonutChart from "@/chart/DonutChart";
-import {fmtAmt, amtCls} from "@/utils"
+import { fmtAmt, amtCls } from "@/utils";
+import { CATEGORY_STYLES, BUDGET_CATEGORY_STYLES } from "@/data/configData";
 
 // ── Dashboard ──────────────────────────────
 export default function DashboardPage({ data, onNavigate }) {
@@ -76,15 +77,17 @@ export default function DashboardPage({ data, onNavigate }) {
                 {recentTx.map((t) => (
                   <tr key={t.id}>
                     <td>
-                      <div className="tx-ico" style={{ background: t.bg }}>
-                        {t.ico}
+                      <div className="tx-ico" style={{ background: CATEGORY_STYLES[t.category].bg }}>
+                        {CATEGORY_STYLES[t.category].ico}
                       </div>
                     </td>
                     <td>
                       <div className="tx-name">{t.name}</div>
                       <div className="tx-sub">{t.sub}</div>
                     </td>
-                    <td style={{ color: "var(--text-2)", fontSize: 12, fontFamily: "var(--fn-m)" }}>{t.date}</td>
+                    <td style={{ color: "var(--text-2)", fontSize: 12, fontFamily: "var(--fn-m)" }}>
+                      {new Date(t.date * 1000).toLocaleDateString("en-VN")}
+                    </td>
                     <td>
                       <Pill status={t.status} />
                     </td>
@@ -108,14 +111,14 @@ export default function DashboardPage({ data, onNavigate }) {
           <div className="card-bd">
             <div className="spend-bar">
               {budget.map((b) => (
-                <div key={b.label} className="spend-item">
+                <div key={b.category} className="spend-item">
                   <div className="spend-row">
-                    <span className="spend-label">{b.label}</span>
+                    <span className="spend-label">{b.category}</span>
                     <span className="spend-val">
                       ${b.spent.toLocaleString()} / ${b.total.toLocaleString()}
                     </span>
                   </div>
-                  <ProgressBar pct={(b.spent / b.total) * 100} color={b.color} />
+                  <ProgressBar pct={(b.spent / b.total) * 100} color={BUDGET_CATEGORY_STYLES[b.category].bg} />
                 </div>
               ))}
             </div>

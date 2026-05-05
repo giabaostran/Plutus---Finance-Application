@@ -10,28 +10,24 @@ import GoalsPage from "@/page/GoalsPage";
 import IntelligencePage from "@/page/IntelligencePage";
 
 import { INITIAL_DATA } from "@/data/data";
+import { NAV_ITEMS, PAGE_TITLES } from "@/data/configData";
 
 import "./App.css";
 
 export default function App() {
   const [activePage, setActivePage] = useState("dashboard");
-  const [theme, setTheme] = useState("light");
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const data = INITIAL_DATA;
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("data-theme") || "light";
+  });
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Apply theme to <html> element for CSS variable inheritance
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("data-theme", theme);
   }, [theme]);
-
-  const PAGE_TITLES = {
-    dashboard: "Dashboard",
-    transactions: "Transactions",
-    assets: "Assets",
-    goals: "Goals",
-    intelligence: "Intelligence",
-  };
 
   const navigate = useCallback((page) => {
     setActivePage(page);
@@ -41,10 +37,10 @@ export default function App() {
   return (
     <>
       <Sidebar
-        navItems={data.navItems}
+        navItems={NAV_ITEMS}
         activePage={activePage}
         onNavigate={navigate}
-        user={data.user}
+        user={INITIAL_DATA.user}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
@@ -59,27 +55,34 @@ export default function App() {
 
         <div className="pages">
           <div className={`page ${activePage === "dashboard" ? "on" : ""}`}>
-            <DashboardPage data={data} onNavigate={navigate} />
+            <DashboardPage data={INITIAL_DATA} onNavigate={navigate} />
           </div>
           <div className={`page ${activePage === "transactions" ? "on" : ""}`}>
-            <TransactionsPage transactions={data.transactions} txSummary={data.txSummary} />
+            <TransactionsPage
+              // transactions={INITIAL_DATA.transactions}
+              txSummary={INITIAL_DATA.txSummary}
+            />
           </div>
           <div className={`page ${activePage === "assets" ? "on" : ""}`}>
-            <AssetsPage assets={data.assets} assetKpis={data.assetKpis} assetTypeOptions={data.assetTypeOptions} />
+            <AssetsPage
+              assets={INITIAL_DATA.assets}
+              assetKpis={INITIAL_DATA.assetKpis}
+              assetTypeOptions={INITIAL_DATA.assetTypeOptions}
+            />
           </div>
           <div className={`page ${activePage === "goals" ? "on" : ""}`}>
             <GoalsPage
-              goals={data.goals}
-              completedGoals={data.completedGoals}
-              goalCategoryOptions={data.goalCategoryOptions}
+              goals={INITIAL_DATA.goals}
+              completedGoals={INITIAL_DATA.completedGoals}
+              goalCategoryOptions={INITIAL_DATA.goalCategoryOptions}
             />
           </div>
           <div className={`page ${activePage === "intelligence" ? "on" : ""}`}>
-            <IntelligencePage insights={data.insights} aiResponses={data.aiResponses} />
+            <IntelligencePage insights={INITIAL_DATA.insights} aiResponses={INITIAL_DATA.aiResponses} />
           </div>
         </div>
 
-        <BottomNav navItems={data.navItems} activePage={activePage} onNavigate={navigate} />
+        <BottomNav navItems={NAV_ITEMS} activePage={activePage} onNavigate={navigate} />
       </div>
     </>
   );

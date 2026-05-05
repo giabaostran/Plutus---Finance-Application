@@ -5,9 +5,9 @@ import Modal from "@/ui/Modal";
 import FormGroup from "@/ui/FormGroup";
 import Pill from "@/ui/Pill";
 import { fmtAmt, amtCls } from "@/utils";
-
+import { CATEGORY_STYLES } from "@/data/configData";
 // ── Transactions ───────────────────────────
-export default function TransactionsPage({ transactions: initTxns, txSummary }) {
+export default function TransactionsPage({ transactions: initTxns = [], txSummary }) {
   const [txns, setTxns] = useState(initTxns);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
@@ -16,6 +16,15 @@ export default function TransactionsPage({ transactions: initTxns, txSummary }) 
   const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
   const PER_PAGE = 10;
+
+  fetch("http://127.0.0.1:3000/transactions")
+    .then((raw) => raw.json())
+    .then((data) =>
+      setTimeout(() => {
+        setTxns(data);
+      }, 3000),
+    )
+    .catch((err) => console.log(err));
 
   // Form state
   const [form, setForm] = useState({
@@ -46,12 +55,12 @@ export default function TransactionsPage({ transactions: initTxns, txSummary }) 
 
   const filtered = txns.filter((t) => {
     const q = search.toLowerCase();
-    if (q && !t.name.toLowerCase().includes(q) && !t.cat.toLowerCase().includes(q)) return false;
-    if (cat !== "All Categories" && t.cat !== cat) return false;
+    if (q && !t.name.toLowerCase().includes(q) && !t.category.toLowerCase().includes(q)) return false;
+    if (cat !== "All Categories" && t.category !== cat) return false;
     if (acct !== "All Accounts" && t.acct !== acct) return false;
     if (filter === "Income" && t.amt <= 0) return false;
     if (filter === "Expenses" && t.amt >= 0) return false;
-    if (filter === "Investments" && t.cat !== "Investment") return false;
+    if (filter === "Investments" && t.category !== "Investment") return false;
     if (filter === "Pending" && t.status !== "pend") return false;
     return true;
   });
@@ -77,11 +86,11 @@ export default function TransactionsPage({ transactions: initTxns, txSummary }) 
     setTxns((prev) => [
       {
         id: nextId(prev),
-        ico: icons[form.cat] || "💳",
+        ico: icons[form.category] || "💳",
         bg: "rgba(91,78,232,0.08)",
         name: form.name || "New Transaction",
         sub: form.acct,
-        cat: form.cat,
+        cat: form.category,
         acct: form.acct,
         date: form.date,
         status: "ok",
@@ -158,6 +167,7 @@ export default function TransactionsPage({ transactions: initTxns, txSummary }) 
             ))}
           </select>
         </div>
+
         <div className="filter-row">
           {FILTERS.map((f) => (
             <button
@@ -181,7 +191,7 @@ export default function TransactionsPage({ transactions: initTxns, txSummary }) 
                 <th style={{ width: 44 }}></th>
                 <th className="sort">Merchant</th>
                 <th className="sort">Category</th>
-                <th className="sort">Account</th>
+                {/* <th className="sort">Account</th> */}
                 <th className="sort">Date</th>
                 <th>Status</th>
                 <th className="sort" style={{ textAlign: "right" }}>
@@ -193,8 +203,8 @@ export default function TransactionsPage({ transactions: initTxns, txSummary }) 
               {paged.map((t) => (
                 <tr key={t.id}>
                   <td style={{ paddingLeft: 20 }}>
-                    <div className="tx-ico" style={{ background: t.bg }}>
-                      {t.ico}
+                    <div className="tx-ico" style={{ background: CATEGORY_STYLES[t.category].bg }}>
+                      {CATEGORY_STYLES[t.category].ico}
                     </div>
                   </td>
                   <td>
@@ -202,10 +212,12 @@ export default function TransactionsPage({ transactions: initTxns, txSummary }) 
                     <div className="tx-sub">{t.sub}</div>
                   </td>
                   <td>
-                    <span className="cat-chip">{t.cat}</span>
+                    <span className="cat-chip">{t.category}</span>
                   </td>
-                  <td style={{ color: "var(--text-2)", fontSize: 12 }}>{t.acct}</td>
-                  <td style={{ color: "var(--text-2)", fontSize: 12, fontFamily: "var(--fn-m)" }}>{t.date}</td>
+                  {/* <td style={{ color: "var(--text-2)", fontSize: 12 }}>{t.acct}</td> */}
+                  <td style={{ color: "var(--text-2)", fontSize: 12, fontFamily: "var(--fn-m)" }}>
+                    {new Date(t.date * 1000).toLocaleDateString("en-VN")}
+                  </td>
                   <td>
                     <Pill status={t.status} />
                   </td>
@@ -272,7 +284,7 @@ export default function TransactionsPage({ transactions: initTxns, txSummary }) 
             </select>
           </FormGroup>
           <FormGroup label="Category">
-            <select className="f-select" value={form.cat} onChange={(e) => setF("cat", e.target.value)}>
+            <select className="f-select" value={form.category} onChange={(e) => setF("cat", e.target.value)}>
               {[
                 "Groceries",
                 "Housing",
