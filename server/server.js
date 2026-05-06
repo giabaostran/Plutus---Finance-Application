@@ -1,24 +1,41 @@
 const express = require("express");
 const cors = require("cors");
 require("module-alias/register");
-
 const v1Router = require("@/routes/v1/index");
 
-const app = express();
 
-const PORT = 3000;
+async function main() {
+  // try {
+  //   const db = await connectToDatabase();
+  //   const collections = await db.collections();
+  //   console.log(
+  //     "Collections:",
+  //     collections.map((c) => c.collectionName),
+  //   );
+  // } catch (err) {
+  //   console.error("Error ... something went wrong:", err);
+  // } finally {
+  //   await disconnectFromDatabase();
+  // }
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+  const app = express();
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  }),
-);
+  const PORT = 3000;
 
-app.use("/api/v1", v1Router);
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
 
-// Start server
-app.listen(PORT);
-console.log(`Server is listening at http://localhost:${PORT}`);
+  app.use(
+    cors({
+      origin: "http://localhost:5173",
+    }),
+  );
+
+  app.use("/api/v1", v1Router);
+
+  // Start server
+  app.listen(PORT);
+  console.log(`Server is listening at http://localhost:${PORT}`);
+}
+
+main();
