@@ -1,0 +1,13 @@
+$kind: http-request
+name: createUser
+url: localhost:3000/
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "email": "gia21@gmail.com",
+      "username": "stephen",
+      "password": "12345678"
+    }
+order: 1778197981602
