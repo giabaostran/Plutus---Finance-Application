@@ -11,10 +11,9 @@ export class UserController {
       const user = this.createUser.execute(email, username, password); // this can throw an error
 
       res.status(201).json(user);
-      
     } catch (error) {
       res.status(400).json({
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? "hi: " + error.message : "Unknown error",
       });
     }
   };

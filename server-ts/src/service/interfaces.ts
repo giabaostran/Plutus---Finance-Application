@@ -3,6 +3,7 @@ import { User } from "../entities/User";
 export interface UserRepository {
   getByEmail: (email: string) => User | null;
   getByUsername: (username: string) => User | null;
+   getNextId(): number;
   save: (user: User) => void;
 }
 

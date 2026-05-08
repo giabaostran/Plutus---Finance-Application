@@ -1,12 +1,14 @@
 [
   {
-    "username": "stephen",
-    "email": "gia21@gmail.cam",
+    "id": 1,
+    "email": "admin1@plutus.com",
+    "username": "admin1",
     "password": "213052Bao!"
   },
   {
-    "username": "tephens03",
-    "email": "gia@gmail.com",
+    "id": 2,
+    "email": "admin2@plutus.com",
+    "username": "admin2",
     "password": "213052Bao!"
   }
 ]

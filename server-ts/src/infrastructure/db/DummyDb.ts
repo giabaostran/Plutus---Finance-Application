@@ -9,11 +9,13 @@ export class DummyDb implements UserRepository {
 
   private readUsers(): User[] {
     // create file if it doesn't exist
-    if (!fs.existsSync(this.filePath)) fs.writeFileSync(this.filePath, JSON.stringify([], null, 2));
+    if (!fs.existsSync(this.filePath)) {
+      fs.writeFileSync(this.filePath, JSON.stringify([], null, 2));
+    }
 
     const data = fs.readFileSync(this.filePath, "utf-8");
 
-    return JSON.parse(data);
+    return JSON.parse(data).map((u: any) => new User(u.id, u.email, u.username, u.password));
   }
 
   private writeUsers(users: User[]): void {
@@ -27,18 +29,27 @@ export class DummyDb implements UserRepository {
 
     this.writeUsers(users);
 
-    console.log(`Saved ${user.email}`);
+    console.log(`Saved ${user.getEmail()}`);
   }
 
   getByEmail(email: string): User | null {
     const users = this.readUsers();
 
-    return users.find((u) => u.email === email) || null;
+    return users.find((u) => u.getEmail() === email) || null;
   }
 
   getByUsername(username: string): User | null {
     const users = this.readUsers();
 
-    return users.find((u) => u.username === username) || null;
+    return users.find((u) => u.getUsername() === username) || null;
+  }
+
+  getNextId(): number {
+    const users = this.readUsers();
+
+    if (users.length === 0) return 1;
+
+    const maxId = Math.max(...users.map((u) => u.getId()));
+    return maxId + 1;
   }
 }

@@ -13,7 +13,9 @@ export class CreateUser implements CreateUserUseCase {
 
     if (this.repository.getByUsername(username)) throw new Error("A user with the same username already exists");
 
-    const newUser = new User(email, username, password);
+    const id = this.repository.getNextId();
+
+    const newUser = new User(id, email, username, password); // This can throw an error if invalid user so delegate to its caller
 
     this.repository.save(newUser);
 
