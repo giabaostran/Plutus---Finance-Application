@@ -35,6 +35,13 @@ export class User {
   getPassword(): string {
     return this.password;
   }
+  setPassword(newPassword: string): void {
+    this.password = newPassword;
+  }
+  
+  setEmail(newEmail: string): void {
+    this.email = newEmail;
+  }
 
   // ===== VALIDATION =====
 

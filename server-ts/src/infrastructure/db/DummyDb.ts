@@ -7,6 +7,7 @@ export class DummyDb implements UserRepository {
   // private filePath = path.join(process.cwd(), "users.json");
   private filePath = "./users.json";
 
+  // ========================= INFRASTRUCTURE IMPLEMENTATION =========================
   private readUsers(): User[] {
     // create file if it doesn't exist
     if (!fs.existsSync(this.filePath)) {
@@ -22,23 +23,39 @@ export class DummyDb implements UserRepository {
     fs.writeFileSync(this.filePath, JSON.stringify(users, null, 2));
   }
 
-  save(user: User): void {
+  // ========================= INFRASTRUCTURE OPERATION =========================
+
+  addUser(user: User): void {
     const users = this.readUsers();
 
     users.push(user);
 
     this.writeUsers(users);
 
-    console.log(`Saved ${user.getEmail()}`);
+    console.log(`Added ${user.getEmail()}`);
   }
 
-  getByEmail(email: string): User | null {
+  updateUser(user: User): void {
+    const users = this.readUsers();
+
+    const index = users.findIndex((u) => u.getId() === user.getId());
+
+    if (index === -1) {
+      throw new Error("User not found");
+    }
+
+    users[index] = user;
+
+    this.writeUsers(users);
+  }
+
+  getUserByEmail(email: string): User | null {
     const users = this.readUsers();
 
     return users.find((u) => u.getEmail() === email) || null;
   }
 
-  getByUsername(username: string): User | null {
+  getUserByUsername(username: string): User | null {
     const users = this.readUsers();
 
     return users.find((u) => u.getUsername() === username) || null;

@@ -1,0 +1,13 @@
+$kind: http-request
+name: createUser
+url: localhost:3000/users
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "email": "admin@plutus.com",
+      "username": "admin",
+      "password": "adminPlutus123"
+    }
+order: 1778197981602
