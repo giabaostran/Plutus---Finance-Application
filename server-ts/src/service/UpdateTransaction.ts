@@ -1,4 +1,4 @@
-import { Transaction } from "../entities/Transaction";
+import { Transaction, TransactionCategory } from "../entities/Transaction";
 import { TransactionRepository, UpdateTransactionUseCase } from "./interfaces";
 
 export class UpdateTransaction implements UpdateTransactionUseCase {
@@ -8,7 +8,7 @@ export class UpdateTransaction implements UpdateTransactionUseCase {
     transactionId: number,
     updates: {
       name?: string;
-      category?: string;
+      category?: TransactionCategory;
       amount?: number;
     },
   ): Transaction {

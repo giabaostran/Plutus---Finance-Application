@@ -1,4 +1,4 @@
-import { Transaction } from "../entities/Transaction";
+import { Transaction, TransactionCategory, TransactionStatus } from "../entities/Transaction";
 import { User } from "../entities/User";
 
 // ============================== RESOURCE RELATED ==============================
@@ -57,9 +57,9 @@ export interface ChangeUserPasswordUseCase {
 export interface CreateTransactionUseCase {
   execute: (
     name: string,
-    category: string,
+    category: TransactionCategory,
     date: number,
-    status: string,
+    status: TransactionStatus,
     amt: number,
     belongsTo: number,
   ) => Transaction;
@@ -74,9 +74,9 @@ export interface UpdateTransactionUseCase {
     transactionId: number,
     updates: {
       name?: string;
-      category?: string;
+      category?: TransactionCategory;
       amount?: number;
-      status?: string;
+      status?: TransactionStatus;
     },
   ): Transaction;
 }

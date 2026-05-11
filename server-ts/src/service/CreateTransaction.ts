@@ -1,4 +1,4 @@
-import { Transaction } from "../entities/Transaction";
+import { Transaction, TransactionCategory, TransactionStatus } from "../entities/Transaction";
 import { CreateTransactionUseCase, TransactionRepository, UserRepository } from "./interfaces";
 
 export class CreateTransaction implements CreateTransactionUseCase {
@@ -7,7 +7,7 @@ export class CreateTransaction implements CreateTransactionUseCase {
     private userRepo: UserRepository,
   ) {}
 
-  execute(name: string, category: string, date: number, status: string, amt: number, belongsTo: number) {
+  execute(name: string, category: TransactionCategory, date: number, status: TransactionStatus, amt: number, belongsTo: number) {
     if (!belongsTo || !this.userRepo.getById(belongsTo)) {
       throw new Error("Must inlude this transaction's owner");
     }

@@ -2,9 +2,9 @@ export class Transaction {
   constructor(
     private id: number,
     private name: string,
-    private category: string,
+    private category: TransactionCategory,
     private date: number,
-    private status: string,
+    private status: TransactionStatus,
     private amt: number,
     private belongsTo: number,
   ) {
@@ -39,7 +39,7 @@ export class Transaction {
     return this.name;
   }
 
-  getCategory(): string {
+  getCategory(): TransactionCategory {
     return this.category;
   }
 
@@ -47,7 +47,7 @@ export class Transaction {
     return this.date;
   }
 
-  getStatus(): string {
+  getStatus(): TransactionStatus {
     return this.status;
   }
 
@@ -69,7 +69,7 @@ export class Transaction {
     this.name = name;
   }
 
-  changeCategory(category: string): void {
+  changeCategory(category: TransactionCategory): void {
     if (!category) {
       throw new Error("Category is required");
     }
@@ -85,7 +85,7 @@ export class Transaction {
     this.date = date;
   }
 
-  changeStatus(status: string): void {
+  changeStatus(status: TransactionStatus): void {
     this.status = status;
   }
 
@@ -107,3 +107,16 @@ export class Transaction {
     return this.amt > 0;
   }
 }
+export type TransactionStatus = "ok" | "pending" | "failed";
+
+export type TransactionCategory =
+  | "housing"
+  | "income"
+  | "groceries"
+  | "investment"
+  | "software"
+  | "transfer"
+  | "transport"
+  | "entertainment"
+  | "health"
+  | "default";
