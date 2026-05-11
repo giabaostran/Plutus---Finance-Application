@@ -9,8 +9,8 @@ export class GetTransactionsById implements GetTransactionByIdUseCase {
   execute(id: number) {
     if (!id || !this.userRepo.getById(id)) throw new Error("User not found");
 
-    const transactions = this.transactionRepo.getTransactionsByUser(id);
-    
+    const transactions = this.transactionRepo.getByUserId(id);
+
     return transactions;
   }
 }

@@ -8,7 +8,6 @@ export class CreateTransaction implements CreateTransactionUseCase {
   ) {}
 
   execute(name: string, category: string, date: number, status: string, amt: number, belongsTo: number) {
-
     if (!belongsTo || !this.userRepo.getById(belongsTo)) {
       throw new Error("Must inlude this transaction's owner");
     }
@@ -17,7 +16,7 @@ export class CreateTransaction implements CreateTransactionUseCase {
 
     const newTransaction = new Transaction(id, name, category, date, status, amt, belongsTo);
 
-    this.transactionRepo.addTransaction(newTransaction);
+    this.transactionRepo.add(newTransaction);
 
     return newTransaction;
   }

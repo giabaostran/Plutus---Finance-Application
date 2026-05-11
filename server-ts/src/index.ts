@@ -9,12 +9,14 @@ import {
   CreateTransactionUseCase,
   TransactionRepository,
   GetTransactionByIdUseCase,
+  UpdateTransactionUseCase,
 } from "./service/interfaces";
 
 import { CreateUser } from "./service/CreateUser";
 import { ChangeUserPassword } from "./service/ChangeUserPassword";
 import { CreateTransaction } from "./service/CreateTransaction";
 import { GetTransactionsById } from "./service/GetTransactionsById";
+import { UpdateTransaction } from "./service/UpdateTransaction";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -29,6 +31,7 @@ const createUser: CreateUserUseCase = new CreateUser(userRepo);
 const changeUserPassword: ChangeUserPasswordUseCase = new ChangeUserPassword(userRepo);
 const createTransaction: CreateTransactionUseCase = new CreateTransaction(transactionRepo, userRepo);
 const getTransactionById: GetTransactionByIdUseCase = new GetTransactionsById(transactionRepo, userRepo);
+const updateTransaction: UpdateTransactionUseCase = new UpdateTransaction(transactionRepo);
 
 app.post("/users", (req: Request, res: Response) => {
   try {
@@ -42,7 +45,7 @@ app.post("/users", (req: Request, res: Response) => {
   }
 });
 
-app.post("/users/:id/password", (req: Request, res: Response) => {
+app.patch("/users/:id/password", (req: Request, res: Response) => {
   try {
     const { oldPassword, newPassword } = req.body;
     const id = Number(req.params.id);
@@ -79,6 +82,27 @@ app.get("/users/:id/transactions", (req: Request, res: Response) => {
     const transactions = getTransactionById.execute(belongsTo);
 
     res.status(201).json(transactions);
+  } catch (error) {
+    res.status(400).json({
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+app.patch("/transactions/:id", (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+
+    const { name, category, amount, status } = req.body;
+
+    const transaction = updateTransaction.execute(id, {
+      name,
+      category,
+      amount,
+      status,
+    });
+
+    res.status(200).json(transaction);
   } catch (error) {
     res.status(400).json({
       error: error instanceof Error ? error.message : "Unknown error",

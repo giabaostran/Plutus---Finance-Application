@@ -1,25 +1,7 @@
 [
   {
     "id": 1,
-    "name": "AC: Black Flag",
-    "category": "entertainment",
-    "date": 1712966440,
-    "status": "ok",
-    "amt": 89,
-    "belongsTo": 1
-  },
-  {
-    "id": 2,
-    "name": "AC: Black Flag",
-    "category": "entertainment",
-    "date": 1712966440,
-    "status": "ok",
-    "amt": 89,
-    "belongsTo": 1
-  },
-  {
-    "id": 3,
-    "name": "AC: Black Flag",
+    "name": "AC 5",
     "category": "entertainment",
     "date": 1712966440,
     "status": "ok",

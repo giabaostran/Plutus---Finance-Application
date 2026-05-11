@@ -23,8 +23,9 @@ export class Transaction {
     if (!Number.isInteger(date)) {
       throw new Error("Invalid timestamp");
     }
+
     if (!Number.isInteger(belongsTo)) {
-      throw new Error("Invalid Belongs to");
+      throw new Error("Invalid belongsTo");
     }
   }
 
@@ -59,6 +60,44 @@ export class Transaction {
   }
 
   // ===== DOMAIN METHODS =====
+
+  changeName(name: string): void {
+    if (!name) {
+      throw new Error("Transaction name is required");
+    }
+
+    this.name = name;
+  }
+
+  changeCategory(category: string): void {
+    if (!category) {
+      throw new Error("Category is required");
+    }
+
+    this.category = category;
+  }
+
+  changeDate(date: number): void {
+    if (!Number.isInteger(date)) {
+      throw new Error("Invalid timestamp");
+    }
+
+    this.date = date;
+  }
+
+  changeStatus(status: string): void {
+    this.status = status;
+  }
+
+  changeAmount(amt: number): void {
+    if (!Number.isFinite(amt)) {
+      throw new Error("Invalid amount");
+    }
+
+    this.amt = amt;
+  }
+
+  // ===== HELPERS =====
 
   isExpense(): boolean {
     return this.amt < 0;

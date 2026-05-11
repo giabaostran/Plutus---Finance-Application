@@ -1,23 +1,13 @@
 import { Transaction } from "../entities/Transaction";
 import { User } from "../entities/User";
 
-// ============================== USER RELATED ==============================
+// ============================== RESOURCE RELATED ==============================
 
 export interface UserUseCases {
   create: (email: string, username: string, password: string) => User;
   changePassword: (id: number, oldPassword: string, newPassword: string) => void;
 }
 
-export interface UserRepository {
-  getByEmail: (email: string) => User | null;
-  getByUsername: (username: string) => User | null;
-  getById: (id: number) => User | null;
-  getNextId(): number;
-  add: (user: User) => void;
-  update: (user: User) => void;
-}
-
-// ============================== TRANSACTION RELATED ==============================
 export interface TransactionUseCases {
   create: (
     name: string,
@@ -30,14 +20,29 @@ export interface TransactionUseCases {
 
   getByUserId: (id: number) => Transaction[] | null;
 }
-export interface TransactionRepository {
-  addTransaction: (transaction: Transaction) => void;
-  getTransactionsByUser: (id: number) => Transaction[] | null;
-  getNextId(): number;
-}
 
 export interface UtilityService {
   sendEmail: (recipient: string, subject: string, content: string) => void;
+}
+
+// ============================== TRANSACTION RELATED ==============================
+
+export interface UserRepository {
+  getByEmail: (email: string) => User | null;
+  getByUsername: (username: string) => User | null;
+  getById: (id: number) => User | null;
+  getNextId(): number;
+
+  add: (user: User) => void;
+  update: (user: User) => void;
+}
+
+export interface TransactionRepository {
+  add: (transaction: Transaction) => void;
+  update: (transaction: Transaction) => void;
+  getByUserId: (id: number) => Transaction[] | null;
+  getById: (id: number) => Transaction | null;
+  getNextId(): number;
 }
 // ============================== BY USE CASE RELATED ==============================
 
@@ -62,4 +67,16 @@ export interface CreateTransactionUseCase {
 
 export interface GetTransactionByIdUseCase {
   execute: (id: number) => Transaction[] | null;
+}
+
+export interface UpdateTransactionUseCase {
+  execute(
+    transactionId: number,
+    updates: {
+      name?: string;
+      category?: string;
+      amount?: number;
+      status?: string;
+    },
+  ): Transaction;
 }

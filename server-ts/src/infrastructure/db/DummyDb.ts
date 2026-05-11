@@ -101,7 +101,7 @@ export class TransactionDummyDb implements TransactionRepository {
 
   // ========================= INFRASTRUCTURE OPERATION =========================
 
-  addTransaction(transaction: Transaction): void {
+  add(transaction: Transaction): void {
     const transactions = this.readTransactions();
 
     transactions.push(transaction);
@@ -111,43 +111,25 @@ export class TransactionDummyDb implements TransactionRepository {
     console.log(`Added Transcations`);
   }
 
-  getTransactionsByUser(id: number): Transaction[] {
+  getByUserId(id: number): Transaction[] {
     const transactions = this.readTransactions();
 
     return transactions.filter((t) => t.getBelongsTo() === id);
   }
 
-  // updateUser(user: User): void {
-  //   const users = this.readUsers();
+  update(transaction: Transaction): void {
+    const transactions = this.readTransactions();
 
-  //   const index = users.findIndex((u) => u.getId() === user.getId());
+    const index = transactions.findIndex((t) => t.getId() === transaction.getId());
 
-  //   if (index === -1) {
-  //     throw new Error("User not found");
-  //   }
+    if (index === -1) {
+      throw new Error("Transaction not found");
+    }
 
-  //   users[index] = user;
+    transactions[index] = transaction;
 
-  //   this.writeUsers(users);
-  // }
-
-  // getUserByEmail(email: string): User | null {
-  //   const users = this.readUsers();
-
-  //   return users.find((u) => u.getEmail() === email) || null;
-  // }
-
-  // getUserByUsername(username: string): User | null {
-  //   const users = this.readUsers();
-
-  //   return users.find((u) => u.getUsername() === username) || null;
-  // }
-
-  // getUserById(id: number): User | null {
-  //   const users = this.readUsers();
-
-  //   return users.find((u) => u.getId() === id) || null;
-  // }
+    this.writeTransactions(transactions);
+  }
 
   getNextId(): number {
     const transactions = this.readTransactions();
@@ -157,5 +139,11 @@ export class TransactionDummyDb implements TransactionRepository {
     const maxId = Math.max(...transactions.map((t) => t.getId()));
 
     return maxId + 1;
+  }
+
+  getById(id: number): Transaction | null {
+    const transactions = this.readTransactions();
+
+    return transactions.find((t) => t.getId() === id) || null;
   }
 }
