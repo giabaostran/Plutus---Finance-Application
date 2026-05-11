@@ -193,11 +193,11 @@ export default function AssetsPage({ assets: initAssets, assetKpis, assetTypeOpt
             className="f-input"
             type="text"
             placeholder="Any additional notes…"
-            value={form.note}
+            alue={form.note}
             onChange={(e) => setF("note", e.target.value)}
           />
         </FormGroup>
-      </Modal>
+      </Modal>v
     </>
   );
 }

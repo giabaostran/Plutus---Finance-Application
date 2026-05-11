@@ -11,27 +11,26 @@ export class UserServices implements UserUseCases {
 
     const id = this.repository.getNextId();
 
-    const newUser = new User(id, email, username, password); // This can throw an error if invalid user so delegate to its caller
+    // This can throw an error if invalid user so delegate to its caller
+    const newUser = new User(id, email, username, password);
 
     this.repository.addUser(newUser);
 
     return newUser;
   }
 
-  changePassword(username: string, oldPassword: string, newPassword: string) {
-    const user = this.repository.getUserByUsername(username);
+  changePassword(id: number, oldPassword: string, newPassword: string) {
+    const user = this.repository.getUserById(id);
 
-    // If user with given name doesn't exist
-    if (!user) {
+    // If supplied password doesn't match or If user with given name doesn't exist
+    if (!user || user.getPassword() !== oldPassword) {
       throw new Error(`Invalid username or password does not exist`);
     }
-    // If supplied password doesn't match
-    if (user.getPassword() === oldPassword) {
-      user.setPassword(newPassword);
-      this.repository.updateUser(user);
-      return
-    }
 
-    throw new Error(`Invalid username or password does not exist`);
+    user.setPassword(newPassword);
+
+    this.repository.updateUser(user);
+
+    return user;
   }
 }

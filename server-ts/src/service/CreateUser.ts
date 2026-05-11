@@ -17,7 +17,7 @@ export class CreateUser implements CreateUserUseCase {
 
     const newUser = new User(id, email, username, password); // This can throw an error if invalid user so delegate to its caller
 
-    this.repository.save(newUser);
+    this.repository.add(newUser);
 
     return newUser;
   }

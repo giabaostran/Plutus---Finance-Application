@@ -1,9 +1,10 @@
 import fs from "fs";
 
 import { User } from "../../entities/User";
-import { UserRepository } from "../../service/interfaces";
+import { UserRepository, TransactionRepository } from "../../service/interfaces";
+import { Transaction } from "../../entities/Transaction";
 
-export class DummyDb implements UserRepository {
+export class UserDummyDb implements UserRepository {
   // private filePath = path.join(process.cwd(), "users.json");
   private filePath = "./users.json";
 
@@ -24,8 +25,7 @@ export class DummyDb implements UserRepository {
   }
 
   // ========================= INFRASTRUCTURE OPERATION =========================
-
-  addUser(user: User): void {
+  add(user: User): void {
     const users = this.readUsers();
 
     users.push(user);
@@ -35,7 +35,7 @@ export class DummyDb implements UserRepository {
     console.log(`Added ${user.getEmail()}`);
   }
 
-  updateUser(user: User): void {
+  update(user: User): void {
     const users = this.readUsers();
 
     const index = users.findIndex((u) => u.getId() === user.getId());
@@ -49,16 +49,22 @@ export class DummyDb implements UserRepository {
     this.writeUsers(users);
   }
 
-  getUserByEmail(email: string): User | null {
+  getByEmail(email: string): User | null {
     const users = this.readUsers();
 
     return users.find((u) => u.getEmail() === email) || null;
   }
 
-  getUserByUsername(username: string): User | null {
+  getByUsername(username: string): User | null {
     const users = this.readUsers();
 
     return users.find((u) => u.getUsername() === username) || null;
+  }
+
+  getById(id: number): User | null {
+    const users = this.readUsers();
+
+    return users.find((u) => u.getId() === id) || null;
   }
 
   getNextId(): number {
@@ -67,6 +73,89 @@ export class DummyDb implements UserRepository {
     if (users.length === 0) return 1;
 
     const maxId = Math.max(...users.map((u) => u.getId()));
+    return maxId + 1;
+  }
+}
+
+export class TransactionDummyDb implements TransactionRepository {
+  // private filePath = path.join(process.cwd(), "users.json");
+  private filePath = "./transactions.json";
+
+  // ========================= INFRASTRUCTURE IMPLEMENTATION =========================
+  private readTransactions(): Transaction[] {
+    // create file if it doesn't exist
+    if (!fs.existsSync(this.filePath)) {
+      fs.writeFileSync(this.filePath, JSON.stringify([], null, 2));
+    }
+
+    const data = fs.readFileSync(this.filePath, "utf-8");
+
+    return JSON.parse(data).map(
+      (t: any) => new Transaction(t.id, t.name, t.category, t.date, t.status, t.amt, t.belongsTo),
+    );
+  }
+
+  private writeTransactions(transactions: Transaction[]): void {
+    fs.writeFileSync(this.filePath, JSON.stringify(transactions, null, 2));
+  }
+
+  // ========================= INFRASTRUCTURE OPERATION =========================
+
+  addTransaction(transaction: Transaction): void {
+    const transactions = this.readTransactions();
+
+    transactions.push(transaction);
+
+    this.writeTransactions(transactions);
+
+    console.log(`Added Transcations`);
+  }
+
+  getTransactionsByUser(id: number): Transaction[] {
+    const transactions = this.readTransactions();
+
+    return transactions.filter((t) => t.getBelongsTo() === id);
+  }
+
+  // updateUser(user: User): void {
+  //   const users = this.readUsers();
+
+  //   const index = users.findIndex((u) => u.getId() === user.getId());
+
+  //   if (index === -1) {
+  //     throw new Error("User not found");
+  //   }
+
+  //   users[index] = user;
+
+  //   this.writeUsers(users);
+  // }
+
+  // getUserByEmail(email: string): User | null {
+  //   const users = this.readUsers();
+
+  //   return users.find((u) => u.getEmail() === email) || null;
+  // }
+
+  // getUserByUsername(username: string): User | null {
+  //   const users = this.readUsers();
+
+  //   return users.find((u) => u.getUsername() === username) || null;
+  // }
+
+  // getUserById(id: number): User | null {
+  //   const users = this.readUsers();
+
+  //   return users.find((u) => u.getId() === id) || null;
+  // }
+
+  getNextId(): number {
+    const transactions = this.readTransactions();
+
+    if (transactions.length === 0) return 1;
+
+    const maxId = Math.max(...transactions.map((t) => t.getId()));
+
     return maxId + 1;
   }
 }

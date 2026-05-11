@@ -1,0 +1,5 @@
+$kind: http-request
+name: getTransactionByUserid
+url: localhost:3000/users/1/transactions
+method: GET
+order: 1407365921491084

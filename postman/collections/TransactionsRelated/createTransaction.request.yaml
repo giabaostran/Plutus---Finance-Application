@@ -1,0 +1,15 @@
+$kind: http-request
+name: createTransaction
+url: localhost:3000/users/1/transactions
+method: POST
+body:
+  type: json
+  content: |2-
+        {
+            "name": "AC: Black Flag",
+            "category": "entertainment",
+            "date": 1712966440,
+            "status": "ok",
+            "amt": 89
+        }
+order: 1778523765659

@@ -1,4 +1,4 @@
-import { CreateUserUseCase, UserUseCases } from "../service/interfaces";
+import { UserUseCases } from "../service/interfaces";
 import { Request, Response } from "express";
 
 export class UserController {
@@ -22,8 +22,8 @@ export class UserController {
   changePassword = (req: Request, res: Response) => {
     try {
       const { oldPassword, newPassword } = req.body;
-      const username = req.params.username as string;
-      const user = this.userServices.changePassword(username, oldPassword, newPassword); // this can throw an error
+      const id = Number(req.params.id);
+      const user = this.userServices.changePassword(id, oldPassword, newPassword); // this can throw an error
 
       res.status(201).json(user);
     } catch (error) {

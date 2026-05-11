@@ -1,6 +1,6 @@
 // ── Topbar ─────────────────────────────────
 export function Topbar({ title, theme, onThemeChange, onHamburger }) {
-  const THEMES = ["light", "dark", "retro"];
+  const THEMES = ["light", "dark", "retro", "retrofuture", "aero"];
   return (
     <header className="topbar">
       <button className="tb-hamburger" onClick={onHamburger}>

@@ -19,7 +19,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 // 1. CSS — injected once into document.head
 // ─────────────────────────────────────────────
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;600;700&family=Nunito:wght@300;400;600;700;800&display=swap');
 
 :root {
   --bg:#F5F2ED; --surface:#FFFFFF; --surface-2:#EDEAE4;
@@ -51,6 +51,350 @@ const CSS = `
   --green:#4AC05E; --red:#E04848; --amber:#C8902A;
   --c1:#4AC05E; --c2:#C8902A; --c3:#46C0C0; --c4:#8050C0;
   --r:2px; --r-sm:2px;
+}
+
+/* ── RETRO-FUTURISM: chrome, neon orange, deep space ── */
+[data-theme="retrofuture"] {
+  --bg:#0A0612; --surface:#100A1E; --surface-2:#180F2C;
+  --border:rgba(255,100,0,0.14); --border-2:rgba(255,100,0,0.30);
+  --text-1:#FFE8C0; --text-2:#A0608A; --text-3:#402848;
+  --sidebar-bg:#060310; --sidebar-t:#FFD090; --sidebar-m:#5A3060;
+  --accent:#FF6400; --accent-h:#FF8030;
+  --green:#40E0A0; --red:#FF3060; --amber:#FFB830;
+  --c1:#FF6400; --c2:#FF3060; --c3:#40E0A0; --c4:#A060FF;
+  --r:0px; --r-sm:0px;
+  --fn-d:'Orbitron',monospace; --fn-b:'Exo 2',sans-serif; --fn-m:'DM Mono',monospace;
+}
+[data-theme="retrofuture"] .sb-mark{color:#000}
+[data-theme="retrofuture"] .sb-item.active{background:rgba(255,100,0,0.1);color:var(--accent)}
+[data-theme="retrofuture"] .sb-item:hover{background:rgba(255,100,0,0.06)}
+[data-theme="retrofuture"] .sb-badge{color:#000}
+[data-theme="retrofuture"] .sb-avatar{color:#000;border-radius:0}
+[data-theme="retrofuture"] .sb-active-bar{border-radius:0}
+[data-theme="retrofuture"] .kpi:hover{box-shadow:0 0 20px rgba(255,100,0,0.12)}
+[data-theme="retrofuture"] .card:hover{border-color:rgba(255,100,0,0.3)}
+[data-theme="retrofuture"] .btn-primary{color:#000}
+[data-theme="retrofuture"] .f-chip.on{color:#000}
+[data-theme="retrofuture"] .pg.on{color:#000}
+[data-theme="retrofuture"] .pill.ok{background:rgba(64,224,160,0.1)}
+[data-theme="retrofuture"] .pill.fail{background:rgba(255,48,96,0.1)}
+[data-theme="retrofuture"] .tag-info{background:rgba(255,100,0,0.1);color:var(--accent)}
+[data-theme="retrofuture"] .insight-action{color:var(--accent)}
+[data-theme="retrofuture"] .msg-user .msg-bubble{color:#000}
+[data-theme="retrofuture"] .bn-item.on{color:var(--accent)}
+/* Scanline grid overlay */
+[data-theme="retrofuture"] body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,100,0,0.015) 3px,rgba(255,100,0,0.015) 4px);
+}
+/* Perspective grid on bg */
+[data-theme="retrofuture"] body::after{
+  content:'';position:fixed;bottom:0;left:0;right:0;height:40vh;pointer-events:none;z-index:0;
+  background:
+    linear-gradient(rgba(255,100,0,0.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,100,0,0.06) 1px,transparent 1px);
+  background-size:60px 60px;
+  transform:perspective(400px) rotateX(60deg);
+  transform-origin:bottom;
+  opacity:0.5;
+}
+
+/* ── FRUTIGER AERO: glossy glass, sky blue, lush greens ── */
+[data-theme="aero"] {
+  --bg:linear-gradient(135deg,#A8D8EA 0%,#E8F4FD 40%,#C8EED8 100%);
+  --bg-solid:#B8DCF0;
+  --surface:rgba(255,255,255,0.72); --surface-2:rgba(255,255,255,0.45);
+  --border:rgba(255,255,255,0.6); --border-2:rgba(100,180,240,0.5);
+  --text-1:#0A2840; --text-2:#2A6080; --text-3:#7AAAC8;
+  --sidebar-bg:rgba(10,40,80,0.82); --sidebar-t:#E8F4FF; --sidebar-m:#6090B8;
+  --accent:#0078D4; --accent-h:#005FA3;
+  --green:#2E8B57; --red:#C0392B; --amber:#E67E22;
+  --c1:#0078D4; --c2:#E67E22; --c3:#2E8B57; --c4:#8E44AD;
+  --r:14px; --r-sm:10px;
+  --fn-d:'Nunito',sans-serif; --fn-b:'Nunito',sans-serif; --fn-m:'DM Mono',monospace;
+}
+[data-theme="aero"] body{background:var(--bg);background-attachment:fixed}
+[data-theme="aero"] .card{
+  background:rgba(255,255,255,0.65);
+  backdrop-filter:blur(16px) saturate(180%);
+  -webkit-backdrop-filter:blur(16px) saturate(180%);
+  border:1px solid rgba(255,255,255,0.7);
+  box-shadow:0 4px 24px rgba(0,100,200,0.08),inset 0 1px 0 rgba(255,255,255,0.8);
+}
+[data-theme="aero"] .kpi{
+  background:rgba(255,255,255,0.60);
+  backdrop-filter:blur(12px) saturate(160%);
+  -webkit-backdrop-filter:blur(12px) saturate(160%);
+  border:1px solid rgba(255,255,255,0.75);
+  box-shadow:0 2px 16px rgba(0,100,200,0.07),inset 0 1px 0 rgba(255,255,255,0.9);
+}
+[data-theme="aero"] .sidebar{
+  background:rgba(10,40,80,0.80);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-right:1px solid rgba(255,255,255,0.15);
+}
+[data-theme="aero"] .topbar{
+  background:rgba(255,255,255,0.60);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.6);
+  box-shadow:0 1px 0 rgba(0,100,200,0.08);
+}
+[data-theme="aero"] .sb-badge{color:#fff}
+[data-theme="aero"] .sb-item.active{background:rgba(255,255,255,0.12)}
+[data-theme="aero"] .sb-avatar{color:#fff;border-radius:50%}
+[data-theme="aero"] .btn-primary{
+  background:linear-gradient(180deg,#2090E8 0%,#0060C0 100%);
+  border:1px solid rgba(0,60,140,0.4);
+  box-shadow:0 2px 8px rgba(0,100,200,0.3),inset 0 1px 0 rgba(255,255,255,0.4);
+  color:#fff;
+}
+[data-theme="aero"] .btn-primary:hover{
+  background:linear-gradient(180deg,#30A0F0 0%,#0070D0 100%);
+}
+[data-theme="aero"] .f-input,[data-theme="aero"] .f-select,[data-theme="aero"] .f-textarea{
+  background:rgba(255,255,255,0.7);
+  border:1px solid rgba(100,160,220,0.5);
+  box-shadow:inset 0 1px 3px rgba(0,80,160,0.08);
+}
+[data-theme="aero"] .modal{
+  background:rgba(240,248,255,0.90);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.8);
+  box-shadow:0 12px 48px rgba(0,80,180,0.2);
+}
+[data-theme="aero"] .prog-fill{
+  background:linear-gradient(90deg,#40B0F0,#0078D4);
+  box-shadow:0 0 6px rgba(0,120,212,0.4);
+}
+[data-theme="aero"] .ai-dot{box-shadow:0 0 6px var(--green)}
+[data-theme="aero"] .t-btn.on{
+  background:rgba(255,255,255,0.7);
+  box-shadow:0 1px 4px rgba(0,100,200,0.15),inset 0 1px 0 rgba(255,255,255,0.9);
+}
+[data-theme="aero"] .theme-sw{background:rgba(255,255,255,0.4);backdrop-filter:blur(8px)}
+[data-theme="aero"] .bot-nav{background:rgba(10,40,80,0.80);backdrop-filter:blur(20px)}
+[data-theme="aero"] .bn-item.on{color:#A8D8FF}
+
+/* ══ AUTH PAGES (Login + 404) ═══════════════════════════════ */
+.auth-shell{
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg);
+  background-attachment:fixed;
+  z-index:500;
+  transition:background var(--ease);
+  padding:20px;
+}
+[data-theme="aero"] .auth-shell{background:linear-gradient(135deg,#A8D8EA 0%,#E8F4FD 40%,#C8EED8 100%)}
+[data-theme="retrofuture"] .auth-shell{
+  background:radial-gradient(ellipse at 50% 0%,#1A0A2E 0%,#0A0612 60%);
+}
+[data-theme="retrofuture"] .auth-shell::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:50vh;
+  background:
+    linear-gradient(rgba(255,100,0,0.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,100,0,0.08) 1px,transparent 1px);
+  background-size:60px 60px;
+  transform:perspective(500px) rotateX(65deg);
+  transform-origin:bottom;
+}
+
+/* Login card */
+.login-card{
+  background:var(--surface);
+  border:1px solid var(--border-2);
+  border-radius:var(--r);
+  padding:40px 40px 36px;
+  width:100%;max-width:420px;
+  display:flex;flex-direction:column;gap:24px;
+  position:relative;z-index:1;
+  box-shadow:0 8px 40px rgba(0,0,0,0.12);
+  transition:background var(--ease);
+}
+[data-theme="aero"] .login-card{
+  background:rgba(255,255,255,0.72);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.8);
+  box-shadow:0 8px 48px rgba(0,100,200,0.15),inset 0 1px 0 rgba(255,255,255,0.9);
+}
+[data-theme="retrofuture"] .login-card{
+  background:rgba(16,10,30,0.95);
+  border:1px solid rgba(255,100,0,0.35);
+  box-shadow:0 0 40px rgba(255,100,0,0.08),0 0 1px rgba(255,100,0,0.6);
+}
+.login-logo{display:flex;align-items:center;gap:12px;justify-content:center}
+.login-mark{
+  width:40px;height:40px;
+  background:var(--accent);
+  border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fn-d);font-size:20px;font-weight:800;
+  color:#fff;flex-shrink:0;
+}
+[data-theme="retrofuture"] .login-mark{color:#000}
+[data-theme="aero"] .login-mark{
+  background:linear-gradient(180deg,#2090E8,#0060C0);
+  box-shadow:0 2px 10px rgba(0,100,200,0.4);
+  color:#fff;
+}
+.login-brand{font-family:var(--fn-d);font-size:24px;font-weight:800;color:var(--text-1);letter-spacing:-0.5px}
+.login-tagline{text-align:center;font-size:13px;color:var(--text-2);margin-top:-16px}
+.login-divider{
+  display:flex;align-items:center;gap:12px;
+  font-size:11px;color:var(--text-3);letter-spacing:0.5px;
+}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--border-2)}
+.login-footer{text-align:center;font-size:12px;color:var(--text-2)}
+.login-footer a{color:var(--accent);cursor:pointer;text-decoration:none;font-weight:600}
+.login-footer a:hover{text-decoration:underline}
+.login-social{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.social-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:9px 14px;
+  border-radius:var(--r-sm);
+  border:1px solid var(--border-2);
+  background:var(--surface-2);
+  font-size:13px;color:var(--text-1);
+  cursor:pointer;font-weight:500;
+  transition:all 0.15s;font-family:var(--fn-b);
+}
+.social-btn:hover{border-color:var(--accent);color:var(--accent)}
+[data-theme="aero"] .social-btn{background:rgba(255,255,255,0.6);backdrop-filter:blur(8px)}
+.login-err{
+  background:rgba(209,64,64,0.08);
+  border:1px solid rgba(209,64,64,0.25);
+  border-radius:var(--r-sm);
+  padding:10px 14px;
+  font-size:13px;color:var(--red);
+  display:flex;align-items:center;gap:8px;
+}
+[data-theme="retrofuture"] .login-err{border-radius:0}
+
+/* ── retrofuture login glow input ── */
+[data-theme="retrofuture"] .f-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(255,100,0,0.15),0 0 8px rgba(255,100,0,0.1);
+}
+[data-theme="retrofuture"] .btn-primary{
+  color:#000;
+  box-shadow:0 0 12px rgba(255,100,0,0.3);
+}
+[data-theme="retrofuture"] .btn-primary:hover{box-shadow:0 0 20px rgba(255,100,0,0.5)}
+
+/* 404 page */
+.e404-shell{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--bg);
+  background-attachment:fixed;
+  z-index:500;
+  gap:0;
+  text-align:center;padding:24px;
+  transition:background var(--ease);
+}
+[data-theme="aero"] .e404-shell{background:linear-gradient(135deg,#A8D8EA 0%,#E8F4FD 40%,#C8EED8 100%)}
+[data-theme="retrofuture"] .e404-shell{background:radial-gradient(ellipse at 50% 0%,#1A0A2E 0%,#0A0612 60%)}
+[data-theme="retrofuture"] .e404-shell::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:50vh;
+  background:linear-gradient(rgba(255,100,0,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,100,0,0.08) 1px,transparent 1px);
+  background-size:60px 60px;transform:perspective(500px) rotateX(65deg);transform-origin:bottom;
+}
+.e404-code{
+  font-family:var(--fn-d);
+  font-size:clamp(80px,18vw,160px);
+  font-weight:800;
+  color:var(--accent);
+  line-height:1;
+  letter-spacing:-4px;
+  opacity:0.18;
+  pointer-events:none;
+  user-select:none;
+  position:relative;z-index:1;
+}
+[data-theme="retrofuture"] .e404-code{
+  opacity:1;
+  text-shadow:0 0 30px rgba(255,100,0,0.5),0 0 60px rgba(255,100,0,0.2);
+  letter-spacing:4px;
+  font-size:clamp(60px,14vw,130px);
+}
+[data-theme="aero"] .e404-code{
+  background:linear-gradient(180deg,#2090E8,#0050A0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;opacity:0.25;
+}
+.e404-title{
+  font-family:var(--fn-d);
+  font-size:clamp(20px,4vw,32px);
+  font-weight:700;
+  color:var(--text-1);
+  margin-top:-24px;
+  position:relative;z-index:1;
+}
+[data-theme="retrofuture"] .e404-title{color:var(--accent);text-shadow:0 0 16px rgba(255,100,0,0.4)}
+.e404-sub{font-size:15px;color:var(--text-2);margin-top:10px;max-width:380px;line-height:1.6;position:relative;z-index:1}
+.e404-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1}
+.e404-card{
+  background:var(--surface);
+  border:1px solid var(--border-2);
+  border-radius:var(--r);
+  padding:20px 24px;
+  margin-top:28px;
+  position:relative;z-index:1;
+  max-width:360px;width:100%;
+  box-shadow:0 4px 20px rgba(0,0,0,0.06);
+}
+[data-theme="aero"] .e404-card{background:rgba(255,255,255,0.65);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.7)}
+[data-theme="retrofuture"] .e404-card{background:rgba(16,10,30,0.95);border:1px solid rgba(255,100,0,0.25)}
+.e404-nav-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-3);margin-bottom:12px}
+.e404-nav-links{display:flex;flex-direction:column;gap:8px}
+.e404-nav-link{
+  display:flex;align-items:center;gap:12px;
+  padding:9px 12px;
+  border-radius:var(--r-sm);
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  cursor:pointer;
+  transition:all 0.15s;
+  font-size:13px;color:var(--text-1);
+  font-family:var(--fn-b);
+}
+.e404-nav-link:hover{border-color:var(--border-2);background:var(--surface)}
+[data-theme="retrofuture"] .e404-nav-link:hover{border-color:var(--accent);color:var(--accent)}
+[data-theme="aero"] .e404-nav-link{background:rgba(255,255,255,0.5)}
+.e404-nav-link-icon{font-size:15px;width:20px;text-align:center}
+.e404-glitch{
+  position:relative;display:inline-block;
+}
+[data-theme="retrofuture"] .e404-glitch::before,[data-theme="retrofuture"] .e404-glitch::after{
+  content:attr(data-text);
+  position:absolute;top:0;left:0;right:0;
+  font-family:var(--fn-d);
+  font-size:inherit;font-weight:800;
+  letter-spacing:4px;
+}
+[data-theme="retrofuture"] .e404-glitch::before{
+  color:#FF3060;clip-path:polygon(0 0,100% 0,100% 45%,0 45%);
+  animation:glitch-top 3s infinite;text-shadow:none;opacity:0.6;
+}
+[data-theme="retrofuture"] .e404-glitch::after{
+  color:#40E0A0;clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%);
+  animation:glitch-bot 3s infinite;text-shadow:none;opacity:0.6;
+}
+@keyframes glitch-top{
+  0%,90%,100%{transform:translate(0)}
+  92%{transform:translate(-3px,0)}
+  94%{transform:translate(3px,0)}
+  96%{transform:translate(-1px,0)}
+}
+@keyframes glitch-bot{
+  0%,90%,100%{transform:translate(0)}
+  92%{transform:translate(3px,0)}
+  94%{transform:translate(-3px,0)}
+  96%{transform:translate(2px,0)}
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -443,7 +787,7 @@ export const INITIAL_DATA = {
   revenueChart: {
     months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     revenueBars: [
-      { x: 68, y: 40, h: 130 },
+      { x: 68,  y: 40, h: 130 },
       { x: 148, y: 30, h: 140 },
       { x: 228, y: 25, h: 145 },
       { x: 308, y: 20, h: 150 },
@@ -451,12 +795,12 @@ export const INITIAL_DATA = {
       { x: 468, y: 22, h: 148 },
     ],
     expenseBars: [
-      { x: 100, y: 85, h: 85 },
-      { x: 180, y: 90, h: 80 },
-      { x: 260, y: 82, h: 88 },
-      { x: 340, y: 80, h: 90 },
-      { x: 420, y: 86, h: 84 },
-      { x: 500, y: 78, h: 92 },
+      { x: 100, y: 85,  h: 85  },
+      { x: 180, y: 90,  h: 80  },
+      { x: 260, y: 82,  h: 88  },
+      { x: 340, y: 80,  h: 90  },
+      { x: 420, y: 86,  h: 84  },
+      { x: 500, y: 78,  h: 92  },
     ],
     profitLine: "100,74 180,66 260,54 340,46 420,60 500,44",
     profitDots: [
@@ -471,353 +815,94 @@ export const INITIAL_DATA = {
   },
 
   allocation: [
-    { label: "Equities", pct: 45, colorVar: "var(--c1)", dashArray: "141.4 172.8", dashOffset: "78.5" },
-    { label: "Bonds", pct: 25, colorVar: "var(--c2)", dashArray: "78.5 235.6", dashOffset: "-62.8" },
-    { label: "Real Estate", pct: 18, colorVar: "var(--c3)", dashArray: "56.5 257.6", dashOffset: "-141.4" },
-    { label: "Cash", pct: 12, colorVar: "var(--c4)", dashArray: "37.7 276.5", dashOffset: "-197.9" },
+    { label: "Equities",    pct: 45, colorVar: "var(--c1)", dashArray: "141.4 172.8", dashOffset: "78.5"   },
+    { label: "Bonds",       pct: 25, colorVar: "var(--c2)", dashArray: "78.5 235.6",  dashOffset: "-62.8"  },
+    { label: "Real Estate", pct: 18, colorVar: "var(--c3)", dashArray: "56.5 257.6",  dashOffset: "-141.4" },
+    { label: "Cash",        pct: 12, colorVar: "var(--c4)", dashArray: "37.7 276.5",  dashOffset: "-197.9" },
   ],
 
   budget: [
-    { label: "🏠 Housing", spent: 2400, total: 2500, color: "var(--red)" },
-    { label: "🛒 Groceries", spent: 620, total: 900, color: "var(--accent)" },
-    { label: "🚗 Transport", spent: 190, total: 400, color: "var(--green)" },
-    { label: "🎬 Entertainment", spent: 340, total: 300, color: "var(--red)" },
-    { label: "☁ Software", spent: 580, total: 800, color: "var(--accent)" },
-    { label: "🏋 Health", spent: 120, total: 250, color: "var(--green)" },
+    { label: "🏠 Housing",      spent: 2400, total: 2500, color: "var(--red)"    },
+    { label: "🛒 Groceries",    spent: 620,  total: 900,  color: "var(--accent)" },
+    { label: "🚗 Transport",    spent: 190,  total: 400,  color: "var(--green)"  },
+    { label: "🎬 Entertainment",spent: 340,  total: 300,  color: "var(--red)"    },
+    { label: "☁ Software",      spent: 580,  total: 800,  color: "var(--accent)" },
+    { label: "🏋 Health",       spent: 120,  total: 250,  color: "var(--green)"  },
   ],
 
   transactions: [
-    {
-      id: 1,
-      ico: "🏠",
-      bg: "rgba(100,130,255,0.12)",
-      name: "Mortgage Payment",
-      sub: "Chase Bank",
-      cat: "Housing",
-      acct: "Chase Bank",
-      date: "Apr 24",
-      status: "ok",
-      amt: -2400,
-    },
-    {
-      id: 2,
-      ico: "💼",
-      bg: "rgba(34,160,107,0.12)",
-      name: "Freelance Project",
-      sub: "Stripe Inc.",
-      cat: "Income",
-      acct: "Stripe",
-      date: "Apr 23",
-      status: "ok",
-      amt: 3500,
-    },
-    {
-      id: 3,
-      ico: "🛒",
-      bg: "rgba(232,84,26,0.12)",
-      name: "Whole Foods",
-      sub: "Visa ···4821",
-      cat: "Groceries",
-      acct: "Visa ···4821",
-      date: "Apr 22",
-      status: "ok",
-      amt: -184,
-    },
-    {
-      id: 4,
-      ico: "◈",
-      bg: "rgba(196,125,26,0.12)",
-      name: "ETF Purchase",
-      sub: "Fidelity",
-      cat: "Investment",
-      acct: "Fidelity",
-      date: "Apr 21",
-      status: "pend",
-      amt: -1000,
-    },
-    {
-      id: 5,
-      ico: "☁",
-      bg: "rgba(160,100,255,0.12)",
-      name: "AWS Services",
-      sub: "Amazon",
-      cat: "Software",
-      acct: "Visa ···4821",
-      date: "Apr 20",
-      status: "ok",
-      amt: -340,
-    },
-    {
-      id: 6,
-      ico: "✖",
-      bg: "rgba(209,64,64,0.12)",
-      name: "Wire Transfer",
-      sub: "Bank of America",
-      cat: "Transfer",
-      acct: "Chase Bank",
-      date: "Apr 19",
-      status: "fail",
-      amt: -5000,
-    },
-    {
-      id: 7,
-      ico: "🚗",
-      bg: "rgba(100,130,255,0.12)",
-      name: "Shell Gas Station",
-      sub: "Visa ···4821",
-      cat: "Transport",
-      acct: "Visa ···4821",
-      date: "Apr 18",
-      status: "ok",
-      amt: -68,
-    },
-    {
-      id: 8,
-      ico: "💼",
-      bg: "rgba(34,160,107,0.12)",
-      name: "Salary — April",
-      sub: "Employer ACH",
-      cat: "Income",
-      acct: "Chase Bank",
-      date: "Apr 15",
-      status: "ok",
-      amt: 9800,
-    },
-    {
-      id: 9,
-      ico: "🎬",
-      bg: "rgba(232,84,26,0.12)",
-      name: "Netflix",
-      sub: "Visa ···4821",
-      cat: "Entertainment",
-      acct: "Visa ···4821",
-      date: "Apr 14",
-      status: "ok",
-      amt: -18,
-    },
-    {
-      id: 10,
-      ico: "🏋",
-      bg: "rgba(160,100,255,0.12)",
-      name: "Equinox",
-      sub: "Visa ···4821",
-      cat: "Health",
-      acct: "Visa ···4821",
-      date: "Apr 13",
-      status: "ok",
-      amt: -120,
-    },
+    { id: 1,  ico: "🏠", bg: "rgba(100,130,255,0.12)", name: "Mortgage Payment",  sub: "Chase Bank",      cat: "Housing",     acct: "Chase Bank",   date: "Apr 24", status: "ok",   amt: -2400  },
+    { id: 2,  ico: "💼", bg: "rgba(34,160,107,0.12)",  name: "Freelance Project", sub: "Stripe Inc.",     cat: "Income",      acct: "Stripe",       date: "Apr 23", status: "ok",   amt: 3500   },
+    { id: 3,  ico: "🛒", bg: "rgba(232,84,26,0.12)",   name: "Whole Foods",       sub: "Visa ···4821",    cat: "Groceries",   acct: "Visa ···4821", date: "Apr 22", status: "ok",   amt: -184   },
+    { id: 4,  ico: "◈",  bg: "rgba(196,125,26,0.12)",  name: "ETF Purchase",      sub: "Fidelity",        cat: "Investment",  acct: "Fidelity",     date: "Apr 21", status: "pend", amt: -1000  },
+    { id: 5,  ico: "☁",  bg: "rgba(160,100,255,0.12)", name: "AWS Services",      sub: "Amazon",          cat: "Software",    acct: "Visa ···4821", date: "Apr 20", status: "ok",   amt: -340   },
+    { id: 6,  ico: "✖",  bg: "rgba(209,64,64,0.12)",   name: "Wire Transfer",     sub: "Bank of America", cat: "Transfer",    acct: "Chase Bank",   date: "Apr 19", status: "fail", amt: -5000  },
+    { id: 7,  ico: "🚗", bg: "rgba(100,130,255,0.12)", name: "Shell Gas Station", sub: "Visa ···4821",    cat: "Transport",   acct: "Visa ···4821", date: "Apr 18", status: "ok",   amt: -68    },
+    { id: 8,  ico: "💼", bg: "rgba(34,160,107,0.12)",  name: "Salary — April",    sub: "Employer ACH",    cat: "Income",      acct: "Chase Bank",   date: "Apr 15", status: "ok",   amt: 9800   },
+    { id: 9,  ico: "🎬", bg: "rgba(232,84,26,0.12)",   name: "Netflix",           sub: "Visa ···4821",    cat: "Entertainment",acct: "Visa ···4821",date: "Apr 14", status: "ok",   amt: -18    },
+    { id: 10, ico: "🏋", bg: "rgba(160,100,255,0.12)", name: "Equinox",           sub: "Visa ···4821",    cat: "Health",      acct: "Visa ···4821", date: "Apr 13", status: "ok",   amt: -120   },
   ],
 
   txSummary: [
-    { label: "Total In", value: "+$18,420", cls: "pos", sub: "12 transactions" },
-    { label: "Total Out", value: "−$6,842", cls: "neg", sub: "12 transactions" },
-    { label: "Net Cash Flow", value: "+$11,578", cls: "pos", sub: "This month" },
-    { label: "Pending", value: "$6,340", cls: "", sub: "2 transactions" },
+    { label: "Total In",      value: "+$18,420", cls: "pos", sub: "12 transactions" },
+    { label: "Total Out",     value: "−$6,842",  cls: "neg", sub: "12 transactions" },
+    { label: "Net Cash Flow", value: "+$11,578", cls: "pos", sub: "This month"      },
+    { label: "Pending",       value: "$6,340",   cls: "",    sub: "2 transactions"  },
   ],
 
   assets: [
-    {
-      id: 1,
-      ico: "🏠",
-      bg: "rgba(91,78,232,0.1)",
-      name: "Primary Residence",
-      type: "Real Estate",
-      val: 320000,
-      cost: 280000,
-      date: "2020-06-01",
-      note: "",
-    },
-    {
-      id: 2,
-      ico: "🚗",
-      bg: "rgba(232,84,26,0.1)",
-      name: "Tesla Model 3",
-      type: "Vehicle",
-      val: 28000,
-      cost: 42000,
-      date: "2022-03-15",
-      note: "",
-    },
-    {
-      id: 3,
-      ico: "📈",
-      bg: "rgba(34,160,107,0.1)",
-      name: "Fidelity Portfolio",
-      type: "Investment",
-      val: 112000,
-      cost: 88000,
-      date: "2019-01-01",
-      note: "",
-    },
-    {
-      id: 4,
-      ico: "💵",
-      bg: "rgba(196,162,90,0.1)",
-      name: "High-Yield Savings",
-      type: "Savings",
-      val: 14200,
-      cost: 14200,
-      date: "2023-08-01",
-      note: "",
-    },
-    {
-      id: 5,
-      ico: "₿",
-      bg: "rgba(196,125,26,0.1)",
-      name: "Bitcoin",
-      type: "Crypto",
-      val: 22400,
-      cost: 15000,
-      date: "2021-11-10",
-      note: "",
-    },
-    {
-      id: 6,
-      ico: "🏢",
-      bg: "rgba(160,100,255,0.1)",
-      name: "Side Business",
-      type: "Business",
-      val: 28200,
-      cost: 5000,
-      date: "2023-01-01",
-      note: "",
-    },
+    { id: 1, ico: "🏠", bg: "rgba(91,78,232,0.1)",   name: "Primary Residence", type: "Real Estate", val: 320000, cost: 280000, date: "2020-06-01", note: "" },
+    { id: 2, ico: "🚗", bg: "rgba(232,84,26,0.1)",   name: "Tesla Model 3",     type: "Vehicle",     val: 28000,  cost: 42000,  date: "2022-03-15", note: "" },
+    { id: 3, ico: "📈", bg: "rgba(34,160,107,0.1)",  name: "Fidelity Portfolio",type: "Investment",  val: 112000, cost: 88000,  date: "2019-01-01", note: "" },
+    { id: 4, ico: "💵", bg: "rgba(196,162,90,0.1)",  name: "High-Yield Savings",type: "Savings",     val: 14200,  cost: 14200,  date: "2023-08-01", note: "" },
+    { id: 5, ico: "₿",  bg: "rgba(196,125,26,0.1)",  name: "Bitcoin",           type: "Crypto",      val: 22400,  cost: 15000,  date: "2021-11-10", note: "" },
+    { id: 6, ico: "🏢", bg: "rgba(160,100,255,0.1)", name: "Side Business",     type: "Business",    val: 28200,  cost: 5000,   date: "2023-01-01", note: "" },
   ],
 
   assetKpis: [
-    { label: "Total Assets", value: "$524,800", icon: "💰", delta: "▲ 4.2%", deltaDir: "up", sub: "this year" },
-    { label: "Total Liabilities", value: "$276,260", icon: "📋", delta: "▼ 1.8%", deltaDir: "up", sub: "paid down" },
-    { label: "Net Value", value: "$248,540", icon: "⬆", delta: "▲ 8.4%", deltaDir: "up", sub: "vs last mo" },
-    { label: "Asset Count", value: "7", icon: "◈", delta: null, deltaDir: null, sub: "4 categories" },
+    { label: "Total Assets",      value: "$524,800", icon: "💰", delta: "▲ 4.2%",  deltaDir: "up", sub: "this year"   },
+    { label: "Total Liabilities", value: "$276,260", icon: "📋", delta: "▼ 1.8%",  deltaDir: "up", sub: "paid down"   },
+    { label: "Net Value",         value: "$248,540", icon: "⬆",  delta: "▲ 8.4%",  deltaDir: "up", sub: "vs last mo"  },
+    { label: "Asset Count",       value: "7",        icon: "◈",  delta: null,        deltaDir: null, sub: "4 categories"},
   ],
 
   assetTypeOptions: [
     { value: "🏠", label: "🏠 Real Estate" },
-    { value: "🚗", label: "🚗 Vehicle" },
-    { value: "📈", label: "📈 Investment" },
-    { value: "₿", label: "₿ Crypto" },
+    { value: "🚗", label: "🚗 Vehicle"     },
+    { value: "📈", label: "📈 Investment"  },
+    { value: "₿",  label: "₿ Crypto"       },
     { value: "💵", label: "💵 Cash/Savings" },
-    { value: "🏢", label: "🏢 Business" },
-    { value: "💎", label: "💎 Other" },
+    { value: "🏢", label: "🏢 Business"    },
+    { value: "💎", label: "💎 Other"       },
   ],
 
   goals: [
-    {
-      id: 1,
-      ico: "🏠",
-      bg: "rgba(91,78,232,0.1)",
-      name: "House Down Payment",
-      deadline: "Dec 2027",
-      target: 80000,
-      current: 32000,
-      contrib: 1500,
-      colorVar: "var(--accent)",
-    },
-    {
-      id: 2,
-      ico: "✈",
-      bg: "rgba(34,160,107,0.1)",
-      name: "Japan Trip",
-      deadline: "Sep 2026",
-      target: 6000,
-      current: 4200,
-      contrib: 400,
-      colorVar: "var(--green)",
-    },
-    {
-      id: 3,
-      ico: "🎓",
-      bg: "rgba(196,125,26,0.1)",
-      name: "MBA Fund",
-      deadline: "Jan 2028",
-      target: 30000,
-      current: 8400,
-      contrib: 800,
-      colorVar: "var(--amber)",
-    },
+    { id: 1, ico: "🏠", bg: "rgba(91,78,232,0.1)",  name: "House Down Payment", deadline: "Dec 2027", target: 80000, current: 32000, contrib: 1500, colorVar: "var(--accent)" },
+    { id: 2, ico: "✈",  bg: "rgba(34,160,107,0.1)", name: "Japan Trip",         deadline: "Sep 2026", target: 6000,  current: 4200,  contrib: 400,  colorVar: "var(--green)"  },
+    { id: 3, ico: "🎓", bg: "rgba(196,125,26,0.1)", name: "MBA Fund",           deadline: "Jan 2028", target: 30000, current: 8400,  contrib: 800,  colorVar: "var(--amber)"  },
   ],
 
   completedGoals: [
-    {
-      id: 99,
-      ico: "✅",
-      bg: "rgba(34,160,107,0.1)",
-      name: "Emergency Fund",
-      deadline: "Mar 2026",
-      target: 18000,
-      current: 18000,
-      contrib: 0,
-      colorVar: "var(--green)",
-      note: "6 month runway",
-    },
+    { id: 99, ico: "✅", bg: "rgba(34,160,107,0.1)", name: "Emergency Fund", deadline: "Mar 2026", target: 18000, current: 18000, contrib: 0, colorVar: "var(--green)", note: "6 month runway" },
   ],
 
   goalCategoryOptions: [
-    { value: "🏠", label: "🏠 Home" },
-    { value: "✈", label: "✈ Travel" },
+    { value: "🏠", label: "🏠 Home"      },
+    { value: "✈",  label: "✈ Travel"    },
     { value: "🎓", label: "🎓 Education" },
-    { value: "🚗", label: "🚗 Vehicle" },
-    { value: "💰", label: "💰 Savings" },
+    { value: "🚗", label: "🚗 Vehicle"   },
+    { value: "💰", label: "💰 Savings"  },
     { value: "🏖", label: "🏖 Lifestyle" },
-    { value: "📦", label: "📦 Other" },
+    { value: "📦", label: "📦 Other"    },
   ],
 
   insights: [
-    {
-      id: 1,
-      tag: "⚠ Warning",
-      tagCls: "tag-warn",
-      title: "Entertainment Budget Exceeded",
-      body: "You've spent $340 on entertainment this month — $40 over your $300 budget with 7 days remaining. Netflix, Spotify and a concert ticket were the main drivers.",
-      date: "Apr 24, 2026",
-      action: "Adjust budget →",
-    },
-    {
-      id: 2,
-      tag: "💡 Opportunity",
-      tagCls: "tag-tip",
-      title: "High-Yield Savings Available",
-      body: "You have $14,200 sitting in a 0.4% APY savings account. Moving to a HYSA could earn you an extra $710/yr at current 5.4% rates.",
-      date: "Apr 22, 2026",
-      action: "Learn more →",
-    },
-    {
-      id: 3,
-      tag: "🔴 Alert",
-      tagCls: "tag-alert",
-      title: "Wire Transfer Failed",
-      body: "A $5,000 wire transfer on Apr 19 failed — likely due to daily limit restrictions. Check with Bank of America or retry in smaller amounts.",
-      date: "Apr 19, 2026",
-      action: "View transaction →",
-    },
-    {
-      id: 4,
-      tag: "✦ Insight",
-      tagCls: "tag-info",
-      title: "On Pace for Best Savings Month",
-      body: "At 52.1%, this is your highest savings rate in 8 months. If you maintain this trajectory, your Emergency Fund top-up goal will be hit by June 2026.",
-      date: "Apr 24, 2026",
-      action: "View goals →",
-    },
-    {
-      id: 5,
-      tag: "📊 Pattern",
-      tagCls: "tag-tip",
-      title: "Groceries Trending Up",
-      body: "Grocery spending has increased 12% over the last 3 months. You're at $620 with 7 days remaining — may hit $720, leaving $180 unused budget.",
-      date: "Apr 23, 2026",
-      action: "See breakdown →",
-    },
-    {
-      id: 6,
-      tag: "✦ Portfolio",
-      tagCls: "tag-info",
-      title: "Rebalancing Opportunity",
-      body: "Equities have grown to 45% of your portfolio — up from your 40% target. Consider shifting $3,100 into bonds or real estate to rebalance.",
-      date: "Apr 20, 2026",
-      action: "View allocation →",
-    },
+    { id: 1, tag: "⚠ Warning",   tagCls: "tag-warn",  title: "Entertainment Budget Exceeded",  body: "You've spent $340 on entertainment this month — $40 over your $300 budget with 7 days remaining. Netflix, Spotify and a concert ticket were the main drivers.", date: "Apr 24, 2026", action: "Adjust budget →"   },
+    { id: 2, tag: "💡 Opportunity",tagCls:"tag-tip",   title: "High-Yield Savings Available",   body: "You have $14,200 sitting in a 0.4% APY savings account. Moving to a HYSA could earn you an extra $710/yr at current 5.4% rates.",                             date: "Apr 22, 2026", action: "Learn more →"      },
+    { id: 3, tag: "🔴 Alert",     tagCls: "tag-alert", title: "Wire Transfer Failed",            body: "A $5,000 wire transfer on Apr 19 failed — likely due to daily limit restrictions. Check with Bank of America or retry in smaller amounts.",                    date: "Apr 19, 2026", action: "View transaction →" },
+    { id: 4, tag: "✦ Insight",   tagCls: "tag-info",  title: "On Pace for Best Savings Month",  body: "At 52.1%, this is your highest savings rate in 8 months. If you maintain this trajectory, your Emergency Fund top-up goal will be hit by June 2026.",          date: "Apr 24, 2026", action: "View goals →"      },
+    { id: 5, tag: "📊 Pattern",  tagCls: "tag-tip",   title: "Groceries Trending Up",           body: "Grocery spending has increased 12% over the last 3 months. You're at $620 with 7 days remaining — may hit $720, leaving $180 unused budget.",                  date: "Apr 23, 2026", action: "See breakdown →"   },
+    { id: 6, tag: "✦ Portfolio", tagCls: "tag-info",  title: "Rebalancing Opportunity",         body: "Equities have grown to 45% of your portfolio — up from your 40% target. Consider shifting $3,100 into bonds or real estate to rebalance.",                    date: "Apr 20, 2026", action: "View allocation →"  },
   ],
 
   aiResponses: [
@@ -830,11 +915,11 @@ export const INITIAL_DATA = {
   ],
 
   navItems: [
-    { id: "dashboard", icon: "⬛", label: "Dashboard", section: "Overview" },
-    { id: "transactions", icon: "⇄", label: "Transactions", section: "Finance", badge: "24" },
-    { id: "assets", icon: "◈", label: "Assets", section: "Finance" },
-    { id: "goals", icon: "◎", label: "Goals", section: "Finance" },
-    { id: "intelligence", icon: "✦", label: "Intelligence", section: "Insights" },
+    { id: "dashboard",    icon: "⬛", label: "Dashboard",    section: "Overview"  },
+    { id: "transactions", icon: "⇄",  label: "Transactions", section: "Finance", badge: "24" },
+    { id: "assets",       icon: "◈",  label: "Assets",       section: "Finance"  },
+    { id: "goals",        icon: "◎",  label: "Goals",        section: "Finance"  },
+    { id: "intelligence", icon: "✦",  label: "Intelligence", section: "Insights" },
   ],
 };
 
@@ -862,9 +947,7 @@ export function Modal({ open, title, onClose, children, footer }) {
       <div className="modal">
         <div className="modal-hd">
           <div className="modal-title">{title}</div>
-          <button className="modal-x" onClick={onClose}>
-            ✕
-          </button>
+          <button className="modal-x" onClick={onClose}>✕</button>
         </div>
         <div className="modal-bd">{children}</div>
         {footer && <div className="modal-ft">{footer}</div>}
@@ -943,21 +1026,13 @@ export function Pagination({ page, totalPages, total, perPage, onChange }) {
   const end = Math.min(page * perPage, total);
   return (
     <div className="pager">
-      <div className="pager-info">
-        Showing {start}–{end} of {total}
-      </div>
+      <div className="pager-info">Showing {start}–{end} of {total}</div>
       <div className="pager-btns">
-        <button className="pg" disabled={page === 1} onClick={() => onChange(page - 1)}>
-          ←
-        </button>
+        <button className="pg" disabled={page === 1} onClick={() => onChange(page - 1)}>←</button>
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-          <button key={p} className={`pg${p === page ? " on" : ""}`} onClick={() => onChange(p)}>
-            {p}
-          </button>
+          <button key={p} className={`pg${p === page ? " on" : ""}`} onClick={() => onChange(p)}>{p}</button>
         ))}
-        <button className="pg" disabled={page === totalPages} onClick={() => onChange(page + 1)}>
-          →
-        </button>
+        <button className="pg" disabled={page === totalPages} onClick={() => onChange(page + 1)}>→</button>
       </div>
     </div>
   );
@@ -973,41 +1048,22 @@ export function BarChart({ data }) {
   return (
     <div>
       <div className="chart-legend">
-        <div className="legend-row">
-          <div className="leg-dot" style={{ background: "var(--c1)" }} />
-          Revenue
-        </div>
-        <div className="legend-row">
-          <div className="leg-dot" style={{ background: "var(--c2)" }} />
-          Expenses
-        </div>
-        <div className="legend-row">
-          <div className="leg-dot" style={{ background: "var(--c3)" }} />
-          Net Profit
-        </div>
+        <div className="legend-row"><div className="leg-dot" style={{ background: "var(--c1)" }} />Revenue</div>
+        <div className="legend-row"><div className="leg-dot" style={{ background: "var(--c2)" }} />Expenses</div>
+        <div className="legend-row"><div className="leg-dot" style={{ background: "var(--c3)" }} />Net Profit</div>
       </div>
       <svg className="chart" viewBox="0 0 540 210" preserveAspectRatio="xMidYMid meet">
         {[20, 60, 100, 140, 170].map((y) => (
           <line key={y} className="cg" x1="50" y1={y} x2="530" y2={y} />
         ))}
         <g className="ct">
-          {[
-            ["$20k", 24],
-            ["$16k", 64],
-            ["$12k", 104],
-            ["$8k", 144],
-            ["$4k", 174],
-          ].map(([txt, y]) => (
-            <text key={y} x="42" y={y} textAnchor="end">
-              {txt}
-            </text>
+          {[["$20k", 24], ["$16k", 64], ["$12k", 104], ["$8k", 144], ["$4k", 174]].map(([txt, y]) => (
+            <text key={y} x="42" y={y} textAnchor="end">{txt}</text>
           ))}
         </g>
         <g className="ct">
           {months.map((m, i) => (
-            <text key={m} x={xCenters[i]} y="194" textAnchor="middle">
-              {m}
-            </text>
+            <text key={m} x={xCenters[i]} y="194" textAnchor="middle">{m}</text>
           ))}
         </g>
         {revenueBars.map((b, i) => (
@@ -1037,9 +1093,7 @@ export function DonutChart({ segments, centerLabel = "$248k", centerSub = "Total
           {segments.map((seg, i) => (
             <circle
               key={seg.label}
-              cx="65"
-              cy="65"
-              r="50"
+              cx="65" cy="65" r="50"
               fill="none"
               stroke={seg.colorVar}
               strokeWidth="16"
@@ -1047,11 +1101,7 @@ export function DonutChart({ segments, centerLabel = "$248k", centerSub = "Total
               strokeDashoffset={seg.dashOffset}
               strokeLinecap="butt"
               transform="rotate(-90 65 65)"
-              style={{
-                opacity: hovered === null || hovered === i ? 1 : 0.3,
-                transition: "opacity 0.2s",
-                cursor: "pointer",
-              }}
+              style={{ opacity: hovered === null || hovered === i ? 1 : 0.3, transition: "opacity 0.2s", cursor: "pointer" }}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
             />
@@ -1066,14 +1116,7 @@ export function DonutChart({ segments, centerLabel = "$248k", centerSub = "Total
         {segments.map((seg, i) => (
           <div
             key={seg.label}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              opacity: hovered === null || hovered === i ? 1 : 0.4,
-              transition: "opacity 0.2s",
-              cursor: "default",
-            }}
+            style={{ display: "flex", justifyContent: "space-between", alignItems: "center", opacity: hovered === null || hovered === i ? 1 : 0.4, transition: "opacity 0.2s", cursor: "default" }}
             onMouseEnter={() => setHovered(i)}
             onMouseLeave={() => setHovered(null)}
           >
@@ -1081,9 +1124,7 @@ export function DonutChart({ segments, centerLabel = "$248k", centerSub = "Total
               <div className="leg-dot" style={{ background: seg.colorVar }} />
               {seg.label}
             </div>
-            <span style={{ fontSize: 12, fontWeight: 600, fontFamily: "var(--fn-m)", color: "var(--text-1)" }}>
-              {seg.pct}%
-            </span>
+            <span style={{ fontSize: 12, fontWeight: 600, fontFamily: "var(--fn-m)", color: "var(--text-1)" }}>{seg.pct}%</span>
           </div>
         ))}
       </div>
@@ -1104,9 +1145,7 @@ export function DashboardPage({ data, onNavigate }) {
     <>
       {/* KPI row */}
       <div className="g4">
-        {kpis.map((k) => (
-          <KpiCard key={k.id} {...k} />
-        ))}
+        {kpis.map((k) => <KpiCard key={k.id} {...k} />)}
       </div>
 
       {/* Chart + Donut */}
@@ -1144,9 +1183,7 @@ export function DashboardPage({ data, onNavigate }) {
               <div className="card-title">Recent Transactions</div>
               <div className="card-sub">Last 7 days</div>
             </div>
-            <button className="card-act" onClick={() => onNavigate("transactions")}>
-              View all →
-            </button>
+            <button className="card-act" onClick={() => onNavigate("transactions")}>View all →</button>
           </div>
           <div className="tbl-wrap">
             <table>
@@ -1162,19 +1199,13 @@ export function DashboardPage({ data, onNavigate }) {
               <tbody>
                 {recentTx.map((t) => (
                   <tr key={t.id}>
-                    <td>
-                      <div className="tx-ico" style={{ background: t.bg }}>
-                        {t.ico}
-                      </div>
-                    </td>
+                    <td><div className="tx-ico" style={{ background: t.bg }}>{t.ico}</div></td>
                     <td>
                       <div className="tx-name">{t.name}</div>
                       <div className="tx-sub">{t.sub}</div>
                     </td>
                     <td style={{ color: "var(--text-2)", fontSize: 12, fontFamily: "var(--fn-m)" }}>{t.date}</td>
-                    <td>
-                      <Pill status={t.status} />
-                    </td>
+                    <td><Pill status={t.status} /></td>
                     <td style={{ textAlign: "right" }}>
                       <span className={amtCls(t.amt)}>{fmtAmt(t.amt)}</span>
                     </td>
@@ -1198,9 +1229,7 @@ export function DashboardPage({ data, onNavigate }) {
                 <div key={b.label} className="spend-item">
                   <div className="spend-row">
                     <span className="spend-label">{b.label}</span>
-                    <span className="spend-val">
-                      ${b.spent.toLocaleString()} / ${b.total.toLocaleString()}
-                    </span>
+                    <span className="spend-val">${b.spent.toLocaleString()} / ${b.total.toLocaleString()}</span>
                   </div>
                   <ProgressBar pct={(b.spent / b.total) * 100} color={b.color} />
                 </div>
@@ -1225,30 +1254,11 @@ export function TransactionsPage({ transactions: initTxns, txSummary }) {
   const PER_PAGE = 10;
 
   // Form state
-  const [form, setForm] = useState({
-    name: "",
-    amt: "",
-    type: "Expense",
-    cat: "Groceries",
-    date: "2026-04-24",
-    acct: "Visa ···4821",
-    note: "",
-  });
+  const [form, setForm] = useState({ name: "", amt: "", type: "Expense", cat: "Groceries", date: "2026-04-24", acct: "Visa ···4821", note: "" });
   const setF = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
   const FILTERS = ["All", "Income", "Expenses", "Investments", "Pending"];
-  const CATS = [
-    "All Categories",
-    "Income",
-    "Housing",
-    "Groceries",
-    "Transport",
-    "Software",
-    "Investment",
-    "Entertainment",
-    "Health",
-    "Transfer",
-  ];
+  const CATS = ["All Categories", "Income", "Housing", "Groceries", "Transport", "Software", "Investment", "Entertainment", "Health", "Transfer"];
   const ACCTS = ["All Accounts", "Visa ···4821", "Chase Bank", "Fidelity", "Stripe"];
 
   const filtered = txns.filter((t) => {
@@ -1269,43 +1279,13 @@ export function TransactionsPage({ transactions: initTxns, txSummary }) {
   const addTx = () => {
     const amount = parseFloat(form.amt) || 0;
     const signedAmt = form.type === "Income" ? Math.abs(amount) : -Math.abs(amount);
-    const icons = {
-      Groceries: "🛒",
-      Housing: "🏠",
-      Transport: "🚗",
-      Entertainment: "🎬",
-      Software: "☁",
-      Health: "🏋",
-      Income: "💼",
-      Investment: "◈",
-      Transfer: "⇄",
-      Other: "💳",
-    };
+    const icons = { Groceries: "🛒", Housing: "🏠", Transport: "🚗", Entertainment: "🎬", Software: "☁", Health: "🏋", Income: "💼", Investment: "◈", Transfer: "⇄", Other: "💳" };
     setTxns((prev) => [
-      {
-        id: nextId(prev),
-        ico: icons[form.cat] || "💳",
-        bg: "rgba(91,78,232,0.08)",
-        name: form.name || "New Transaction",
-        sub: form.acct,
-        cat: form.cat,
-        acct: form.acct,
-        date: form.date,
-        status: "ok",
-        amt: signedAmt,
-      },
+      { id: nextId(prev), ico: icons[form.cat] || "💳", bg: "rgba(91,78,232,0.08)", name: form.name || "New Transaction", sub: form.acct, cat: form.cat, acct: form.acct, date: form.date, status: "ok", amt: signedAmt },
       ...prev,
     ]);
     setModalOpen(false);
-    setForm({
-      name: "",
-      amt: "",
-      type: "Expense",
-      cat: "Groceries",
-      date: "2026-04-24",
-      acct: "Visa ···4821",
-      note: "",
-    });
+    setForm({ name: "", amt: "", type: "Expense", cat: "Groceries", date: "2026-04-24", acct: "Visa ···4821", note: "" });
   };
 
   return (
@@ -1320,9 +1300,7 @@ export function TransactionsPage({ transactions: initTxns, txSummary }) {
           </div>
           <div style={{ display: "flex", gap: 8 }}>
             <button className="card-act">Export CSV ↗</button>
-            <button className="btn btn-primary btn-sm" onClick={() => setModalOpen(true)}>
-              + Add
-            </button>
+            <button className="btn btn-primary btn-sm" onClick={() => setModalOpen(true)}>+ Add</button>
           </div>
         </div>
 
@@ -1330,53 +1308,18 @@ export function TransactionsPage({ transactions: initTxns, txSummary }) {
         <div className="toolbar">
           <div className="tb-search">
             <span style={{ color: "var(--text-3)" }}>⌕</span>
-            <input
-              type="text"
-              placeholder="Search merchant, category…"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-            />
+            <input type="text" placeholder="Search merchant, category…" value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} />
           </div>
-          <select
-            className="tb-sel"
-            value={cat}
-            onChange={(e) => {
-              setCat(e.target.value);
-              setPage(1);
-            }}
-          >
-            {CATS.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
+          <select className="tb-sel" value={cat} onChange={(e) => { setCat(e.target.value); setPage(1); }}>
+            {CATS.map((c) => <option key={c}>{c}</option>)}
           </select>
-          <select
-            className="tb-sel"
-            value={acct}
-            onChange={(e) => {
-              setAcct(e.target.value);
-              setPage(1);
-            }}
-          >
-            {ACCTS.map((a) => (
-              <option key={a}>{a}</option>
-            ))}
+          <select className="tb-sel" value={acct} onChange={(e) => { setAcct(e.target.value); setPage(1); }}>
+            {ACCTS.map((a) => <option key={a}>{a}</option>)}
           </select>
         </div>
         <div className="filter-row">
           {FILTERS.map((f) => (
-            <button
-              key={f}
-              className={`f-chip${filter === f ? " on" : ""}`}
-              onClick={() => {
-                setFilter(f);
-                setPage(1);
-              }}
-            >
-              {f}
-            </button>
+            <button key={f} className={`f-chip${filter === f ? " on" : ""}`} onClick={() => { setFilter(f); setPage(1); }}>{f}</button>
           ))}
         </div>
 
@@ -1391,42 +1334,28 @@ export function TransactionsPage({ transactions: initTxns, txSummary }) {
                 <th className="sort">Account</th>
                 <th className="sort">Date</th>
                 <th>Status</th>
-                <th className="sort" style={{ textAlign: "right" }}>
-                  Amount
-                </th>
+                <th className="sort" style={{ textAlign: "right" }}>Amount</th>
               </tr>
             </thead>
             <tbody>
               {paged.map((t) => (
                 <tr key={t.id}>
-                  <td style={{ paddingLeft: 20 }}>
-                    <div className="tx-ico" style={{ background: t.bg }}>
-                      {t.ico}
-                    </div>
-                  </td>
+                  <td style={{ paddingLeft: 20 }}><div className="tx-ico" style={{ background: t.bg }}>{t.ico}</div></td>
                   <td>
                     <div className="tx-name">{t.name}</div>
                     <div className="tx-sub">{t.sub}</div>
                   </td>
-                  <td>
-                    <span className="cat-chip">{t.cat}</span>
-                  </td>
+                  <td><span className="cat-chip">{t.cat}</span></td>
                   <td style={{ color: "var(--text-2)", fontSize: 12 }}>{t.acct}</td>
                   <td style={{ color: "var(--text-2)", fontSize: 12, fontFamily: "var(--fn-m)" }}>{t.date}</td>
-                  <td>
-                    <Pill status={t.status} />
-                  </td>
+                  <td><Pill status={t.status} /></td>
                   <td style={{ textAlign: "right" }}>
                     <span className={amtCls(t.amt)}>{fmtAmt(t.amt)}</span>
                   </td>
                 </tr>
               ))}
               {paged.length === 0 && (
-                <tr>
-                  <td colSpan={7} style={{ textAlign: "center", color: "var(--text-3)", padding: 32 }}>
-                    No transactions match your filters.
-                  </td>
-                </tr>
+                <tr><td colSpan={7} style={{ textAlign: "center", color: "var(--text-3)", padding: 32 }}>No transactions match your filters.</td></tr>
               )}
             </tbody>
           </table>
@@ -1435,89 +1364,37 @@ export function TransactionsPage({ transactions: initTxns, txSummary }) {
       </div>
 
       {/* Add Transaction Modal */}
-      <Modal
-        open={modalOpen}
-        title="Add Transaction"
-        onClose={() => setModalOpen(false)}
-        footer={
-          <>
-            <button className="btn btn-ghost" onClick={() => setModalOpen(false)}>
-              Cancel
-            </button>
-            <button className="btn btn-primary" onClick={addTx}>
-              Save Transaction
-            </button>
-          </>
-        }
+      <Modal open={modalOpen} title="Add Transaction" onClose={() => setModalOpen(false)}
+        footer={<>
+          <button className="btn btn-ghost" onClick={() => setModalOpen(false)}>Cancel</button>
+          <button className="btn btn-primary" onClick={addTx}>Save Transaction</button>
+        </>}
       >
         <div className="f-row">
-          <FormGroup label="Merchant">
-            <input
-              className="f-input"
-              type="text"
-              placeholder="e.g. Whole Foods"
-              value={form.name}
-              onChange={(e) => setF("name", e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup label="Amount ($)">
-            <input
-              className="f-input"
-              type="number"
-              placeholder="0.00"
-              value={form.amt}
-              onChange={(e) => setF("amt", e.target.value)}
-            />
-          </FormGroup>
+          <FormGroup label="Merchant"><input className="f-input" type="text" placeholder="e.g. Whole Foods" value={form.name} onChange={(e) => setF("name", e.target.value)} /></FormGroup>
+          <FormGroup label="Amount ($)"><input className="f-input" type="number" placeholder="0.00" value={form.amt} onChange={(e) => setF("amt", e.target.value)} /></FormGroup>
         </div>
         <div className="f-row">
           <FormGroup label="Type">
             <select className="f-select" value={form.type} onChange={(e) => setF("type", e.target.value)}>
-              {["Expense", "Income", "Transfer", "Investment"].map((o) => (
-                <option key={o}>{o}</option>
-              ))}
+              {["Expense", "Income", "Transfer", "Investment"].map((o) => <option key={o}>{o}</option>)}
             </select>
           </FormGroup>
           <FormGroup label="Category">
             <select className="f-select" value={form.cat} onChange={(e) => setF("cat", e.target.value)}>
-              {[
-                "Groceries",
-                "Housing",
-                "Transport",
-                "Entertainment",
-                "Software",
-                "Health",
-                "Income",
-                "Investment",
-                "Transfer",
-                "Other",
-              ].map((o) => (
-                <option key={o}>{o}</option>
-              ))}
+              {["Groceries", "Housing", "Transport", "Entertainment", "Software", "Health", "Income", "Investment", "Transfer", "Other"].map((o) => <option key={o}>{o}</option>)}
             </select>
           </FormGroup>
         </div>
         <div className="f-row">
-          <FormGroup label="Date">
-            <input className="f-input" type="date" value={form.date} onChange={(e) => setF("date", e.target.value)} />
-          </FormGroup>
+          <FormGroup label="Date"><input className="f-input" type="date" value={form.date} onChange={(e) => setF("date", e.target.value)} /></FormGroup>
           <FormGroup label="Account">
             <select className="f-select" value={form.acct} onChange={(e) => setF("acct", e.target.value)}>
-              {["Visa ···4821", "Chase Bank", "Fidelity", "Stripe"].map((o) => (
-                <option key={o}>{o}</option>
-              ))}
+              {["Visa ···4821", "Chase Bank", "Fidelity", "Stripe"].map((o) => <option key={o}>{o}</option>)}
             </select>
           </FormGroup>
         </div>
-        <FormGroup label="Notes">
-          <input
-            className="f-input"
-            type="text"
-            placeholder="Optional note…"
-            value={form.note}
-            onChange={(e) => setF("note", e.target.value)}
-          />
-        </FormGroup>
+        <FormGroup label="Notes"><input className="f-input" type="text" placeholder="Optional note…" value={form.note} onChange={(e) => setF("note", e.target.value)} /></FormGroup>
       </Modal>
     </>
   );
@@ -1527,15 +1404,7 @@ export function TransactionsPage({ transactions: initTxns, txSummary }) {
 export function AssetsPage({ assets: initAssets, assetKpis, assetTypeOptions }) {
   const [assets, setAssets] = useState(initAssets);
   const [modalOpen, setModalOpen] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    type: "🏠",
-    typeLabel: "Real Estate",
-    val: "",
-    cost: "",
-    date: "2024-01-01",
-    note: "",
-  });
+  const [form, setForm] = useState({ name: "", type: "🏠", typeLabel: "Real Estate", val: "", cost: "", date: "2024-01-01", note: "" });
   const setF = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
   const totalAssets = assets.reduce((s, a) => s + a.val, 0);
@@ -1543,20 +1412,17 @@ export function AssetsPage({ assets: initAssets, assetKpis, assetTypeOptions }) 
 
   const addAsset = () => {
     if (!form.name.trim()) return;
-    setAssets((prev) => [
-      ...prev,
-      {
-        id: nextId(prev),
-        ico: form.type,
-        bg: "rgba(91,78,232,0.08)",
-        name: form.name,
-        type: form.typeLabel,
-        val: parseFloat(form.val) || 0,
-        cost: parseFloat(form.cost) || parseFloat(form.val) || 0,
-        date: form.date,
-        note: form.note,
-      },
-    ]);
+    setAssets((prev) => [...prev, {
+      id: nextId(prev),
+      ico: form.type,
+      bg: "rgba(91,78,232,0.08)",
+      name: form.name,
+      type: form.typeLabel,
+      val: parseFloat(form.val) || 0,
+      cost: parseFloat(form.cost) || parseFloat(form.val) || 0,
+      date: form.date,
+      note: form.note,
+    }]);
     setModalOpen(false);
     setForm({ name: "", type: "🏠", typeLabel: "Real Estate", val: "", cost: "", date: "2024-01-01", note: "" });
   };
@@ -1566,24 +1432,15 @@ export function AssetsPage({ assets: initAssets, assetKpis, assetTypeOptions }) 
   return (
     <>
       <div className="g4">
-        {assetKpis.map((k) => (
-          <KpiCard key={k.label} {...k} sparkPoints={null} sparkAreaPoints={null} />
-        ))}
+        {assetKpis.map((k) => <KpiCard key={k.label} {...k} sparkPoints={null} sparkAreaPoints={null} />)}
       </div>
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
-          <div style={{ fontFamily: "var(--fn-d)", fontSize: 15, fontWeight: 700, color: "var(--text-1)" }}>
-            My Assets
-          </div>
-          <div style={{ fontSize: 12, color: "var(--text-2)", marginTop: 2 }}>
-            {assets.length} assets · Net gain ${netValue >= 0 ? "+" : ""}
-            {netValue.toLocaleString()}
-          </div>
+          <div style={{ fontFamily: "var(--fn-d)", fontSize: 15, fontWeight: 700, color: "var(--text-1)" }}>My Assets</div>
+          <div style={{ fontSize: 12, color: "var(--text-2)", marginTop: 2 }}>{assets.length} assets · Net gain ${netValue >= 0 ? "+" : ""}{netValue.toLocaleString()}</div>
         </div>
-        <button className="btn btn-primary" onClick={() => setModalOpen(true)}>
-          + Add Asset
-        </button>
+        <button className="btn btn-primary" onClick={() => setModalOpen(true)}>+ Add Asset</button>
       </div>
 
       <div className="asset-grid">
@@ -1591,41 +1448,20 @@ export function AssetsPage({ assets: initAssets, assetKpis, assetTypeOptions }) 
           const gain = a.val - a.cost;
           const gainPct = a.cost > 0 ? ((gain / a.cost) * 100).toFixed(1) : "0.0";
           const gainCls = gain >= 0 ? "amt-pos" : "amt-neg";
-          const gainStr =
-            gain >= 0
-              ? `+$${gain.toLocaleString()} (${gainPct}%)`
-              : `-$${Math.abs(gain).toLocaleString()} (${gainPct}%)`;
+          const gainStr = gain >= 0 ? `+$${gain.toLocaleString()} (${gainPct}%)` : `-$${Math.abs(gain).toLocaleString()} (${gainPct}%)`;
           return (
             <div key={a.id} className="asset-card">
               <div className="asset-top">
-                <div className="asset-icon" style={{ background: a.bg }}>
-                  {a.ico}
-                </div>
+                <div className="asset-icon" style={{ background: a.bg }}>{a.ico}</div>
                 <div style={{ flex: 1 }}>
                   <div className="asset-name">{a.name}</div>
                   <div className="asset-type">{a.type}</div>
                 </div>
-                <button
-                  style={{
-                    border: "none",
-                    background: "none",
-                    color: "var(--text-3)",
-                    fontSize: 18,
-                    cursor: "pointer",
-                    lineHeight: 1,
-                  }}
-                  onClick={() => removeAsset(a.id)}
-                >
-                  ×
-                </button>
+                <button style={{ border: "none", background: "none", color: "var(--text-3)", fontSize: 18, cursor: "pointer", lineHeight: 1 }} onClick={() => removeAsset(a.id)}>×</button>
               </div>
               <div>
                 <div className="asset-val">${a.val.toLocaleString()}</div>
-                <div className="asset-change">
-                  <span className={gainCls} style={{ fontSize: 12, fontFamily: "var(--fn-m)" }}>
-                    {gainStr}
-                  </span>
-                </div>
+                <div className="asset-change"><span className={gainCls} style={{ fontSize: 12, fontFamily: "var(--fn-m)" }}>{gainStr}</span></div>
               </div>
               <div className="asset-foot">
                 <span className="asset-meta">Since {a.date.slice(0, 4)}</span>
@@ -1640,84 +1476,29 @@ export function AssetsPage({ assets: initAssets, assetKpis, assetTypeOptions }) 
         </div>
       </div>
 
-      <Modal
-        open={modalOpen}
-        title="Add Asset"
-        onClose={() => setModalOpen(false)}
-        footer={
-          <>
-            <button className="btn btn-ghost" onClick={() => setModalOpen(false)}>
-              Cancel
-            </button>
-            <button className="btn btn-primary" onClick={addAsset}>
-              Add Asset
-            </button>
-          </>
-        }
+      <Modal open={modalOpen} title="Add Asset" onClose={() => setModalOpen(false)}
+        footer={<>
+          <button className="btn btn-ghost" onClick={() => setModalOpen(false)}>Cancel</button>
+          <button className="btn btn-primary" onClick={addAsset}>Add Asset</button>
+        </>}
       >
-        <FormGroup label="Asset Name">
-          <input
-            className="f-input"
-            type="text"
-            placeholder="e.g. Primary Residence, Tesla…"
-            value={form.name}
-            onChange={(e) => setF("name", e.target.value)}
-          />
-        </FormGroup>
+        <FormGroup label="Asset Name"><input className="f-input" type="text" placeholder="e.g. Primary Residence, Tesla…" value={form.name} onChange={(e) => setF("name", e.target.value)} /></FormGroup>
         <div className="f-row">
           <FormGroup label="Type">
-            <select
-              className="f-select"
-              value={form.type}
-              onChange={(e) => {
-                const opt = assetTypeOptions.find((o) => o.value === e.target.value);
-                setForm((f) => ({
-                  ...f,
-                  type: e.target.value,
-                  typeLabel: opt ? opt.label.split(" ").slice(1).join(" ") : "",
-                }));
-              }}
-            >
-              {assetTypeOptions.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
-              ))}
+            <select className="f-select" value={form.type} onChange={(e) => {
+              const opt = assetTypeOptions.find((o) => o.value === e.target.value);
+              setForm((f) => ({ ...f, type: e.target.value, typeLabel: opt ? opt.label.split(" ").slice(1).join(" ") : "" }));
+            }}>
+              {assetTypeOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </FormGroup>
-          <FormGroup label="Current Value ($)">
-            <input
-              className="f-input"
-              type="number"
-              placeholder="0"
-              value={form.val}
-              onChange={(e) => setF("val", e.target.value)}
-            />
-          </FormGroup>
+          <FormGroup label="Current Value ($)"><input className="f-input" type="number" placeholder="0" value={form.val} onChange={(e) => setF("val", e.target.value)} /></FormGroup>
         </div>
         <div className="f-row">
-          <FormGroup label="Purchase Price ($)">
-            <input
-              className="f-input"
-              type="number"
-              placeholder="0"
-              value={form.cost}
-              onChange={(e) => setF("cost", e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup label="Purchase Date">
-            <input className="f-input" type="date" value={form.date} onChange={(e) => setF("date", e.target.value)} />
-          </FormGroup>
+          <FormGroup label="Purchase Price ($)"><input className="f-input" type="number" placeholder="0" value={form.cost} onChange={(e) => setF("cost", e.target.value)} /></FormGroup>
+          <FormGroup label="Purchase Date"><input className="f-input" type="date" value={form.date} onChange={(e) => setF("date", e.target.value)} /></FormGroup>
         </div>
-        <FormGroup label="Notes">
-          <input
-            className="f-input"
-            type="text"
-            placeholder="Any additional notes…"
-            value={form.note}
-            onChange={(e) => setF("note", e.target.value)}
-          />
-        </FormGroup>
+        <FormGroup label="Notes"><input className="f-input" type="text" placeholder="Any additional notes…" value={form.note} onChange={(e) => setF("note", e.target.value)} /></FormGroup>
       </Modal>
     </>
   );
@@ -1733,20 +1514,17 @@ export function GoalsPage({ goals: initGoals, completedGoals, goalCategoryOption
   const addGoal = () => {
     if (!form.name.trim()) return;
     const deadline = new Date(form.date).toLocaleDateString("en-US", { month: "short", year: "numeric" });
-    setGoals((prev) => [
-      ...prev,
-      {
-        id: nextId(prev),
-        ico: form.cat,
-        bg: "rgba(91,78,232,0.08)",
-        name: form.name,
-        deadline,
-        target: parseFloat(form.target) || 0,
-        current: parseFloat(form.current) || 0,
-        contrib: parseFloat(form.contrib) || 0,
-        colorVar: "var(--accent)",
-      },
-    ]);
+    setGoals((prev) => [...prev, {
+      id: nextId(prev),
+      ico: form.cat,
+      bg: "rgba(91,78,232,0.08)",
+      name: form.name,
+      deadline,
+      target: parseFloat(form.target) || 0,
+      current: parseFloat(form.current) || 0,
+      contrib: parseFloat(form.contrib) || 0,
+      colorVar: "var(--accent)",
+    }]);
     setModalOpen(false);
     setForm({ name: "", target: "", current: "", contrib: "", cat: "🏠", date: "2027-01-01" });
   };
@@ -1761,28 +1539,18 @@ export function GoalsPage({ goals: initGoals, completedGoals, goalCategoryOption
       <div className="goal-card" style={{ opacity: completed ? 0.6 : 1 }}>
         <div className="goal-top">
           <div className="goal-info">
-            <div className="goal-icon" style={{ background: goal.bg }}>
-              {goal.ico}
-            </div>
+            <div className="goal-icon" style={{ background: goal.bg }}>{goal.ico}</div>
             <div>
               <div className="goal-name">{goal.name}</div>
               <div className="goal-deadline">
-                {completed
-                  ? `Completed ${goal.deadline}`
-                  : `Target: ${goal.deadline} · ~${months} months at $${goal.contrib.toLocaleString()}/mo`}
+                {completed ? `Completed ${goal.deadline}` : `Target: ${goal.deadline} · ~${months} months at $${goal.contrib.toLocaleString()}/mo`}
               </div>
             </div>
           </div>
-          {completed ? (
-            <span className="pill ok">Achieved</span>
-          ) : (
-            <button
-              style={{ border: "none", background: "none", color: "var(--text-3)", fontSize: 18, cursor: "pointer" }}
-              onClick={() => removeGoal(goal.id)}
-            >
-              ×
-            </button>
-          )}
+          {completed
+            ? <span className="pill ok">Achieved</span>
+            : <button style={{ border: "none", background: "none", color: "var(--text-3)", fontSize: 18, cursor: "pointer" }} onClick={() => removeGoal(goal.id)}>×</button>
+          }
         </div>
         <div className="goal-amounts">
           <div className="goal-current">${goal.current.toLocaleString()}</div>
@@ -1791,11 +1559,9 @@ export function GoalsPage({ goals: initGoals, completedGoals, goalCategoryOption
         <ProgressBar pct={pct} color={goal.colorVar} height={8} />
         <div className="goal-foot">
           <span className="goal-rate">
-            {completed ? goal.note || "Goal complete!" : `$${remaining.toLocaleString()} remaining`}
+            {completed ? (goal.note || "Goal complete!") : `$${remaining.toLocaleString()} remaining`}
           </span>
-          <span className="goal-pct" style={{ color: goal.colorVar }}>
-            {pct}%
-          </span>
+          <span className="goal-pct" style={{ color: goal.colorVar }}>{pct}%</span>
         </div>
       </div>
     );
@@ -1805,22 +1571,14 @@ export function GoalsPage({ goals: initGoals, completedGoals, goalCategoryOption
     <>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
-          <div style={{ fontFamily: "var(--fn-d)", fontSize: 15, fontWeight: 700, color: "var(--text-1)" }}>
-            Financial Goals
-          </div>
-          <div style={{ fontSize: 12, color: "var(--text-2)", marginTop: 2 }}>
-            {goals.length} active · {completedGoals.length} completed
-          </div>
+          <div style={{ fontFamily: "var(--fn-d)", fontSize: 15, fontWeight: 700, color: "var(--text-1)" }}>Financial Goals</div>
+          <div style={{ fontSize: 12, color: "var(--text-2)", marginTop: 2 }}>{goals.length} active · {completedGoals.length} completed</div>
         </div>
-        <button className="btn btn-primary" onClick={() => setModalOpen(true)}>
-          + New Goal
-        </button>
+        <button className="btn btn-primary" onClick={() => setModalOpen(true)}>+ New Goal</button>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-        {goals.map((g) => (
-          <GoalCard key={g.id} goal={g} />
-        ))}
+        {goals.map((g) => <GoalCard key={g.id} goal={g} />)}
         {goals.length === 0 && (
           <div style={{ textAlign: "center", padding: 40, color: "var(--text-3)", fontSize: 14 }}>
             No active goals. Create one to get started!
@@ -1830,93 +1588,33 @@ export function GoalsPage({ goals: initGoals, completedGoals, goalCategoryOption
 
       {completedGoals.length > 0 && (
         <div style={{ marginTop: 8 }}>
-          <div
-            style={{
-              fontSize: 12,
-              fontWeight: 600,
-              textTransform: "uppercase",
-              letterSpacing: 1,
-              color: "var(--text-2)",
-              marginBottom: 12,
-            }}
-          >
-            Completed
-          </div>
+          <div style={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: 1, color: "var(--text-2)", marginBottom: 12 }}>Completed</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {completedGoals.map((g) => (
-              <GoalCard key={g.id} goal={g} completed />
-            ))}
+            {completedGoals.map((g) => <GoalCard key={g.id} goal={g} completed />)}
           </div>
         </div>
       )}
 
-      <Modal
-        open={modalOpen}
-        title="Create Goal"
-        onClose={() => setModalOpen(false)}
-        footer={
-          <>
-            <button className="btn btn-ghost" onClick={() => setModalOpen(false)}>
-              Cancel
-            </button>
-            <button className="btn btn-primary" onClick={addGoal}>
-              Create Goal
-            </button>
-          </>
-        }
+      <Modal open={modalOpen} title="Create Goal" onClose={() => setModalOpen(false)}
+        footer={<>
+          <button className="btn btn-ghost" onClick={() => setModalOpen(false)}>Cancel</button>
+          <button className="btn btn-primary" onClick={addGoal}>Create Goal</button>
+        </>}
       >
-        <FormGroup label="Goal Name">
-          <input
-            className="f-input"
-            type="text"
-            placeholder="e.g. Down Payment, Japan Trip…"
-            value={form.name}
-            onChange={(e) => setF("name", e.target.value)}
-          />
-        </FormGroup>
+        <FormGroup label="Goal Name"><input className="f-input" type="text" placeholder="e.g. Down Payment, Japan Trip…" value={form.name} onChange={(e) => setF("name", e.target.value)} /></FormGroup>
         <div className="f-row">
-          <FormGroup label="Target Amount ($)">
-            <input
-              className="f-input"
-              type="number"
-              placeholder="0"
-              value={form.target}
-              onChange={(e) => setF("target", e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup label="Already Saved ($)">
-            <input
-              className="f-input"
-              type="number"
-              placeholder="0"
-              value={form.current}
-              onChange={(e) => setF("current", e.target.value)}
-            />
-          </FormGroup>
+          <FormGroup label="Target Amount ($)"><input className="f-input" type="number" placeholder="0" value={form.target} onChange={(e) => setF("target", e.target.value)} /></FormGroup>
+          <FormGroup label="Already Saved ($)"><input className="f-input" type="number" placeholder="0" value={form.current} onChange={(e) => setF("current", e.target.value)} /></FormGroup>
         </div>
         <div className="f-row">
           <FormGroup label="Category">
             <select className="f-select" value={form.cat} onChange={(e) => setF("cat", e.target.value)}>
-              {goalCategoryOptions.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
-              ))}
+              {goalCategoryOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </FormGroup>
-          <FormGroup label="Target Date">
-            <input className="f-input" type="date" value={form.date} onChange={(e) => setF("date", e.target.value)} />
-          </FormGroup>
+          <FormGroup label="Target Date"><input className="f-input" type="date" value={form.date} onChange={(e) => setF("date", e.target.value)} /></FormGroup>
         </div>
-        <FormGroup label="Monthly Contribution ($)">
-          <input
-            className="f-input"
-            type="number"
-            placeholder="e.g. 500"
-            value={form.contrib}
-            onChange={(e) => setF("contrib", e.target.value)}
-          />
-        </FormGroup>
+        <FormGroup label="Monthly Contribution ($)"><input className="f-input" type="number" placeholder="e.g. 500" value={form.contrib} onChange={(e) => setF("contrib", e.target.value)} /></FormGroup>
       </Modal>
     </>
   );
@@ -1925,16 +1623,8 @@ export function GoalsPage({ goals: initGoals, completedGoals, goalCategoryOption
 // ── Intelligence ───────────────────────────
 export function IntelligencePage({ insights, aiResponses }) {
   const [messages, setMessages] = useState([
-    {
-      id: 1,
-      role: "ai",
-      text: "Hi Alex! Based on your April data, you're on track to save <strong>$7,438</strong> this month — that's 52.1% of income. Your biggest opportunity: entertainment spending is 13% over budget. Want me to suggest adjustments?",
-    },
-    {
-      id: 2,
-      role: "ai",
-      text: "📈 Your ETF purchase from Apr 21 is still pending. Markets are up 1.4% since then — worth confirming it went through.",
-    },
+    { id: 1, role: "ai", text: "Hi Alex! Based on your April data, you're on track to save <strong>$7,438</strong> this month — that's 52.1% of income. Your biggest opportunity: entertainment spending is 13% over budget. Want me to suggest adjustments?" },
+    { id: 2, role: "ai", text: "📈 Your ETF purchase from Apr 21 is still pending. Markets are up 1.4% since then — worth confirming it went through." },
   ]);
   const [input, setInput] = useState("");
   const [rIdx, setRIdx] = useState(0);
@@ -1947,10 +1637,7 @@ export function IntelligencePage({ insights, aiResponses }) {
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now() + 1, role: "ai", text: aiResponses[rIdx % aiResponses.length] },
-      ]);
+      setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: aiResponses[rIdx % aiResponses.length] }]);
       setRIdx((r) => r + 1);
     }, 600);
   };
@@ -1965,30 +1652,13 @@ export function IntelligencePage({ insights, aiResponses }) {
       <div className="card">
         <div className="card-hd">
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: "var(--r-sm)",
-                background: "var(--accent)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 16,
-                flexShrink: 0,
-              }}
-            >
-              ✦
-            </div>
+            <div style={{ width: 36, height: 36, borderRadius: "var(--r-sm)", background: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 }}>✦</div>
             <div>
               <div className="card-title">Finsight AI</div>
               <div className="card-sub">Your personal financial intelligence</div>
             </div>
           </div>
-          <div className="ai-status">
-            <div className="ai-dot" />
-            Online
-          </div>
+          <div className="ai-status"><div className="ai-dot" />Online</div>
         </div>
         <div className="ai-chat">
           <div className="chat-msgs" ref={msgsRef}>
@@ -2008,17 +1678,13 @@ export function IntelligencePage({ insights, aiResponses }) {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendChat()}
             />
-            <button className="btn btn-primary" onClick={sendChat}>
-              Send
-            </button>
+            <button className="btn btn-primary" onClick={sendChat}>Send</button>
           </div>
         </div>
       </div>
 
       {/* Insights grid */}
-      <div style={{ fontFamily: "var(--fn-d)", fontSize: 15, fontWeight: 700, color: "var(--text-1)" }}>
-        Insights & Alerts
-      </div>
+      <div style={{ fontFamily: "var(--fn-d)", fontSize: 15, fontWeight: 700, color: "var(--text-1)" }}>Insights & Alerts</div>
       <div className="intel-grid">
         {insights.map((ins) => (
           <div key={ins.id} className="insight-card">
@@ -2055,23 +1721,18 @@ export function Sidebar({ navItems, activePage, onNavigate, user, isOpen, onClos
           {sections.map((section) => (
             <div key={section}>
               <div className="sb-section">{section}</div>
-              {navItems
-                .filter((n) => n.section === section)
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    className={`sb-item${activePage === item.id ? " active" : ""}`}
-                    onClick={() => {
-                      onNavigate(item.id);
-                      onClose();
-                    }}
-                  >
-                    <div className="sb-active-bar" />
-                    <span className="sb-item-icon">{item.icon}</span>
-                    {item.label}
-                    {item.badge && <span className="sb-badge">{item.badge}</span>}
-                  </div>
-                ))}
+              {navItems.filter((n) => n.section === section).map((item) => (
+                <div
+                  key={item.id}
+                  className={`sb-item${activePage === item.id ? " active" : ""}`}
+                  onClick={() => { onNavigate(item.id); onClose(); }}
+                >
+                  <div className="sb-active-bar" />
+                  <span className="sb-item-icon">{item.icon}</span>
+                  {item.label}
+                  {item.badge && <span className="sb-badge">{item.badge}</span>}
+                </div>
+              ))}
             </div>
           ))}
         </nav>
@@ -2091,30 +1752,23 @@ export function Sidebar({ navItems, activePage, onNavigate, user, isOpen, onClos
 
 // ── Topbar ─────────────────────────────────
 export function Topbar({ title, theme, onThemeChange, onHamburger }) {
-  const THEMES = ["light", "dark", "retro"];
+  const THEMES = ["light", "dark", "retro", "retrofuture", "aero"];
+  const LABELS = { light: "Light", dark: "Dark", retro: "Retro", retrofuture: "Retro-Fi", aero: "Aero" };
   return (
     <header className="topbar">
       <button className="tb-hamburger" onClick={onHamburger}>
-        <span />
-        <span />
-        <span />
+        <span /><span /><span />
       </button>
       <div className="tb-title">{title}</div>
       <div className="tb-right">
         <div className="theme-sw">
           {THEMES.map((t) => (
             <button key={t} className={`t-btn${theme === t ? " on" : ""}`} onClick={() => onThemeChange(t)}>
-              {t.charAt(0).toUpperCase() + t.slice(1)}
+              {LABELS[t]}
             </button>
           ))}
         </div>
-        <div
-          className="tb-icon"
-          title="Cycle theme"
-          onClick={() => onThemeChange(THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length])}
-        >
-          ◑
-        </div>
+        <div className="tb-icon" title="Cycle theme" onClick={() => onThemeChange(THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length])}>◑</div>
         <div className="tb-icon">🔔</div>
       </div>
     </header>
@@ -2126,11 +1780,7 @@ export function BottomNav({ navItems, activePage, onNavigate }) {
   return (
     <nav className="bot-nav">
       {navItems.map((item) => (
-        <button
-          key={item.id}
-          className={`bn-item${activePage === item.id ? " on" : ""}`}
-          onClick={() => onNavigate(item.id)}
-        >
+        <button key={item.id} className={`bn-item${activePage === item.id ? " on" : ""}`} onClick={() => onNavigate(item.id)}>
           <span className="bn-ico">{item.icon}</span>
           {item.label.length > 6 ? item.label.slice(0, 5) + "…" : item.label}
         </button>
@@ -2140,39 +1790,278 @@ export function BottomNav({ navItems, activePage, onNavigate }) {
 }
 
 // ─────────────────────────────────────────────
+// LoginPage
+// ─────────────────────────────────────────────
+export function LoginPage({ onLogin, theme, onThemeChange }) {
+  const [tab, setTab]         = useState("login"); // "login" | "signup"
+  const [email, setEmail]     = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName]       = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [error, setError]     = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const THEMES = ["light", "dark", "retro", "retrofuture", "aero"];
+  const LABELS = { light: "Light", dark: "Dark", retro: "Retro", retrofuture: "Retro-Fi", aero: "Aero" };
+
+  const DEMO = { email: "alex@finsight.app", password: "password" };
+
+  const submit = () => {
+    setError("");
+    if (!email || !password) { setError("Please fill in all fields."); return; }
+    if (tab === "signup" && !name) { setError("Please enter your name."); return; }
+    setLoading(true);
+    setTimeout(() => {
+      if (tab === "login") {
+        if (email === DEMO.email && password === DEMO.password) {
+          onLogin();
+        } else {
+          setError("Invalid email or password. Try alex@finsight.app / password");
+          setLoading(false);
+        }
+      } else {
+        // signup always succeeds in demo
+        onLogin();
+      }
+    }, 900);
+  };
+
+  return (
+    <div className="auth-shell">
+      {/* Theme picker top-right */}
+      <div style={{ position: "fixed", top: 16, right: 16, zIndex: 600 }}>
+        <div className="theme-sw">
+          {THEMES.map((t) => (
+            <button key={t} className={`t-btn${theme === t ? " on" : ""}`} onClick={() => onThemeChange(t)}>
+              {LABELS[t]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="login-card">
+        {/* Logo */}
+        <div className="login-logo">
+          <div className="login-mark">F</div>
+          <div className="login-brand">Finsight</div>
+        </div>
+        <div className="login-tagline">Your intelligent financial dashboard</div>
+
+        {/* Tab toggle */}
+        <div className="theme-sw" style={{ alignSelf: "stretch" }}>
+          <button className={`t-btn${tab === "login" ? " on" : ""}`} style={{ flex: 1 }} onClick={() => { setTab("login"); setError(""); }}>Sign In</button>
+          <button className={`t-btn${tab === "signup" ? " on" : ""}`} style={{ flex: 1 }} onClick={() => { setTab("signup"); setError(""); }}>Sign Up</button>
+        </div>
+
+        {/* Error */}
+        {error && <div className="login-err">⚠ {error}</div>}
+
+        {/* Form */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {tab === "signup" && (
+            <FormGroup label="Full Name">
+              <input className="f-input" type="text" placeholder="Alex Kim" value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submit()} />
+            </FormGroup>
+          )}
+          <FormGroup label="Email">
+            <input className="f-input" type="email" placeholder="alex@finsight.app" value={email} onChange={(e) => setEmail(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submit()} />
+          </FormGroup>
+          <FormGroup label="Password">
+            <div style={{ position: "relative" }}>
+              <input
+                className="f-input"
+                type={showPass ? "text" : "password"}
+                placeholder={tab === "login" ? "••••••••" : "Min. 8 characters"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && submit()}
+                style={{ paddingRight: 40 }}
+              />
+              <button
+                onClick={() => setShowPass((s) => !s)}
+                style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "var(--text-3)", fontSize: 14 }}
+              >{showPass ? "🙈" : "👁"}</button>
+            </div>
+          </FormGroup>
+          {tab === "login" && (
+            <div style={{ textAlign: "right", marginTop: -4 }}>
+              <a style={{ fontSize: 12, color: "var(--accent)", cursor: "pointer" }}>Forgot password?</a>
+            </div>
+          )}
+        </div>
+
+        <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", padding: "11px 0", fontSize: 14 }} onClick={submit} disabled={loading}>
+          {loading ? "Please wait…" : tab === "login" ? "Sign In →" : "Create Account →"}
+        </button>
+
+        {/* Demo hint */}
+        {tab === "login" && (
+          <div style={{ textAlign: "center", fontSize: 11, color: "var(--text-3)", marginTop: -8 }}>
+            Demo: <span style={{ fontFamily: "var(--fn-m)", color: "var(--text-2)" }}>alex@finsight.app</span> / <span style={{ fontFamily: "var(--fn-m)", color: "var(--text-2)" }}>password</span>
+          </div>
+        )}
+
+        <div className="login-divider">or continue with</div>
+
+        <div className="login-social">
+          <button className="social-btn">
+            <span style={{ fontSize: 16 }}>G</span> Google
+          </button>
+          <button className="social-btn">
+            <span style={{ fontSize: 16 }}>⌘</span> Apple
+          </button>
+        </div>
+
+        <div className="login-footer">
+          {tab === "login"
+            ? <>Don't have an account? <a onClick={() => { setTab("signup"); setError(""); }}>Sign up free</a></>
+            : <>Already have an account? <a onClick={() => { setTab("login"); setError(""); }}>Sign in</a></>
+          }
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// NotFoundPage
+// ─────────────────────────────────────────────
+export function NotFoundPage({ onNavigate, theme, onThemeChange }) {
+  const THEMES = ["light", "dark", "retro", "retrofuture", "aero"];
+  const LABELS = { light: "Light", dark: "Dark", retro: "Retro", retrofuture: "Retro-Fi", aero: "Aero" };
+
+  const quickLinks = [
+    { icon: "⬛", label: "Dashboard",    id: "dashboard"    },
+    { icon: "⇄",  label: "Transactions", id: "transactions" },
+    { icon: "◈",  label: "Assets",       id: "assets"       },
+    { icon: "◎",  label: "Goals",        id: "goals"        },
+    { icon: "✦",  label: "Intelligence", id: "intelligence" },
+  ];
+
+  return (
+    <div className="e404-shell">
+      {/* Theme picker */}
+      <div style={{ position: "fixed", top: 16, right: 16, zIndex: 600 }}>
+        <div className="theme-sw">
+          {THEMES.map((t) => (
+            <button key={t} className={`t-btn${theme === t ? " on" : ""}`} onClick={() => onThemeChange(t)}>
+              {LABELS[t]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="e404-code">
+        <span className="e404-glitch" data-text="404">404</span>
+      </div>
+
+      <div className="e404-title">Page not found</div>
+      <div className="e404-sub">
+        The page you're looking for doesn't exist or may have been moved. Let's get you back on track.
+      </div>
+
+      <div className="e404-actions">
+        <button className="btn btn-primary" onClick={() => onNavigate("dashboard")}>
+          ← Back to Dashboard
+        </button>
+        <button className="btn btn-ghost" onClick={() => onNavigate("login")}>
+          Sign out
+        </button>
+      </div>
+
+      <div className="e404-card">
+        <div className="e404-nav-title">Quick navigation</div>
+        <div className="e404-nav-links">
+          {quickLinks.map((l) => (
+            <div key={l.id} className="e404-nav-link" onClick={() => onNavigate(l.id)}>
+              <span className="e404-nav-link-icon">{l.icon}</span>
+              {l.label}
+              <span style={{ marginLeft: "auto", color: "var(--text-3)", fontSize: 12 }}>→</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
 // 8. APP ROOT
 // ─────────────────────────────────────────────
 
 export default function App() {
-  const [activePage, setActivePage] = useState("dashboard");
-  const [theme, setTheme] = useState("light");
+  // "login" | "dashboard" | "transactions" | "assets" | "goals" | "intelligence" | "404"
+  const [route, setRoute]         = useState("login");
+  const [theme, setTheme]         = useState("light");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const data = INITIAL_DATA;
 
-  // Apply theme to <html> element for CSS variable inheritance
+  // Apply theme to <html>
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
-  const PAGE_TITLES = {
-    dashboard: "Dashboard",
-    transactions: "Transactions",
-    assets: "Assets",
-    goals: "Goals",
-    intelligence: "Intelligence",
-  };
+  const APP_PAGES = ["dashboard", "transactions", "assets", "goals", "intelligence"];
 
   const navigate = useCallback((page) => {
-    setActivePage(page);
+    if (page === "login") {
+      setIsAuthenticated(false);
+      setRoute("login");
+      return;
+    }
+    if (APP_PAGES.includes(page)) {
+      setRoute(page);
+      setSidebarOpen(false);
+      return;
+    }
+    // Unknown route → 404
+    setRoute("404");
     setSidebarOpen(false);
   }, []);
 
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+    setRoute("dashboard");
+  };
+
+  const PAGE_TITLES = {
+    dashboard:    "Dashboard",
+    transactions: "Transactions",
+    assets:       "Assets",
+    goals:        "Goals",
+    intelligence: "Intelligence",
+  };
+
+  // ── Login ─────────────────────────────────
+  if (!isAuthenticated || route === "login") {
+    return (
+      <LoginPage
+        onLogin={handleLogin}
+        theme={theme}
+        onThemeChange={setTheme}
+      />
+    );
+  }
+
+  // ── 404 ───────────────────────────────────
+  if (route === "404") {
+    return (
+      <NotFoundPage
+        onNavigate={navigate}
+        theme={theme}
+        onThemeChange={setTheme}
+      />
+    );
+  }
+
+  // ── Main App ──────────────────────────────
   return (
     <>
       <Sidebar
         navItems={data.navItems}
-        activePage={activePage}
+        activePage={route}
         onNavigate={navigate}
         user={data.user}
         isOpen={sidebarOpen}
@@ -2181,35 +2070,25 @@ export default function App() {
 
       <div className="shell">
         <Topbar
-          title={PAGE_TITLES[activePage]}
+          title={PAGE_TITLES[route] || "Finsight"}
           theme={theme}
           onThemeChange={setTheme}
           onHamburger={() => setSidebarOpen(true)}
         />
 
         <div className="pages">
-          <div className={`page${activePage === "dashboard" ? " on" : ""}`}>
-            <DashboardPage data={data} onNavigate={navigate} />
-          </div>
-          <div className={`page${activePage === "transactions" ? " on" : ""}`}>
-            <TransactionsPage transactions={data.transactions} txSummary={data.txSummary} />
-          </div>
-          <div className={`page${activePage === "assets" ? " on" : ""}`}>
-            <AssetsPage assets={data.assets} assetKpis={data.assetKpis} assetTypeOptions={data.assetTypeOptions} />
-          </div>
-          <div className={`page${activePage === "goals" ? " on" : ""}`}>
-            <GoalsPage
-              goals={data.goals}
-              completedGoals={data.completedGoals}
-              goalCategoryOptions={data.goalCategoryOptions}
-            />
-          </div>
-          <div className={`page${activePage === "intelligence" ? " on" : ""}`}>
-            <IntelligencePage insights={data.insights} aiResponses={data.aiResponses} />
-          </div>
+          <div className={`page${route === "dashboard"    ? " on" : ""}`}><DashboardPage     data={data} onNavigate={navigate} /></div>
+          <div className={`page${route === "transactions" ? " on" : ""}`}><TransactionsPage  transactions={data.transactions} txSummary={data.txSummary} /></div>
+          <div className={`page${route === "assets"       ? " on" : ""}`}><AssetsPage        assets={data.assets} assetKpis={data.assetKpis} assetTypeOptions={data.assetTypeOptions} /></div>
+          <div className={`page${route === "goals"        ? " on" : ""}`}><GoalsPage         goals={data.goals} completedGoals={data.completedGoals} goalCategoryOptions={data.goalCategoryOptions} /></div>
+          <div className={`page${route === "intelligence" ? " on" : ""}`}><IntelligencePage  insights={data.insights} aiResponses={data.aiResponses} /></div>
         </div>
 
-        <BottomNav navItems={data.navItems} activePage={activePage} onNavigate={navigate} />
+        <BottomNav
+          navItems={data.navItems}
+          activePage={route}
+          onNavigate={navigate}
+        />
       </div>
     </>
   );
