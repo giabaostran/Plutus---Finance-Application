@@ -35,3 +35,9 @@ export const BUDGET_CATEGORY_STYLES = {
   software: { bg: "var(--accent)" },
   health: { bg: "var(--green)" },
 };
+
+export const APP_PAGES = ["dashboard", "transactions", "assets", "goals", "intelligence"];
+
+export const THEMES = ["light", "dark", "retro", "retrofuture", "aero"];
+
+export const THEME_LABELS = { light: "Light", dark: "Dark", retro: "Retro", retrofuture: "Retro-Fi", aero: "Aero" };

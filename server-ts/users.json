@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "email": "admin@plutus.com",
+    "email": "demo@plutus.com",
     "username": "admin",
-    "password": "plutusAdmin123",
+    "password": "plutusAdmin2026",
     "deleted": false
   },
   {

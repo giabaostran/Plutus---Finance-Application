@@ -1,3 +1,5 @@
+import { getInitials } from "../utils";
+
 // ── Sidebar ────────────────────────────────
 export default function Sidebar({ navItems, activePage, onNavigate, user, isOpen, onClose }) {
   const sections = [...new Set(navItems.map((n) => n.section))];
@@ -35,10 +37,10 @@ export default function Sidebar({ navItems, activePage, onNavigate, user, isOpen
         </nav>
         <div className="sb-foot">
           <div className="sb-user">
-            <div className="sb-avatar">{user.initials}</div>
+            <div className="sb-avatar">{getInitials(user.username)}</div>
             <div>
-              <div className="sb-uname">{user.name}</div>
-              <div className="sb-urole">{user.plan}</div>
+              <div className="sb-uname">{user.username}</div>
+              <div className="sb-urole">{user.email}</div>
             </div>
           </div>
         </div>

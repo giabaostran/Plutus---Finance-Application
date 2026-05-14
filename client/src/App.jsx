@@ -12,17 +12,18 @@ import IntelligencePage from "@/page/IntelligencePage";
 import LoginPage from "./page/LoginPage";
 
 import { INITIAL_DATA } from "@/data/data";
-import { NAV_ITEMS, PAGE_TITLES } from "@/data/configData";
+import { NAV_ITEMS, PAGE_TITLES, APP_PAGES } from "@/data/configData";
 
 import "./App.css";
+import { login } from "./api/login";
 
 export default function App() {
   // "login" | "dashboard" | "transactions" | "assets" | "goals" | "intelligence" | "404"
   const [route, setRoute] = useState("login");
   const [theme, setTheme] = useState(() => localStorage.getItem("data-theme") || "light");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const [token, setToken] = useState();
+  const [user, setUser] = useState();
   const data = INITIAL_DATA;
 
   // Apply theme to <html>
@@ -30,39 +31,36 @@ export default function App() {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
-  const APP_PAGES = ["dashboard", "transactions", "assets", "goals", "intelligence"];
-
   const navigate = useCallback((page) => {
     if (page === "login") {
-      setIsAuthenticated(false);
+      setToken();
       setRoute("login");
       return;
     }
+
     if (APP_PAGES.includes(page)) {
       setRoute(page);
       setSidebarOpen(false);
       return;
     }
+
     // Unknown route → 404
     setRoute("404");
     setSidebarOpen(false);
   }, []);
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-    setRoute("dashboard");
-  };
-
-  const PAGE_TITLES = {
-    dashboard: "Dashboard",
-    transactions: "Transactions",
-    assets: "Assets",
-    goals: "Goals",
-    intelligence: "Intelligence",
+  const handleLogin = async ({ email, password }) => {
+    const data = await login({ email, password });
+    if (data.accessToken) {
+      setToken(data.accessToken);
+      setUser(data.user);
+      setRoute("dashboard");
+    }
+    return data;
   };
 
   // ── Login ─────────────────────────────────
-  if (!isAuthenticated || route === "login") {
+  if (!token || route === "login") {
     return <LoginPage onLogin={handleLogin} theme={theme} onThemeChange={setTheme} />;
   }
 
@@ -78,7 +76,7 @@ export default function App() {
         navItems={NAV_ITEMS}
         route={route}
         onNavigate={navigate}
-        user={INITIAL_DATA.user}
+        user={user}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />

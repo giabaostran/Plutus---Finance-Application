@@ -4,8 +4,10 @@ import Pagination from "../ui/Pagination";
 import Pill from "../ui/Pill";
 import Modal from "../ui/Modal";
 import FormGroup from "../ui/FormGroup";
+import { THEMES, THEME_LABELS } from "../data/configData";
 
 import { useState } from "react";
+import { login } from "../api/login";
 
 // ─────────────────────────────────────────────
 // LoginPage
@@ -19,35 +21,31 @@ export default function LoginPage({ onLogin, theme, onThemeChange }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const THEMES = ["light", "dark", "retro", "retrofuture", "aero"];
-  const LABELS = { light: "Light", dark: "Dark", retro: "Retro", retrofuture: "Retro-Fi", aero: "Aero" };
-
-  const DEMO = { email: "demo@plutus.com", password: "password" };
-
-  const submit = () => {
+  const submit = async () => {
     setError("");
+
     if (!email || !password) {
       setError("Please fill in all fields.");
       return;
     }
+
     if (tab === "signup" && !name) {
       setError("Please enter your name.");
       return;
     }
+
     setLoading(true);
-    setTimeout(() => {
+    try {
       if (tab === "login") {
-        if (email === DEMO.email && password === DEMO.password) {
-          onLogin();
-        } else {
-          setError("Invalid email or password. Try demo@plutus.com / password");
-          setLoading(false);
-        }
+        await onLogin({ email, password });
       } else {
-        // signup always succeeds in demo
-        onLogin();
+        await onRegister({ name, email, password });
       }
-    }, 900);
+    } catch (e) {
+      setError(e.message || "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,7 +55,7 @@ export default function LoginPage({ onLogin, theme, onThemeChange }) {
         <div className="theme-sw">
           {THEMES.map((t) => (
             <button key={t} className={`t-btn${theme === t ? " on" : ""}`} onClick={() => onThemeChange(t)}>
-              {LABELS[t]}
+              {THEME_LABELS[t]}
             </button>
           ))}
         </div>
@@ -151,11 +149,12 @@ export default function LoginPage({ onLogin, theme, onThemeChange }) {
               </button>
             </div>
           </FormGroup>
-          {tab === "login" && (
+
+          {/* {tab === "login" && (
             <div style={{ textAlign: "right", marginTop: -4 }}>
               <a style={{ fontSize: 12, color: "var(--accent)", cursor: "pointer" }}>Forgot password?</a>
             </div>
-          )}
+          )} */}
         </div>
 
         <button
@@ -170,11 +169,11 @@ export default function LoginPage({ onLogin, theme, onThemeChange }) {
         {/* Demo hint */}
         {tab === "login" && (
           <div style={{ textAlign: "center", fontSize: 11, color: "var(--text-3)", marginTop: -8 }}>
-            Demo: <span style={{ fontFamily: "var(--fn-m)", color: "var(--text-2)" }}>plutus@plutus.com</span> /{" "}
-            <span style={{ fontFamily: "var(--fn-m)", color: "var(--text-2)" }}>password</span>
+            Demo: <span style={{ fontFamily: "var(--fn-m)", color: "var(--text-2)" }}>demo@plutus.com</span> /{" "}
+            <span style={{ fontFamily: "var(--fn-m)", color: "var(--text-2)" }}>plutusAdmin2026</span>
           </div>
         )}
-
+        {/* 
         <div className="login-divider">or continue with</div>
 
         <div className="login-social">
@@ -184,7 +183,7 @@ export default function LoginPage({ onLogin, theme, onThemeChange }) {
           <button className="social-btn">
             <span style={{ fontSize: 16 }}>⌘</span> Apple
           </button>
-        </div>
+        </div> */}
 
         <div className="login-footer">
           {tab === "login" ? (

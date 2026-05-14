@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import cors from "cors";
 
 import { DummyTransactionDb, DummyUserDb, DummyAssetDb } from "./infrastructure/db/DummyDb";
 
@@ -36,6 +37,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
 // ========================================

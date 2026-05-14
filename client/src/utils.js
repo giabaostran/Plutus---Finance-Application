@@ -16,3 +16,14 @@ export const statusLabel = { ok: "✓ Done", pend: "⏳ Pending", fail: "✖ Fai
 export const nextId = (arr) => Math.max(0, ...arr.map((x) => x.id)) + 1;
 
 export const transactionBgColor = {};
+
+export const getInitials = (name) => {
+  if (!name) return "";
+
+  return name
+    .trim()
+    .split(/\s+/) // Split by any whitespace
+    .map((word) => word[0]) // Take the first character of each word
+    .join("") // Combine them
+    .toUpperCase(); // Ensure they are capitalized
+};
