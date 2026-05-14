@@ -1,5 +1,5 @@
 // ── Sidebar ────────────────────────────────
-export function Sidebar({ navItems, activePage, onNavigate, user, isOpen, onClose }) {
+export default function Sidebar({ navItems, activePage, onNavigate, user, isOpen, onClose }) {
   const sections = [...new Set(navItems.map((n) => n.section))];
   return (
     <>
@@ -7,7 +7,7 @@ export function Sidebar({ navItems, activePage, onNavigate, user, isOpen, onClos
       <aside className={`sidebar${isOpen ? " on" : ""}`}>
         <div className="sb-logo">
           <div className="sb-mark">P</div>
-          <div className="sb-name">lutus</div>
+          <div className="sb-name">Plutus</div>
         </div>
         <nav className="sb-nav">
           {sections.map((section) => (

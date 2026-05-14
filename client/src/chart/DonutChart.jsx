@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState } from "react";
 
 // ── DonutChart ─────────────────────────────
 export default function DonutChart({ segments, centerLabel = "$248k", centerSub = "Total" }) {

@@ -1,0 +1,12 @@
+$kind: http-request
+name: login
+url: localhost:3000/login
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "email":"admin2@plutus.com",
+        "password":"plutusAdmin12345"
+    }
+order: 4421025424105364

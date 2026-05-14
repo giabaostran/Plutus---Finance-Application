@@ -1,6 +1,6 @@
 $kind: http-request
 name: createTransaction
-url: localhost:3000/users/1/transactions
+url: localhost:3000/transactions
 method: POST
 body:
   type: json

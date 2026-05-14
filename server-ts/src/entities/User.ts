@@ -4,6 +4,7 @@ export class User {
     private email: string,
     private username: string,
     private password: string,
+    private deleted: boolean = false,
   ) {
     if (!username) {
       throw new Error("Name is required");
@@ -38,9 +39,21 @@ export class User {
   setPassword(newPassword: string): void {
     this.password = newPassword;
   }
-  
+
   setEmail(newEmail: string): void {
     this.email = newEmail;
+  }
+
+  isDeleted(): boolean {
+    return this.deleted;
+  }
+
+  softDelete(): void {
+    this.deleted = true;
+  }
+
+  restore(): void {
+    this.deleted = false;
   }
 
   // ===== VALIDATION =====

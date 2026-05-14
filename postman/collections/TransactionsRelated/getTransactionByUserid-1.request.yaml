@@ -1,0 +1,10 @@
+$kind: http-request
+name: getTransactionByUserid
+url: localhost:3000/transactions/
+method: GET
+headers:
+  authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AcGx1dHVzLmNvbSIsImlhdCI6MTc3ODcyOTQ4NSwiZXhwIjoxNzc4ODE1ODg1fQ.ywpIkTHJcKqi3Ps3j_bhQ-8dnOae8eWnAWNhOsgUJLY
+body:
+  type: json
+  content: ""
+order: 1414377424574563

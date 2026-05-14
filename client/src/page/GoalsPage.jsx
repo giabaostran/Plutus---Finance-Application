@@ -1,7 +1,11 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import Modal from "@/ui/Modal";
-import FormGroup from "@/ui/FormGroup";
-import ProgressBar from "@/ui/ProgressBar";
+import KpiCard from "../ui/KpiCard";
+import SummaryRow from "../ui/SummaryRow";
+import Pagination from "../ui/Pagination";
+import Pill from "../ui/Pill";
+import Modal from "../ui/Modal";
+import FormGroup from "../ui/FormGroup";
+import ProgressBar from "../ui/ProgressBar";
+import { useState } from "react";
 
 // ── Goals ──────────────────────────────────
 export default function GoalsPage({ goals: initGoals, completedGoals, goalCategoryOptions }) {

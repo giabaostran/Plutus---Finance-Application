@@ -3,6 +3,14 @@
     "id": 1,
     "email": "admin@plutus.com",
     "username": "admin",
-    "password": "plutusAdmin1234"
+    "password": "plutusAdmin123",
+    "deleted": false
+  },
+  {
+    "id": 2,
+    "email": "admin2@plutus.com",
+    "username": "admin2",
+    "password": "plutusAdmin12345",
+    "deleted": false
   }
 ]

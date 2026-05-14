@@ -1,0 +1,13 @@
+$kind: http-request
+name: register
+url: localhost:3000/register
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "email": "admin2@plutus.com",
+      "username": "admin2",
+      "password": "plutusAdmin123"
+    }
+order: 1778197981602

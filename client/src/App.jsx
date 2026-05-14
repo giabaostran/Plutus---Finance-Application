@@ -1,13 +1,15 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { Sidebar } from "@/layout/Sidebar";
-import { Topbar } from "@/layout/Topbar";
-import { BottomNav } from "@/layout/BottomNav";
+import { useState, useEffect, useCallback } from "react";
+
+import Sidebar from "@/layout/Sidebar";
+import Topbar from "@/layout/Topbar";
+import BottomNav from "@/layout/BottomNav";
 
 import DashboardPage from "@/page/DashboardPage";
 import TransactionsPage from "@/page/TransactionsPage";
 import AssetsPage from "@/page/AssetsPage";
 import GoalsPage from "@/page/GoalsPage";
 import IntelligencePage from "@/page/IntelligencePage";
+import LoginPage from "./page/LoginPage";
 
 import { INITIAL_DATA } from "@/data/data";
 import { NAV_ITEMS, PAGE_TITLES } from "@/data/configData";
@@ -15,30 +17,66 @@ import { NAV_ITEMS, PAGE_TITLES } from "@/data/configData";
 import "./App.css";
 
 export default function App() {
-  const [activePage, setActivePage] = useState("dashboard");
-
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("data-theme") || "light";
-  });
-
+  // "login" | "dashboard" | "transactions" | "assets" | "goals" | "intelligence" | "404"
+  const [route, setRoute] = useState("login");
+  const [theme, setTheme] = useState(() => localStorage.getItem("data-theme") || "light");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Apply theme to <html> element for CSS variable inheritance
+  const data = INITIAL_DATA;
+
+  // Apply theme to <html>
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("data-theme", theme);
   }, [theme]);
 
+  const APP_PAGES = ["dashboard", "transactions", "assets", "goals", "intelligence"];
+
   const navigate = useCallback((page) => {
-    setActivePage(page);
+    if (page === "login") {
+      setIsAuthenticated(false);
+      setRoute("login");
+      return;
+    }
+    if (APP_PAGES.includes(page)) {
+      setRoute(page);
+      setSidebarOpen(false);
+      return;
+    }
+    // Unknown route → 404
+    setRoute("404");
     setSidebarOpen(false);
   }, []);
 
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+    setRoute("dashboard");
+  };
+
+  const PAGE_TITLES = {
+    dashboard: "Dashboard",
+    transactions: "Transactions",
+    assets: "Assets",
+    goals: "Goals",
+    intelligence: "Intelligence",
+  };
+
+  // ── Login ─────────────────────────────────
+  if (!isAuthenticated || route === "login") {
+    return <LoginPage onLogin={handleLogin} theme={theme} onThemeChange={setTheme} />;
+  }
+
+  // ── 404 ───────────────────────────────────
+  if (route === "404") {
+    return <NotFoundPage onNavigate={navigate} theme={theme} onThemeChange={setTheme} />;
+  }
+
+  // ── Main App ──────────────────────────────
   return (
     <>
       <Sidebar
         navItems={NAV_ITEMS}
-        activePage={activePage}
+        route={route}
         onNavigate={navigate}
         user={INITIAL_DATA.user}
         isOpen={sidebarOpen}
@@ -47,42 +85,39 @@ export default function App() {
 
       <div className="shell">
         <Topbar
-          title={PAGE_TITLES[activePage]}
+          title={PAGE_TITLES[route]}
           theme={theme}
           onThemeChange={setTheme}
           onHamburger={() => setSidebarOpen(true)}
         />
 
         <div className="pages">
-          <div className={`page ${activePage === "dashboard" ? "on" : ""}`}>
+          <div className={`page ${route === "dashboard" ? "on" : ""}`}>
             <DashboardPage data={INITIAL_DATA} onNavigate={navigate} />
           </div>
-          <div className={`page ${activePage === "transactions" ? "on" : ""}`}>
-            <TransactionsPage
-              // transactions={INITIAL_DATA.transactions}
-              txSummary={INITIAL_DATA.txSummary}
-            />
+          <div className={`page ${route === "transactions" ? "on" : ""}`}>
+            <TransactionsPage transactions={INITIAL_DATA.transactions} txSummary={INITIAL_DATA.txSummary} />
           </div>
-          <div className={`page ${activePage === "assets" ? "on" : ""}`}>
+          <div className={`page ${route === "assets" ? "on" : ""}`}>
             <AssetsPage
               assets={INITIAL_DATA.assets}
               assetKpis={INITIAL_DATA.assetKpis}
               assetTypeOptions={INITIAL_DATA.assetTypeOptions}
             />
           </div>
-          <div className={`page ${activePage === "goals" ? "on" : ""}`}>
+          <div className={`page ${route === "goals" ? "on" : ""}`}>
             <GoalsPage
               goals={INITIAL_DATA.goals}
               completedGoals={INITIAL_DATA.completedGoals}
               goalCategoryOptions={INITIAL_DATA.goalCategoryOptions}
             />
           </div>
-          <div className={`page ${activePage === "intelligence" ? "on" : ""}`}>
+          <div className={`page ${route === "intelligence" ? "on" : ""}`}>
             <IntelligencePage insights={INITIAL_DATA.insights} aiResponses={INITIAL_DATA.aiResponses} />
           </div>
         </div>
 
-        <BottomNav navItems={NAV_ITEMS} activePage={activePage} onNavigate={navigate} />
+        <BottomNav navItems={NAV_ITEMS} route={route} onNavigate={navigate} />
       </div>
     </>
   );

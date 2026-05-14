@@ -1,15 +1,5 @@
 // ── KpiCard ────────────────────────────────
-export default function KpiCard({
-  label,
-  value,
-  icon,
-  delta,
-  deltaDir,
-  sub,
-  sparkPoints,
-  sparkAreaPoints,
-  sparkColor,
-}) {
+export default function KpiCard({ label, value, icon, delta, deltaDir, sub, sparkPoints, sparkAreaPoints, sparkColor }) {
   const lineClass = sparkColor === "red" ? "sp-line-r" : "sp-line-g";
   const areaClass = sparkColor === "red" ? "sp-area-r" : "sp-area-g";
   return (

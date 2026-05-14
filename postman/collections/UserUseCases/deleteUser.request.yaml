@@ -1,0 +1,7 @@
+$kind: http-request
+name: deleteUser
+url: localhost:3000/users/me
+method: DELETE
+headers:
+  Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJhZG1pbjJAcGx1dHVzLmNvbSIsImlhdCI6MTc3ODc4ODQwOCwiZXhwIjoxNzc4ODc0ODA4fQ.gaNa1HWri6waueflbaoDcpdH_T5NyjOgVJZmxlJTD8E
+order: 4467314376471256

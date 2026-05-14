@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 
 // ── Intelligence ───────────────────────────
 export default function IntelligencePage({ insights, aiResponses }) {

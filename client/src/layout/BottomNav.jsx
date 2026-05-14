@@ -1,5 +1,5 @@
 // ── BottomNav ──────────────────────────────
-export function BottomNav({ navItems, activePage, onNavigate }) {
+export default function BottomNav({ navItems, activePage, onNavigate }) {
   return (
     <nav className="bot-nav">
       {navItems.map((item) => (

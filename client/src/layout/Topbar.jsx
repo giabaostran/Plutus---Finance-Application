@@ -1,6 +1,7 @@
 // ── Topbar ─────────────────────────────────
-export function Topbar({ title, theme, onThemeChange, onHamburger }) {
+export default function Topbar({ title, theme, onThemeChange, onHamburger }) {
   const THEMES = ["light", "dark", "retro", "retrofuture", "aero"];
+  const LABELS = { light: "Light", dark: "Dark", retro: "Retro", retrofuture: "Retro-Fi", aero: "Aero" };
   return (
     <header className="topbar">
       <button className="tb-hamburger" onClick={onHamburger}>
@@ -13,7 +14,7 @@ export function Topbar({ title, theme, onThemeChange, onHamburger }) {
         <div className="theme-sw">
           {THEMES.map((t) => (
             <button key={t} className={`t-btn${theme === t ? " on" : ""}`} onClick={() => onThemeChange(t)}>
-              {t.charAt(0).toUpperCase() + t.slice(1)}
+              {LABELS[t]}
             </button>
           ))}
         </div>

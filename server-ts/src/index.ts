@@ -1,7 +1,9 @@
-import express from "express";
-import { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-import { TransactionDummyDb, UserDummyDb } from "./infrastructure/db/DummyDb";
+import { DummyTransactionDb, DummyUserDb, DummyAssetDb } from "./infrastructure/db/DummyDb";
+
 import {
   UserRepository,
   CreateUserUseCase,
@@ -10,33 +12,126 @@ import {
   TransactionRepository,
   GetTransactionByIdUseCase,
   UpdateTransactionUseCase,
+  CreateAssetUseCase,
+  AssetRepository,
+  GetUserUseCase,
+  DeleteUserUseCase,
+  LoginUseCase,
+  DeleteTransactionUseCase,
 } from "./service/interfaces";
 
-import { CreateUser } from "./service/CreateUser";
-import { ChangeUserPassword } from "./service/ChangeUserPassword";
-import { CreateTransaction } from "./service/CreateTransaction";
-import { GetTransactionsById } from "./service/GetTransactionsById";
-import { UpdateTransaction } from "./service/UpdateTransaction";
+import { CreateUser } from "./service/userRelated/CreateUser";
+import { ChangeUserPassword } from "./service/userRelated/ChangeUserPassword";
+import { CreateTransaction } from "./service/transactionRelated/CreateTransaction";
+import { GetTransactionsById } from "./service/transactionRelated/GetTransactionsById";
+import { UpdateTransaction } from "./service/transactionRelated/UpdateTransaction";
+import { CreateAsset } from "./service/assetRelated/CreateAsset";
+import { GetUser } from "./service/userRelated/GetUser";
+import { DeleteUser } from "./service/userRelated/DeleteUser";
+import { Login } from "./service/userRelated/Login";
+import { DeleteTransaction } from "./service/transactionRelated/DeleteTransaction";
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-const userRepo: UserRepository = new UserDummyDb();
-const transactionRepo: TransactionRepository = new TransactionDummyDb();
-
 app.use(express.json());
 
-// controller
+// ========================================
+// TYPES
+// ========================================
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}
+
+// ========================================
+// DATABASES
+// ========================================
+
+const userRepo: UserRepository = new DummyUserDb();
+const transactionRepo: TransactionRepository = new DummyTransactionDb();
+const assetRepo: AssetRepository = new DummyAssetDb();
+
+// ========================================
+// USE CASES
+// ========================================
+
+// USER
 const createUser: CreateUserUseCase = new CreateUser(userRepo);
 const changeUserPassword: ChangeUserPasswordUseCase = new ChangeUserPassword(userRepo);
+
+const getUser: GetUserUseCase = new GetUser(userRepo);
+
+const deleteUser: DeleteUserUseCase = new DeleteUser(userRepo);
+
+const login: LoginUseCase = new Login(userRepo);
+
+// TRANSACTION
 const createTransaction: CreateTransactionUseCase = new CreateTransaction(transactionRepo, userRepo);
+
 const getTransactionById: GetTransactionByIdUseCase = new GetTransactionsById(transactionRepo, userRepo);
+
 const updateTransaction: UpdateTransactionUseCase = new UpdateTransaction(transactionRepo);
 
-app.post("/users", (req: Request, res: Response) => {
+const deleteTransaction: DeleteTransactionUseCase = new DeleteTransaction(transactionRepo);
+
+// ASSET
+const createAsset: CreateAssetUseCase = new CreateAsset(assetRepo);
+
+// ========================================
+// AUTH MIDDLEWARE
+// ========================================
+
+function authenticateToken(req: Request, res: Response, next: NextFunction) {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({
+      message: "No authorization header",
+    });
+  }
+
+  // const token = authHeader.split(" ")[1];
+  const token = authHeader;
+
+  if (!token) {
+    return res.status(401).json({
+      message: "No token provided",
+    });
+  }
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as `string`, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({
+        message: "Invalid token",
+      });
+    }
+
+    console.log(decoded);
+
+    req.user = decoded;
+
+    next();
+  });
+}
+
+// ========================================
+// AUTH ROUTES
+// ========================================
+
+// REGISTER
+app.post("/register", (req: Request, res: Response) => {
   try {
     const { email, username, password } = req.body;
-    const user = createUser.execute(email, username, password); // this can throw an error
+
+    const user = createUser.execute(email, username, password);
+
     res.status(201).json(user);
   } catch (error) {
     res.status(400).json({
@@ -45,13 +140,64 @@ app.post("/users", (req: Request, res: Response) => {
   }
 });
 
-app.patch("/users/:id/password", (req: Request, res: Response) => {
+// LOGIN
+app.post("/login", (req: Request, res: Response) => {
   try {
+    const { email, password } = req.body;
+
+    const user = login.execute(email, password);
+
+    const accessToken = jwt.sign(
+      {
+        userId: user.getId(),
+        email: user.getEmail(),
+      },
+      process.env.ACCESS_TOKEN_SECRET as string,
+      {
+        expiresIn: "1d",
+      },
+    );
+
+    res.status(200).json({
+      accessToken,
+      user,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// ========================================
+// USER ROUTES (PROTECTED)
+// ========================================
+
+// GET CURRENT USER
+app.get("/users/me", authenticateToken, (req: Request, res: Response) => {
+  try {
+    const userId = req.user.userId;
+
+    const user = getUser.execute(userId);
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// CHANGE PASSWORD
+app.patch("/users/me/password", authenticateToken, (req: Request, res: Response) => {
+  try {
+    const userId = req.user.userId;
+
     const { oldPassword, newPassword } = req.body;
-    const id = Number(req.params.id);
-    const user = changeUserPassword.execute(id, oldPassword, newPassword); // this can throw an error
 
-    res.status(201).json(user);
+    const user = changeUserPassword.execute(userId, oldPassword, newPassword);
+
+    res.status(200).json(user);
   } catch (error) {
     res.status(400).json({
       error: error instanceof Error ? error.message : "Unknown error",
@@ -59,15 +205,33 @@ app.patch("/users/:id/password", (req: Request, res: Response) => {
   }
 });
 
-
-
-app.post("/users/:id/transactions", (req: Request, res: Response) => {
+// DELETE USER
+app.delete("/users/me", authenticateToken, (req: Request, res: Response) => {
   try {
+    const userId = req.user.userId;
+
+    const deletedUser = deleteUser.execute(userId);
+
+    res.status(200).json(deletedUser);
+  } catch (error) {
+    res.status(400).json({
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// ========================================
+// TRANSACTION ROUTES (PROTECTED)
+// ========================================
+
+// CREATE TRANSACTION
+app.post("/transactions", authenticateToken, (req: Request, res: Response) => {
+  try {
+    const userId = req.user.userId;
+
     const { name, category, date, status, amt } = req.body;
 
-    const belongsTo = Number(req.params.id);
-
-    const transaction = createTransaction.execute(name, category, date, status, amt, belongsTo); // this can throw an error
+    const transaction = createTransaction.execute(name, category, date, status, amt, userId);
 
     res.status(201).json(transaction);
   } catch (error) {
@@ -77,13 +241,14 @@ app.post("/users/:id/transactions", (req: Request, res: Response) => {
   }
 });
 
-app.get("/users/:id/transactions", (req: Request, res: Response) => {
+// GET MY TRANSACTIONS
+app.get("/transactions", authenticateToken, (req: Request, res: Response) => {
   try {
-    const belongsTo = Number(req.params.id);
+    const userId = req.user.userId;
 
-    const transactions = getTransactionById.execute(belongsTo);
+    const transactions = getTransactionById.execute(userId);
 
-    res.status(201).json(transactions);
+    res.status(200).json(transactions);
   } catch (error) {
     res.status(400).json({
       error: error instanceof Error ? error.message : "Unknown error",
@@ -91,13 +256,16 @@ app.get("/users/:id/transactions", (req: Request, res: Response) => {
   }
 });
 
-app.patch("/transactions/:id", (req: Request, res: Response) => {
+// UPDATE TRANSACTION
+app.patch("/transactions/:transactionId", authenticateToken, (req: Request, res: Response) => {
   try {
-    const id = Number(req.params.id);
+    const transactionId = Number(req.params.transactionId);
+
+    const userId = req.user.userId;
 
     const { name, category, amount, status } = req.body;
 
-    const transaction = updateTransaction.execute(id, {
+    const transaction = updateTransaction.execute(transactionId, userId, {
       name,
       category,
       amount,
@@ -111,6 +279,30 @@ app.patch("/transactions/:id", (req: Request, res: Response) => {
     });
   }
 });
+
+app.delete("/transactions/:transactionId", authenticateToken, (req: Request, res: Response) => {
+  try {
+    const transactionId = Number(req.params.transactionId);
+
+    const userId = req.user.userId;
+
+    const transaction = deleteTransaction.execute(transactionId, userId);
+
+    res.status(200).json(transaction);
+  } catch (error) {
+    res.status(400).json({
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// ========================================
+// ASSET ROUTES (PROTECTED)
+// ========================================
+
+// ========================================
+// SERVER
+// ========================================
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

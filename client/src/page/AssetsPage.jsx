@@ -1,7 +1,13 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import KpiCard from "@/ui/KpiCard";
-import Modal from "@/ui/Modal";
-import FormGroup from "@/ui/FormGroup";
+import KpiCard from "../ui/KpiCard";
+import SummaryRow from "../ui/SummaryRow";
+import Pagination from "../ui/Pagination";
+import Pill from "../ui/Pill";
+import Modal from "../ui/Modal";
+import FormGroup from "../ui/FormGroup";
+
+import { useState } from "react";
+import { fmtAmt, amtCls } from "../utils";
+
 // ── Assets ─────────────────────────────────
 export default function AssetsPage({ assets: initAssets, assetKpis, assetTypeOptions }) {
   const [assets, setAssets] = useState(initAssets);
@@ -193,11 +199,11 @@ export default function AssetsPage({ assets: initAssets, assetKpis, assetTypeOpt
             className="f-input"
             type="text"
             placeholder="Any additional notes…"
-            alue={form.note}
+            value={form.note}
             onChange={(e) => setF("note", e.target.value)}
           />
         </FormGroup>
-      </Modal>v
+      </Modal>
     </>
   );
 }

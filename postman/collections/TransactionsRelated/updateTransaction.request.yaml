@@ -1,8 +1,10 @@
 $kind: http-request
 name: updateTransaction
-url: localhost:3000/transactions/1/
+url: localhost:3000/transactions/6/
 method: PATCH
+headers:
+  Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiYWRtaW4yQHBsdXR1cy5jb20iLCJpYXQiOjE3Nzg3ODk2NzAsImV4cCI6MTc3ODg3NjA3MH0.JMhVwv8Q_kQ4X0ryg8_L3yYiAwd9ZJp6RYzXDxoJFwk
 body:
   type: json
-  content: ""
-order: 3488189378903971
+  content: '{"name": "AC: Black Flag Resynced"}'
+order: 3116432082369291

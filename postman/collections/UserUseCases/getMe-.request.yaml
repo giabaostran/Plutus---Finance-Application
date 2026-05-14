@@ -1,0 +1,7 @@
+$kind: http-request
+name: getMe?
+url: localhost:3000/users/me
+method: GET
+headers:
+  Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBwbHV0dXMuY29tIiwiaWF0IjoxNzc4Nzg5MjM1LCJleHAiOjE3Nzg4NzU2MzV9.prztio7DAyOgdHsdH7-eacl6jXMIwWC0C7bY5LxbbLk
+order: 4487072820913111
